@@ -253,44 +253,7 @@ class GeneratePress_Site {
 	 * @since 1.6
 	 */
 	public function loading_icon() {
-		?>
-		<svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#000">
-		    <g fill="none" fill-rule="evenodd" stroke-width="2">
-		        <circle cx="22" cy="22" r="1">
-		            <animate attributeName="r"
-		                begin="0s" dur="1.8s"
-		                values="1; 20"
-		                calcMode="spline"
-		                keyTimes="0; 1"
-		                keySplines="0.165, 0.84, 0.44, 1"
-		                repeatCount="indefinite" />
-		            <animate attributeName="stroke-opacity"
-		                begin="0s" dur="1.8s"
-		                values="1; 0"
-		                calcMode="spline"
-		                keyTimes="0; 1"
-		                keySplines="0.3, 0.61, 0.355, 1"
-		                repeatCount="indefinite" />
-		        </circle>
-		        <circle cx="22" cy="22" r="1">
-		            <animate attributeName="r"
-		                begin="-0.9s" dur="1.8s"
-		                values="1; 20"
-		                calcMode="spline"
-		                keyTimes="0; 1"
-		                keySplines="0.165, 0.84, 0.44, 1"
-		                repeatCount="indefinite" />
-		            <animate attributeName="stroke-opacity"
-		                begin="-0.9s" dur="1.8s"
-		                values="1; 0"
-		                calcMode="spline"
-		                keyTimes="0; 1"
-		                keySplines="0.3, 0.61, 0.355, 1"
-		                repeatCount="indefinite" />
-		        </circle>
-		    </g>
-		</svg>
-		<?php
+		// Deprecated since 1.9
 	}
 
 	/**
@@ -369,7 +332,7 @@ class GeneratePress_Site {
 
 							<div class="loading" style="display: none;">
 								<span class="site-message"></span>
-								<?php $this->loading_icon(); ?>
+								<?php GeneratePress_Sites_Helper::loading_icon(); ?>
 							</div>
 
 							<span class="error-message" style="display: none;"><a href="#">[?]</a></span>
@@ -395,7 +358,7 @@ class GeneratePress_Site {
 					<div class="site-step-details">
 						<div class="theme-options">
 							<span class="number"></span>
-							<span class="big-loader"><?php $this->loading_icon(); ?></span>
+							<span class="big-loader"><?php GeneratePress_Sites_Helper::loading_icon(); ?></span>
 
 							<h3><?php _e( 'Theme Options', 'gp-premium' ); ?></h3>
 							<p><?php _e( 'Options set in the Customizer of the theme.', 'gp-premium' ); ?></p>
@@ -403,7 +366,7 @@ class GeneratePress_Site {
 
 						<div class="demo-content">
 							<span class="number"></span>
-							<span class="big-loader"><?php $this->loading_icon(); ?></span>
+							<span class="big-loader"><?php GeneratePress_Sites_Helper::loading_icon(); ?></span>
 
 							<h3 id="demo-content"><?php _e( 'Demo Content', 'gp-premium' ); ?><span class="skip-content-import" style="display: none;"><a href="#"><?php _e( 'Skip this step', 'gp-premium' ); ?> &rarr;</a></span></h3>
 							<p>
@@ -454,7 +417,7 @@ class GeneratePress_Site {
 
 						<div class="import-complete">
 							<span class="number"></span>
-							<span class="big-loader"><?php $this->loading_icon(); ?></span>
+							<span class="big-loader"><?php GeneratePress_Sites_Helper::loading_icon(); ?></span>
 
 							<h3 id="import-complete"><?php _e( 'All Done', 'gp-premium' ); ?></h3>
 							<p><?php _e( 'Your site is ready to go!', 'gp-premium' ); ?></p>
@@ -506,7 +469,7 @@ class GeneratePress_Site {
 
 			<div class="site-demo" style="display: none;">
 				<div class="demo-loading loading">
-					<?php $this->loading_icon(); ?>
+					<?php GeneratePress_Sites_Helper::loading_icon(); ?>
 				</div>
 
 				<iframe></iframe>
@@ -640,6 +603,11 @@ class GeneratePress_Site {
 			$data['widgets'] = false;
 		}
 
+		// Backup our plugins early.
+		$backup_data = get_option( '_generatepress_site_library_backup', array() );
+		$backup_data['plugins'] = get_option( 'active_plugins', array() );
+		update_option( '_generatepress_site_library_backup', $backup_data );
+
 		wp_send_json( $data );
 
 		die();
@@ -663,6 +631,41 @@ class GeneratePress_Site {
 			wp_send_json_error( __( 'No theme options exist.', 'gp-premium' ) );
 		}
 
+		// Delete existing backup.
+		delete_option( '_generatepress_site_library_backup' );
+
+		// Backup options.
+		$backup_data = get_option( '_generatepress_site_library_backup', array() );
+
+		$theme_mods = GeneratePress_Sites_Helper::get_theme_mods();
+		$settings = GeneratePress_Sites_Helper::get_theme_settings();
+
+		$data = array(
+			'mods' => array(),
+			'options' => array()
+		);
+
+		foreach ( $theme_mods as $theme_mod ) {
+			$data['mods'][$theme_mod] = get_theme_mod( $theme_mod );
+		}
+
+		foreach ( $settings as $setting ) {
+			$data['options'][$setting] = get_option( $setting );
+		}
+
+		$backup_data['theme_options'] = $data;
+
+		$modules = generatepress_get_site_premium_modules();
+
+		$active_modules = array();
+		foreach ( $modules as $name => $key ) {
+			if ( 'activated' == get_option( $key ) ) {
+				$active_modules[ $name ] = $key;
+			}
+		}
+
+		$backup_data['modules'] = $active_modules;
+
 		$settings = GeneratePress_Sites_Helper::get_options( $this->directory . 'options.json' );
 
 		// Remove all existing theme options.
@@ -681,6 +684,10 @@ class GeneratePress_Site {
 		foreach ( $option_keys as $key ) {
 			delete_option( $key );
 		}
+
+		// Need to backup these items before we remove all theme mods.
+		$backup_data['site_options']['nav_menu_locations'] = get_theme_mod( 'nav_menu_locations' );
+		$backup_data['site_options']['custom_logo'] = get_theme_mod( 'custom_logo' );
 
 		// Remove existing theme mods.
 		remove_theme_mods();
@@ -749,10 +756,21 @@ class GeneratePress_Site {
 		$css = '/* GeneratePress Site CSS */ ' . $css . ' /* End GeneratePress Site CSS */';
 
 		$current_css = wp_get_custom_css_post();
-		$current_css->post_content = preg_replace( '#(/\\* GeneratePress Site CSS \\*/).*?(/\\* End GeneratePress Site CSS \\*/)#s', '', $current_css->post_content );
-		$css = $current_css->post_content . $css;
+
+		if ( isset( $current_css->post_content ) ) {
+			preg_match( '#(/\* GeneratePress Site CSS).*?(End GeneratePress Site CSS \*/)#s', $current_css->post_content, $matches );
+
+			if ( ! empty( $matches ) ) {
+				$backup_data['css'] = $matches[0];
+			}
+
+			$current_css->post_content = preg_replace( '#(/\\* GeneratePress Site CSS \\*/).*?(/\\* End GeneratePress Site CSS \\*/)#s', '', $current_css->post_content );
+			$css = $current_css->post_content . $css;
+		}
 
 		wp_update_custom_css_post( $css );
+
+		update_option( '_generatepress_site_library_backup', $backup_data );
 
 		die();
 
@@ -799,10 +817,18 @@ class GeneratePress_Site {
 		// Disable import of authors.
 		add_filter( 'wxr_importer.pre_process.user', '__return_false' );
 
+		// Keep track of our progress.
+		add_action( 'wxr_importer.processed.post', array( $this, 'track_post' ) );
+		add_action( 'wxr_importer.processed.term', array( $this, 'track_term' ) );
+
 		// Disables generation of multiple image sizes (thumbnails) in the content import step.
 		if ( ! apply_filters( 'generate_sites_regen_thumbnails', true ) ) {
 			add_filter( 'intermediate_image_sizes_advanced', '__return_null' );
 		}
+
+		$backup_data = get_option( '_generatepress_site_library_backup', array() );
+		$backup_data['content'] = true;
+		update_option( '_generatepress_site_library_backup', $backup_data );
 
 		// Import content
 		$content = get_transient( 'generatepress_sites_content_file' );
@@ -859,6 +885,8 @@ class GeneratePress_Site {
 			return;
 		}
 
+		$backup_data = get_option( '_generatepress_site_library_backup', array() );
+
 		$settings = GeneratePress_Sites_Helper::get_options( $this->directory . 'options.json' );
 
 		delete_option( 'generate_page_header_global_locations' );
@@ -869,6 +897,7 @@ class GeneratePress_Site {
 
 				case 'page_for_posts':
 				case 'page_on_front':
+					$backup_data['site_options'][ $key ] = get_option( $key );
 					GeneratePress_Sites_Helper::set_reading_pages( $key, $val, $this->slug );
 				break;
 
@@ -876,6 +905,7 @@ class GeneratePress_Site {
 				case 'woocommerce_cart_page_id':
 				case 'woocommerce_checkout_page_id':
 				case 'woocommerce_myaccount_page_id':
+					$backup_data['site_options'][ $key ] = get_option( $key );
 					GeneratePress_Sites_Helper::set_woocommerce_pages( $key, $val, $this->slug );
 				break;
 
@@ -900,7 +930,6 @@ class GeneratePress_Site {
 				break;
 
 				case 'custom_logo':
-
 					$data = GeneratePress_Sites_Helper::sideload_image( $val );
 
 					if ( ! is_wp_error( $data ) && isset( $data->attachment_id ) ) {
@@ -916,6 +945,7 @@ class GeneratePress_Site {
 					if ( in_array( $key, ( array ) generatepress_sites_disallowed_options() ) ) {
 						GeneratePress_Sites_Helper::log( 'Disallowed option: ' . $key );
 					} else {
+						$backup_data['site_options'][ $key ] = get_option( $key );
 						delete_option( $key );
 						update_option( $key, $val );
 					}
@@ -924,6 +954,9 @@ class GeneratePress_Site {
 			}
 
 		}
+
+		// Set our backed up options.
+		update_option( '_generatepress_site_library_backup', $backup_data );
 
 		// Update any custom menu link URLs.
 		GeneratePress_Sites_Helper::update_menu_urls( $this->preview_url );
@@ -1034,4 +1067,25 @@ class GeneratePress_Site {
 
 	}
 
+	/**
+	 * Track Imported Post
+	 *
+	 * @param  int $post_id Post ID.
+	 * @return void
+	 */
+	function track_post( $post_id ) {
+		update_post_meta( $post_id, '_generatepress_sites_imported_post', true );
+	}
+
+	/**
+	 * Track Imported Term
+	 *
+	 * @param  int $term_id Term ID.
+	 * @return void
+	 */
+	function track_term( $term_id ) {
+		$term = get_term( $term_id );
+
+		update_term_meta( $term_id, '_generatepress_sites_imported_term', true );
+	}
 }

@@ -3,9 +3,9 @@
 Contributors: thethemefoundry
 Tags: contact, contact form, email, feedback form, form, form builder, custom form, lead generation, survey form, quote form
 Requires at least: 4.8
-Tested up to: 5.2
+Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 1.8.15
+Stable tag: 1.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,6 +96,46 @@ Absolutely! HappyForms gets out of the way and is designed to work with any them
 Yep! HappyForms free isn't going anywhere but for those looking for even more you may be interested in our [HappyForms upgrade plan](https://happyforms.me/upgrade).
 
 == Changelog ==
+
+= 1.9.2 =
+* New feature: Additional CSS section in Style tab allowing to write custom styles for each individual form.
+
+= 1.9.1 =
+* New feature: Quarter width setting for parts and part choices.
+* Improvement: Various improvements to HappyForms UI styles.
+* Improvement: Improved compatibility of form part styles with some themes.
+* Bugfix: Fixed choice parts not saving "Checked by default" setting.
+
+= 1.9.0 =
+* New feature: Date filter on All Forms screen now allows you to filter forms by date added.
+* Improvement: Email controls are now grouped in a dedicated step.
+* Improvement: Additional email controls for sender and reply-to addresses.
+* Improvement: Various improvements to UI styles, wording, and default values of parts.
+
+= 1.8.22 =
+* Improvement: Improved plugin's text domain for better management of translations.
+* Improvement: Various improvements to HappyForms UI styles and frontend.
+
+= 1.8.21 =
+* New feature: Added Help tab to all HappyForms screens, providing easy access to help guide and our email support.
+* Improvement: All Forms screen improvements.
+
+= 1.8.20 =
+* Improvement: Various improvements related to builder and front-end styles.
+* Improvement: Compatibility with WordPress 5.3.
+
+= 1.8.19 =
+* New feature: Added new control "Hide form on submission" to Step 2.
+* Improvement: Various improvements to styles and wording in form builder UI.
+
+= 1.8.18 =
+* Bugfix: Fix bug with submitted values not displaying in email notifications.
+
+= 1.8.17 =
+* New feature: Choices width control to allow for multi-column layouts in Single Choice and Multiple Choice part.
+
+= 1.8.16 =
+* Improvement: HappyForms form builder styles update.
 
 = 1.8.15 =
 * Bugfix: Fix admin notices.
@@ -527,6 +567,36 @@ Yep! HappyForms free isn't going anywhere but for those looking for even more yo
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.9.2 =
+* New Additional CSS section in Style step.
+
+= 1.9.1 =
+* Quarter width for parts and part choices. Various improvements to UI and part styles.
+
+= 1.9.0 =
+* New Email step, various improvements to form builder UI.
+
+= 1.8.22 =
+* Improved text domain for better management of translations. Improvements to UI and frontend styles.
+
+= 1.8.21 =
+* New Help tab linking to our help guide and support email. All Forms screen improvements.
+
+= 1.8.20 =
+* Various style improvements, compatibility with WordPress 5.3.
+
+= 1.8.19 =
+* New control for hiding form after submission, various improvements to styles and wording in form builder UI.
+
+= 1.8.18 =
+* Fixed bug with submitted values not displaying in email notifications.
+
+= 1.8.17 =
+* New control for setting choices width allowing for multi-column layouts in Single Choice and Multiple Choice part.
+
+= 1.8.16 =
+* Improved and fixed styles in form builder.
 
 = 1.8.15 =
 * Fix admin notices.

@@ -86,7 +86,7 @@ if ( ! function_exists( 'generate_fonts_secondary_nav_customizer' ) ) {
 		$wp_customize->add_setting(
 			'font_secondary_navigation_category',
 			array(
-				'default' => '',
+				'default' => $defaults['font_secondary_navigation_category'],
 				'sanitize_callback' => 'sanitize_text_field'
 			)
 		);
@@ -95,7 +95,7 @@ if ( ! function_exists( 'generate_fonts_secondary_nav_customizer' ) ) {
 		$wp_customize->add_setting(
 			'font_secondary_navigation_variants',
 			array(
-				'default' => '',
+				'default' => $defaults['font_secondary_navigation_variants'],
 				'sanitize_callback' => 'generate_premium_sanitize_variants'
 			)
 		);

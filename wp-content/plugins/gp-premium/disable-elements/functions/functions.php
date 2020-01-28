@@ -250,7 +250,6 @@ if ( ! function_exists( 'generate_disable_elements_setup' ) ) {
 		// Remove the navigation
 		if ( ! empty( $disable_nav ) && false !== $disable_nav && function_exists( 'generate_get_navigation_location' ) ) {
 			add_filter( 'generate_navigation_location','__return_false', 20 );
-			remove_action( 'generate_after_header', 'generate_menu_plus_mobile_header', 5 );
 		}
 
 		// Remove the title

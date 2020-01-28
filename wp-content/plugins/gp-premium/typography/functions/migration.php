@@ -124,8 +124,7 @@ if ( ! function_exists( 'generate_add_to_font_customizer_list' ) ) {
 	add_filter( 'generate_typography_customize_list', 'generate_add_to_font_customizer_list' );
 	/**
 	 * This function makes sure your selected typography option exists in the Customizer list
-	 * Why wouldn't it? Originally, all 800+ fonts were in each list. This has been reduced to 200.
-	 * This functions makes sure that if you were using a font that is now not included in the 200, you won't lose it.
+	 * The list gets updated from time to time, which means some fonts might be replaced by others.
 	 *
 	 * @since 1.3.40
 	 */
@@ -147,12 +146,17 @@ if ( ! function_exists( 'generate_add_to_font_customizer_list' ) ) {
 			'font_site_tagline',
 			'font_navigation',
 			'font_widget_title',
+			'font_buttons',
 			'font_heading_1',
 			'font_heading_2',
 			'font_heading_3',
+			'font_heading_4',
+			'font_heading_5',
+			'font_heading_6',
+			'font_footer',
 		);
 
-		$all_fonts = generate_get_all_google_fonts();
+		$all_fonts = false; // We'll get this later if we need it.
 		$select_fonts = generate_get_all_google_fonts( apply_filters( 'generate_number_of_fonts', 200 ) );
 
 		foreach ( $font_settings as $setting ) {
@@ -167,10 +171,37 @@ if ( ! function_exists( 'generate_add_to_font_customizer_list' ) ) {
 				continue;
 			}
 
+			$variants = get_theme_mod( $setting . '_variants', array() );
+			$category = get_theme_mod( $setting . '_category' );
+
+			if ( ! empty( $variants ) && ! is_array( $variants ) ) {
+				$variants = explode( ',', $variants );
+			}
+
+			if ( ! $variants ) {
+				if ( ! $all_fonts ) {
+					$all_fonts = generate_get_all_google_fonts();
+				}
+
+				if ( array_key_exists( $id, $all_fonts ) ) {
+					$variants = $all_fonts[ $id ]['variants'];
+				}
+			}
+
+			if ( ! $category ) {
+				if ( ! $all_fonts ) {
+					$all_fonts = generate_get_all_google_fonts();
+				}
+
+				if ( array_key_exists( $id, $all_fonts ) ) {
+					$category = $all_fonts[ $id ]['category'];
+				}
+			}
+
 			$fonts[ $id ] = array(
 				'name' => $generate_settings[ $setting ],
-				'variants' => array_key_exists( $id, $all_fonts ) ? $all_fonts[$id]['variants'] : array(),
-				'category' => array_key_exists( $id, $all_fonts ) ? $all_fonts[$id]['category'] : 'sans-serif'
+				'variants' => $variants,
+				'category' => $category ? $category : 'sans-serif',
 			);
 		}
 
@@ -183,10 +214,37 @@ if ( ! function_exists( 'generate_add_to_font_customizer_list' ) ) {
 			$secondary_nav_id = strtolower( str_replace( ' ', '_', $secondary_nav_settings[ 'font_secondary_navigation' ] ) );
 
 			if ( ! array_key_exists( $secondary_nav_id, $select_fonts ) && ! in_array( $secondary_nav_settings[ 'font_secondary_navigation' ], generate_typography_default_fonts() ) ) {
+				$variants = get_theme_mod( 'font_secondary_navigation_variants', array() );
+				$category = get_theme_mod( 'font_secondary_navigation_category' );
+
+				if ( ! empty( $variants ) && ! is_array( $variants ) ) {
+					$variants = explode( ',', $variants );
+				}
+
+				if ( ! $variants ) {
+					if ( ! $all_fonts ) {
+						$all_fonts = generate_get_all_google_fonts();
+					}
+
+					if ( array_key_exists( $secondary_nav_id, $all_fonts ) ) {
+						$variants = $all_fonts[ $secondary_nav_id ]['variants'];
+					}
+				}
+
+				if ( ! $category ) {
+					if ( ! $all_fonts ) {
+						$all_fonts = generate_get_all_google_fonts();
+					}
+
+					if ( array_key_exists( $secondary_nav_id, $all_fonts ) ) {
+						$category = $all_fonts[ $secondary_nav_id ]['category'];
+					}
+				}
+
 				$fonts[ $secondary_nav_id ] = array(
 					'name' => $secondary_nav_settings[ 'font_secondary_navigation' ],
-					'variants' => array_key_exists( $secondary_nav_id, $all_fonts ) ? $all_fonts[$secondary_nav_id]['variants'] : array(),
-					'category' => array_key_exists( $secondary_nav_id, $all_fonts ) ? $all_fonts[$secondary_nav_id]['category'] : 'sans-serif'
+					'variants' => $variants,
+					'category' => $category ? $category : 'sans-serif',
 				);
 			}
 		}

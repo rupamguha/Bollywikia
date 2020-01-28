@@ -93,6 +93,8 @@ if ( ! function_exists( 'generate_secondary_nav_get_defaults' ) ) {
 			'secondary_menu_item_height' => '40',
 			'secondary_sub_menu_item_height' => '10',
 			'font_secondary_navigation' => 'inherit',
+			'font_secondary_navigation_variants' => '',
+			'font_secondary_navigation_category' => '',
 			'secondary_navigation_font_weight' => 'normal',
 			'secondary_navigation_font_transform' => 'none',
 			'secondary_navigation_font_size' => '13',

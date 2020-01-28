@@ -71,6 +71,9 @@
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
 }
 
 .main-navigation .menu-toggle {
@@ -131,15 +134,11 @@
 	margin-right: 10px;
 }
 
-.nav-aligned-center #site-navigation .navigation-branding,
-.nav-aligned-center #sticky-navigation .navigation-branding {
-	margin-right: 10px;
-	margin-left: auto;
-}
-
-.nav-aligned-center  .main-navigation.has-branding:not(.slideout-navigation) .inside-navigation .main-nav,
-.nav-aligned-center  .main-navigation.has-sticky-branding.navigation-stick .inside-navigation .main-nav {
-	margin-right: auto;
+.nav-aligned-center .main-navigation.has-branding .inside-navigation,
+.nav-aligned-center .main-navigation.has-sticky-branding.navigation-stick .inside-navigation {
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
 }
 
 .nav-aligned-left  .main-navigation.has-branding:not(.slideout-navigation) .inside-navigation .main-nav,

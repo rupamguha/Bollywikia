@@ -33,7 +33,15 @@ if ( ! function_exists( 'generate_blog_scripts' ) ) {
 			$deps[] = 'infinitescroll';
 			wp_enqueue_script( 'infinitescroll', plugin_dir_url( __FILE__ ) . 'js/infinite-scroll.pkgd.min.js', array( 'jquery' ), '3.0.1', true );
 
-			if ( $settings['infinite_scroll_button'] ) {
+			$font_icons = true;
+
+			if ( function_exists( 'generate_get_option' ) ) {
+				if ( 'font' !== generate_get_option( 'icons' ) ) {
+					$font_icons = false;
+				}
+			}
+
+			if ( $settings['infinite_scroll_button'] && $font_icons ) {
 				wp_enqueue_style( 'gp-premium-icons' );
 			}
 		}
@@ -43,6 +51,7 @@ if ( ! function_exists( 'generate_blog_scripts' ) ) {
 			wp_localize_script( 'generate-blog', 'blog', array(
 				'more'  => $settings['masonry_load_more'],
 				'loading' => $settings['masonry_loading'],
+				'icon' => function_exists( 'generate_get_svg_icon' ) ? generate_get_svg_icon( 'spinner' ) : '',
 			) );
 		}
 
@@ -266,7 +275,7 @@ if ( ! function_exists( 'generate_blog_css' ) ) {
 		}
 
 		if ( ! $settings['page_post_image_padding'] || ! $settings['single_post_image_padding'] || ! $settings['post_image_padding'] ) {
-			$return .= '@media ' . apply_filters( 'generate_mobile_media_query', '(max-width:768px)' ) . '{';
+			$return .= '@media ' . generate_premium_get_media_query( 'mobile' ) . '{';
 				if ( ! $settings['post_image_padding'] && 'post-image-aligned-center' == $settings['post_image_alignment'] && ! is_singular() ) {
 					$return .= '.no-featured-image-padding .post-image {margin-left:-' . $mobile_content_padding_left . 'px;margin-right:-' . $mobile_content_padding_right . 'px;}';
 					$return .= '.post-image-above-header .no-featured-image-padding .inside-article .post-image {margin-top:-' . $mobile_content_padding_top . 'px;}';
@@ -494,11 +503,22 @@ if ( ! function_exists( 'generate_blog_load_more' ) ) {
 		if ( is_post_type_archive( 'product' ) ) {
 			return;
 		}
-		?>
-		<div class="masonry-load-more load-more <?php if ( 'true' == generate_blog_get_masonry() && generate_blog_get_columns() ) { ?>are-images-unloaded<?php } ?>">
-			<a class="button" href="#"><?php echo wp_kses_post( $settings['masonry_load_more'] ); ?></a>
-		</div>
-		<?php
+
+		$icon = '';
+
+		if ( function_exists( 'generate_get_svg_icon' ) ) {
+			$icon = generate_get_svg_icon( 'spinner' );
+		}
+
+		printf(
+			'<div class="masonry-load-more load-more %1$s %2$s">
+				<a class="button" href="#">%3$s%4$s</a>
+			</div>',
+			$icon ? 'has-svg-icon' : '',
+			( 'true' == generate_blog_get_masonry() && generate_blog_get_columns() ) ? 'are-images-unloaded' : '',
+			$icon,
+			wp_kses_post( $settings['masonry_load_more'] )
+		);
 	}
 }
 

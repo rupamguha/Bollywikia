@@ -274,7 +274,7 @@ function generatepress_woocommerce_customize_register( $wp_customize ) {
 				'section' => 'generate_woocommerce_layout',
 				'settings' => array(
 					'desktop' => 'generate_woocommerce_settings[columns]',
-					//'tablet' => 'generate_woocommerce_settings[tablet_columns]',
+					'tablet' => 'generate_woocommerce_settings[tablet_columns]',
 					'mobile' => 'generate_woocommerce_settings[mobile_columns]',
 				),
 				'choices' => array(
@@ -285,19 +285,85 @@ function generatepress_woocommerce_customize_register( $wp_customize ) {
 						'edit' => false,
 						'unit' => 'Col',
 					),
-					// 'tablet' => array(
-						// 'min' => 1,
-						// 'max' => 4,
-						// 'step' => 1,
-						// 'edit' => false,
-						// 'unit' => '',
-					// ),
+					'tablet' => array(
+						'min' => 1,
+						'max' => 3,
+						'step' => 1,
+						'edit' => false,
+						'unit' => 'Col',
+					),
 					'mobile' => array(
 						'min' => 1,
 						'max' => 3,
 						'step' => 1,
 						'edit' => false,
 						'unit' => 'Col',
+					),
+				),
+			)
+		)
+	);
+
+	$wp_customize->add_setting(
+		'generate_woocommerce_settings[columns_gap]', array(
+			'default' => $defaults['columns_gap'],
+			'type' => 'option',
+			'capability' => 'edit_theme_options',
+			'sanitize_callback' => 'absint'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'generate_woocommerce_settings[tablet_columns_gap]', array(
+			'default' => $defaults['tablet_columns_gap'],
+			'type' => 'option',
+			'capability' => 'edit_theme_options',
+			'sanitize_callback' => 'generate_premium_sanitize_empty_absint'
+		)
+	);
+
+	$wp_customize->add_setting(
+		'generate_woocommerce_settings[mobile_columns_gap]', array(
+			'default' => $defaults['mobile_columns_gap'],
+			'type' => 'option',
+			'capability' => 'edit_theme_options',
+			'sanitize_callback' => 'generate_premium_sanitize_empty_absint'
+		)
+	);
+
+	$wp_customize->add_control(
+		new GeneratePress_Pro_Range_Slider_Control(
+			$wp_customize,
+			'gp_woocommerce_column_gap',
+			array(
+				'label' => __( 'Column Gap', 'gp-premium' ),
+				'section' => 'generate_woocommerce_layout',
+				'settings' => array(
+					'desktop' => 'generate_woocommerce_settings[columns_gap]',
+					'tablet' => 'generate_woocommerce_settings[tablet_columns_gap]',
+					'mobile' => 'generate_woocommerce_settings[mobile_columns_gap]',
+				),
+				'choices' => array(
+					'desktop' => array(
+						'min' => 0,
+						'max' => 100,
+						'step' => 5,
+						'edit' => true,
+						'unit' => 'px',
+					),
+					'tablet' => array(
+						'min' => 0,
+						'max' => 100,
+						'step' => 5,
+						'edit' => true,
+						'unit' => 'px',
+					),
+					'mobile' => array(
+						'min' => 0,
+						'max' => 100,
+						'step' => 5,
+						'edit' => true,
+						'unit' => 'px',
 					),
 				),
 			)
@@ -815,6 +881,15 @@ function generatepress_woocommerce_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
+		'generate_woocommerce_settings[tablet_related_upsell_columns]', array(
+			'default' => $defaults['tablet_related_upsell_columns'],
+			'type' => 'option',
+			'capability' => 'edit_theme_options',
+			'sanitize_callback' => 'absint'
+		)
+	);
+
+	$wp_customize->add_setting(
 		'generate_woocommerce_settings[mobile_related_upsell_columns]', array(
 			'default' => $defaults['mobile_related_upsell_columns'],
 			'type' => 'option',
@@ -832,12 +907,20 @@ function generatepress_woocommerce_customize_register( $wp_customize ) {
 				'section' => 'generate_woocommerce_layout',
 				'settings' => array(
 					'desktop' => 'generate_woocommerce_settings[related_upsell_columns]',
+					'tablet' => 'generate_woocommerce_settings[tablet_related_upsell_columns]',
 					'mobile' => 'generate_woocommerce_settings[mobile_related_upsell_columns]',
 				),
 				'choices' => array(
 					'desktop' => array(
 						'min' => 1,
 						'max' => 6,
+						'step' => 1,
+						'edit' => false,
+						'unit' => 'Col',
+					),
+					'tablet' => array(
+						'min' => 1,
+						'max' => 3,
 						'step' => 1,
 						'edit' => false,
 						'unit' => 'Col',

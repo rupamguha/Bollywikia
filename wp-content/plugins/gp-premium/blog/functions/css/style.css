@@ -154,7 +154,7 @@
 	max-width: none;
 }
 
-.load-more .button.loading:before {
+.load-more:not(.has-svg-icon) .button.loading:before {
 	content: "\e900";
 	display: inline-block;
     font-family: "GP Premium";
@@ -166,6 +166,16 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+	-webkit-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear;
+	margin-right: 7px;
+}
+
+.load-more .button:not(.loading) .gp-icon {
+	display: none;
+}
+
+.load-more .gp-icon svg {
 	-webkit-animation: spin 2s infinite linear;
 	animation: spin 2s infinite linear;
 	margin-right: 7px;

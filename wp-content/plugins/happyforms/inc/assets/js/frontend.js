@@ -281,6 +281,12 @@
 				}
 
 				this.$el.trigger( 'happyforms-scrolltop', elTopOffset );
+
+				var hasErrorNotices = $( '.happyforms-message-notice.error', $form ).length;
+
+				if ( ! hasErrorNotices && this.$el.hasClass( 'happyforms-form--hide-on-submit' ) ) {
+					$( '.happyforms-part', $form ).hide();
+				}
 			}
 		},
 

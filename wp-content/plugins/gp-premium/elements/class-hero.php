@@ -402,12 +402,12 @@ class GeneratePress_Hero {
 				$css->add_property( 'display', 'none' );
 			}
 
-			if ( 'merge-desktop' === $options['site_header_merge'] ) {
-				if ( $options['site_logo'] && GeneratePress_Elements_Helper::does_option_exist( 'site-logo' ) ) {
-					$css->set_selector( '.site-logo:not(.page-hero-logo)' );
-					$css->add_property( 'display', 'none' );
-				}
+			if ( $options['site_logo'] && GeneratePress_Elements_Helper::does_option_exist( 'site-logo' ) ) {
+				$css->set_selector( '.site-logo:not(.page-hero-logo)' );
+				$css->add_property( 'display', 'none' );
+			}
 
+			if ( 'merge-desktop' === $options['site_header_merge'] ) {
 				$css->stop_media_query();
 			}
 
@@ -417,16 +417,16 @@ class GeneratePress_Hero {
 			}
 		}
 
-		$css->start_media_query( apply_filters( 'generate_mobile_media_query', '(max-width:768px)' ) );
+		$css->start_media_query( generate_premium_get_media_query( 'mobile' ) );
 
 		$css->set_selector( '.page-hero' );
 
-		if ( $options['padding_top_mobile'] ) {
+		if ( $options['padding_top_mobile'] || '0' === $options['padding_top_mobile'] ) {
 			$css->add_property( 'padding-top', absint( $options['padding_top_mobile'] ), false, esc_html( $options['padding_top_unit_mobile'] ) );
 		}
 
 		if ( 'merge' === $options['site_header_merge'] && $options['site_header_height_mobile'] ) {
-			if ( $options['padding_top_mobile'] ) {
+			if ( $options['padding_top_mobile'] || '0' === $options['padding_top_mobile'] ) {
 				$css->add_property( 'padding-top', 'calc(' . absint( $options['padding_top_mobile'] ) . esc_html( $options['padding_top_unit_mobile'] ) . ' + ' . absint( $options['site_header_height_mobile'] ) . 'px)' );
 			} elseif ( $options['padding_top'] ) {
 				$css->add_property( 'padding-top', 'calc(' . absint( $options['padding_top'] ) . esc_html( $options['padding_top_unit'] ) . ' + ' . absint( $options['site_header_height_mobile'] ) . 'px)' );
@@ -435,15 +435,15 @@ class GeneratePress_Hero {
 			}
 		}
 
-		if ( $options['padding_right_mobile'] ) {
+		if ( $options['padding_right_mobile'] || '0' === $options['padding_right_mobile'] ) {
 			$css->add_property( 'padding-right', absint( $options['padding_right_mobile'] ), false, esc_html( $options['padding_right_unit_mobile'] ) );
 		}
 
-		if ( $options['padding_bottom_mobile'] ) {
+		if ( $options['padding_bottom_mobile'] || '0' === $options['padding_bottom_mobile'] ) {
 			$css->add_property( 'padding-bottom', absint( $options['padding_bottom_mobile'] ), false, esc_html( $options['padding_bottom_unit_mobile'] ) );
 		}
 
-		if ( $options['padding_left_mobile'] ) {
+		if ( $options['padding_left_mobile'] || '0' === $options['padding_left_mobile'] ) {
 			$css->add_property( 'padding-left', absint( $options['padding_left_mobile'] ), false, esc_html( $options['padding_left_unit_mobile'] ) );
 		}
 
@@ -454,7 +454,7 @@ class GeneratePress_Hero {
 
 		$css->stop_media_query();
 
-		return $css->css_output();
+		return apply_filters( 'generate_page_hero_css_output', $css->css_output(), $options );
 	}
 
 	/**
@@ -539,7 +539,7 @@ class GeneratePress_Hero {
 		}
 
 		if ( $options['site_logo'] && GeneratePress_Elements_Helper::does_option_exist( 'site-logo' ) ) {
-			if ( 'merge-desktop' === $options['site_header_merge'] || GeneratePress_Elements_Helper::does_option_exist( 'navigation-as-header' ) ) {
+			if ( '' !== $options['site_header_merge'] ) {
 				add_action( 'generate_after_logo', array( $this, 'add_site_logo' ) );
 			} else {
 				add_filter( 'theme_mod_custom_logo', array( $this, 'replace_logo' ) );
@@ -558,8 +558,12 @@ class GeneratePress_Hero {
 			}
 		}
 
-		if ( $options['mobile_logo'] && GeneratePress_Elements_Helper::does_option_exist( 'mobile-logo' ) && $options['site_header_merge'] ) {
-			add_action( 'generate_inside_mobile_header', array( $this, 'add_mobile_header_logo' ) );
+		if ( $options['mobile_logo'] && GeneratePress_Elements_Helper::does_option_exist( 'mobile-logo' ) ) {
+			if ( 'merge' === $options['site_header_merge'] ) {
+				add_action( 'generate_inside_mobile_header', array( $this, 'add_mobile_header_logo' ) );
+			} else {
+				add_filter( 'generate_mobile_header_logo', array( $this, 'replace_logo' ) );
+			}
 		}
 
 		if ( $options['navigation_location'] ) {
@@ -855,7 +859,11 @@ class GeneratePress_Hero {
 				$data = preg_match_all( '/{{post_terms.([^}]*)}}/', $content, $matches );
 				foreach ( $matches[1] as $match ) {
 					$search[] = '{{post_terms.' . $match . '}}';
-					$replace[] = get_the_term_list( get_the_ID(), $match, apply_filters( 'generate_page_hero_terms_before', '' ), apply_filters( 'generate_page_hero_terms_separator', ', ' ), apply_filters( 'generate_page_hero_terms_after', '' ) );
+					$terms = get_the_term_list( get_the_ID(), $match, apply_filters( 'generate_page_hero_terms_before', '' ), apply_filters( 'generate_page_hero_terms_separator', ', ' ), apply_filters( 'generate_page_hero_terms_after', '' ) );
+
+					if ( ! is_wp_error( $terms ) ) {
+						$replace[] = $terms;
+					}
 				}
 			}
 

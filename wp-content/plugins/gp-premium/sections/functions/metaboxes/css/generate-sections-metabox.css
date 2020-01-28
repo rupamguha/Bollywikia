@@ -316,10 +316,15 @@ body.generate-modal-open { overflow: hidden; }
 .generate-sections-modal .media-frame-content .panel { display: none; padding: 2em; }
 .generate-sections-modal .media-frame-content .panel.active { display: block; }
 .generate-sections-modal .media-frame-content .panel .section-title input { width:100%;padding:10px; }
-.generate-sections-modal .media-frame-content .panel .old-sections-js.html-active .mce-panel { display: none; }
-.generate-sections-modal .media-frame-content .panel .old-sections-js.html-active .wp-editor-area { display: block !important; min-height: 300px; }
+.generate-sections-modal .media-frame-content .panel .html-active .mce-panel { display: none; }
+.generate-sections-modal .media-frame-content .panel .html-active .wp-editor-area { display: block !important; min-height: 300px; }
 .generate-sections-modal .media-frame-content .panel .mce-wp-dfw, .generate-sections-modal .media-frame-content .panel .qt-dfw { display: none; }
 .generate-sections-modal .media-frame-content .panel .generate-sections-remove-image { display: none; }
+
+textarea.no-rich-edit {
+	width: 100%;
+	min-height: 300px;
+}
 
 /*# sourceMappingURL=meta.css.map */
 

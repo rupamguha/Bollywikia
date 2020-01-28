@@ -422,7 +422,8 @@ class HappyForms_Message_Controller {
 
 	public function email_part_visible( $visible, $part, $form, $response ) {
 		$required = happyforms_is_truthy( $part['required'] );
-		$value = happyforms_get_email_part_value( $response, $part, $form );
+		$message = array( 'parts' => $response );
+		$value = happyforms_get_email_part_value( $message, $part, $form );
 
 		if ( false === $required && empty( $value ) ) {
 			$visible = false;
@@ -450,6 +451,7 @@ class HappyForms_Message_Controller {
 
 		if ( count( $subject_parts ) > 0 ) {
 			$part = $subject_parts[count( $subject_parts ) - 1];
+			$message = array( 'parts' => $message );
 			$subject = happyforms_get_email_part_value( $message, $part, $form );
 		}
 
@@ -525,14 +527,16 @@ class HappyForms_Message_Controller {
 		if ( false !== $email_part
 			&& ! empty( $form['confirmation_email_subject'] )
 			&& ! empty( $form['confirmation_email_content'] )
-			&& ! empty( $form['email_recipient'] ) ) {
+			&& ! empty( $form['confirmation_email_sender_address'] ) ) {
 
 			// Compose an email message
 			$email_message = new HappyForms_Email_Message( $message );
-			$senders = explode( ',', $form['email_recipient'] );
-			$name = $form['confirmation_email_from_name'];
+			$senders = happyforms_get_form_property( $form, 'confirmation_email_sender_address' );
+			$senders = explode( ',', $senders );
+			$name = happyforms_get_form_property( $form, 'confirmation_email_from_name' );
 			$from = $senders[0];
-			$reply_to = $senders[0];
+			$reply_to = happyforms_get_form_property( $form, 'confirmation_email_reply_to' );
+			$reply_to = empty( $reply_to ) ? $from : $reply_to;
 
 			$email_message->set_from( $from );
 			$email_message->set_from_name( $name );

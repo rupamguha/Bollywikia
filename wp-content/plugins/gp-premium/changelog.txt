@@ -1,5 +1,57 @@
 == changelog ==
 
+= 1.9.0 =
+* Blog: Support SVG icon feature
+* Colors: Add navigation search color options
+* Disable Elements: Disable mobile menu in Mobile Header if nav is disabled
+* Elements: Add wp_body_open hook
+* Elements: Allow 0 mobile padding in Elements
+* Elements: Add generate_elements_admin_menu_capability filter
+* Elements: Add generate_page_hero_css_output filter
+* Elements: Prevent error in Header Element if taxonomy doesn't exist
+* Elements: Fix double logo when Header Element has logo + using nav as header
+* Elements: Fix mobile header logo not replacing if merge is disabled
+* Elements: Fix missing arrow in Choose Element Type select in WP 5.3
+* Elements: Add generate_inside_site_container hook option
+* Elements: Add generate_after_entry_content hook option
+* Menu Plus: Add off canvas desktop toggle label option
+* Menu Plus: Add generate_off_canvas_toggle_output filter
+* Menu Plus: Support SVG icon feature
+* Menu Plus: Fix sticky navigation overlapping BB controls
+* Menu Plus: Add align-items: center to nav as header, mobile header and sticky nav with branding
+* Sections: Fix text/visual switch bug in Firefox
+* Sites: Add option to revert site import
+* Sites: Increase site library limit to 100
+* Spacing: Add live preview to group container padding
+* Typography: Add tablet site title/navigation font size options
+* Typography: Add archive post title weight, transform, font size and line height
+* Typography: Add single content title weight, transform, font size and line height
+* Typography: Only call all google fonts once in the Customizer
+* Typography: Get Google fonts from readable JSON list
+* Typography: Make sure font settings aren't lost if list is changed
+* Typography: Only call generate_get_all_google_fonts if needed
+* WooCommerce: Add columns gap options (desktop, tablet, mobile)
+* WooCommerce: Add tablet column options
+* WooCommerce: Add related/upsell tablet column options
+* WooCommerce: Support SVG icon feature
+* WooCommerce: Prevent empty added to cart panel on single products
+* WooCommerce: Fix woocommerce-ordering arrow in old FF versions
+* WooCommerce: Make item/items string translatable
+* General: Better customizer device widths
+* General: Use generate_premium_get_media_query throughout modules
+* General: Improve Customizer control styling
+
+= 1.8.3 =
+* Menu Plus: Use flexbox for center aligned nav with nav branding
+* Menu Plus: Center overlay off canvas exit button on mobile
+* Menu Plus: Add alt tag to sticky nav logo
+* Menu Plus: Set generate_not_mobile_menu_media_query filter based on mobile menu breakpoint
+* Sections: Remember when text tab is active
+* Sections: Disable visual editor if turned off in profile
+* Typography: Add generate_google_font_display filter
+* WooCommerce: Fix single product sidebar layout metabox option
+* WooCommerce: Reduce carousel thumbnail max-width to 100px to match new thumbnail sizes
+
 = 1.8.2 =
 * Elements: Use Page Hero site title color for mobile header site title
 * Menu Plus: Give mobile header site title more left spacing

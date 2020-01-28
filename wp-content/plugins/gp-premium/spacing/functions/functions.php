@@ -110,9 +110,9 @@ if ( ! function_exists( 'generate_spacing_customizer_live_preview' ) ) {
 		);
 
 		wp_localize_script( 'generate-spacing-customizer', 'gp_spacing', array(
-			'mobile' => apply_filters( 'generate_mobile_media_query', '(max-width:768px)' ),
-			'tablet' => apply_filters( 'generate_tablet_media_query', '(min-width: 769px) and (max-width: 1024px)' ),
-			'desktop' => apply_filters( 'generate_desktop_media_query', '(min-width:1025px)' ),
+			'mobile' => generate_premium_get_media_query( 'mobile' ),
+			'tablet' => generate_premium_get_media_query( 'tablet' ),
+			'desktop' => generate_premium_get_media_query( 'desktop' ),
 		) );
 	}
 }
@@ -183,7 +183,7 @@ if ( ! function_exists( 'generate_spacing_premium_css' ) ) {
 		$premium_css = new GeneratePress_Pro_CSS;
 
 		// Mobile spacing
-		$premium_css->start_media_query( apply_filters( 'generate_mobile_menu_media_query', '(max-width:768px)' ) );
+		$premium_css->start_media_query( generate_premium_get_media_query( 'mobile-menu' ) );
 
 			if ( '' !== $spacing_settings[ 'mobile_menu_item' ] ) {
 				$premium_css->set_selector( '.menu-toggle,.main-navigation .mobile-bar-items a' );
@@ -201,7 +201,7 @@ if ( ! function_exists( 'generate_spacing_premium_css' ) ) {
 
 		$premium_css->stop_media_query();
 
-		$premium_css->start_media_query( apply_filters( 'generate_mobile_media_query', '(max-width:768px)' ) );
+		$premium_css->start_media_query( generate_premium_get_media_query( 'mobile' ) );
 
 			$premium_css->set_selector( '.inside-header' );
 
@@ -272,7 +272,7 @@ if ( ! function_exists( 'generate_spacing_premium_css' ) ) {
 			);
 
 			if ( 'false' !== $menu_plus[ 'sticky_menu' ] && '' !== $spacing_settings[ 'sticky_menu_item_height' ] ) {
-				$premium_css->start_media_query( apply_filters( 'generate_tablet_media_query', '(min-width: 769px) and (max-width: 1024px)' ) . ',' . apply_filters( 'generate_desktop_media_query', '(min-width:1025px)' ) );
+				$premium_css->start_media_query( generate_premium_get_media_query( 'tablet' ) . ',' . generate_premium_get_media_query( 'desktop' ) );
 
 					$premium_css->set_selector( '.main-navigation.sticky-navigation-transition .main-nav > ul > li > a,.sticky-navigation-transition .menu-toggle,.main-navigation.sticky-navigation-transition .mobile-bar-items a, .sticky-navigation-transition .navigation-branding .main-title' );
 					$premium_css->add_property( 'line-height', absint( $spacing_settings[ 'sticky_menu_item_height' ] ), false, 'px' );

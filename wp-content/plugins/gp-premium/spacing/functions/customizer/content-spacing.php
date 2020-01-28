@@ -210,7 +210,7 @@ $wp_customize->add_control(
 		'generate_spacing_settings[content_element_separator]',
 		array(
 			'label' => __( 'Content Separator', 'gp-premium' ),
-			'description' => __( 'The space between the featured image, title, content and entry meta.', 'gp-premium' ),
+			'sub_description' => __( 'The content separator controls the space between the featured image, title, content and entry meta.', 'gp-premium' ),
 			'section' => $content_section,
 			'settings' => array(
 				'desktop' => 'generate_spacing_settings[content_element_separator]',

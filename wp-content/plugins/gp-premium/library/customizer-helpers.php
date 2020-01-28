@@ -32,8 +32,17 @@ add_action( 'customize_controls_enqueue_scripts', 'generate_premium_control_inli
  */
 function generate_premium_control_inline_scripts() {
 	if ( function_exists( 'generate_typography_default_fonts' ) ) {
+		$number_of_fonts = apply_filters( 'generate_number_of_fonts', 200 );
+
 		wp_localize_script( 'generatepress-pro-typography-customizer', 'gp_customize', array( 'nonce' => wp_create_nonce( 'gp_customize_nonce' ) ) );
 		wp_localize_script( 'generatepress-pro-typography-customizer', 'typography_defaults', generate_typography_default_fonts() );
+		wp_localize_script(
+			'generatepress-pro-typography-customizer',
+			'generatePressTypography',
+			array(
+				'googleFonts' => apply_filters( 'generate_typography_customize_list', generate_get_all_google_fonts( $number_of_fonts ) )
+			)
+		);
 	}
 
 	wp_enqueue_script( 'generatepress-pro-customizer-controls', plugin_dir_url( __FILE__ )  . 'customizer/controls/js/generatepress-controls.js', array( 'customize-controls', 'jquery' ), GP_PREMIUM_VERSION, true );
@@ -204,4 +213,37 @@ function generate_premium_customizer_shortcut_controls( $wp_customize ) {
 			)
 		)
 	);
+}
+
+add_action( 'customize_controls_print_styles', 'generate_premium_customize_print_styles' );
+/**
+ * Print control styles for the Customizer.
+ *
+ * @since 1.9
+ */
+function generate_premium_customize_print_styles() {
+	$sizes = apply_filters( 'generate_customizer_device_preview_sizes', array(
+		'tablet' => 900,
+		'mobile' => 640,
+	) );
+    ?>
+	    <style>
+			.wp-customizer .preview-tablet .wp-full-overlay-main {
+				width: <?php echo absint( $sizes['tablet'] ); ?>px;
+				margin: 0 auto;
+				left: 50%;
+				-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+			}
+
+			.wp-customizer .preview-mobile .wp-full-overlay-main {
+				width: <?php echo absint( $sizes['mobile'] ); ?>px;
+				margin: 0 auto;
+				left: 50%;
+				-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+				height: 100%;
+			}
+	    </style>
+    <?php
 }

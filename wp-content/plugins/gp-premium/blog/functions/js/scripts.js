@@ -47,7 +47,7 @@ jQuery( document ).ready( function( $ ) {
 		} );
 
 		$button.on( 'click', function( e ) {
-			$( this ).html( blog.loading ).addClass( 'loading' );
+			$( this ).html( blog.icon + blog.loading ).addClass( 'loading' );
 		} );
 
 		$container.on( 'append.infiniteScroll', function( event, response, path, items ) {
@@ -65,7 +65,7 @@ jQuery( document ).ready( function( $ ) {
 				} );
 			}
 
-			$button.html( blog.more ).removeClass( 'loading' );
+			$button.html( blog.icon + blog.more ).removeClass( 'loading' );
 		} );
 
 		$container.on( 'last.infiniteScroll', function() {

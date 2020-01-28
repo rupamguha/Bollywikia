@@ -198,3 +198,7 @@ input#generate-select-all,
 .license-key-message.not-receiving-updates {
 	color: red;
 }
+
+.mass-activate-select {
+	margin-top: 0;
+}

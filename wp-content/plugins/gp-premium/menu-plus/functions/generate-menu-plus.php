@@ -33,6 +33,7 @@ if ( ! function_exists( 'generate_menu_plus_get_defaults' ) ) {
 			'mobile_header_sticky' => 'disable',
 			'mobile_header_branding' => 'logo',
 			'slideout_menu' => 'false',
+			'off_canvas_desktop_toggle_label' => '',
 			'slideout_menu_side' => 'left',
 			'slideout_menu_style' => 'slide',
 			'slideout_close_button' => 'outside',
@@ -594,6 +595,24 @@ if ( ! function_exists( 'generate_menu_plus_customize_register' ) ) {
 		);
 
 		$wp_customize->add_setting(
+			'generate_menu_plus_settings[off_canvas_desktop_toggle_label]',
+			array(
+				'default' => $defaults['off_canvas_desktop_toggle_label'],
+				'type' => 'option',
+				'sanitize_callback' => 'wp_kses_post'
+			)
+		);
+
+		$wp_customize->add_control(
+			'generate_menu_plus_settings[off_canvas_desktop_toggle_label]', array(
+				'label' => esc_html__( 'Desktop Toggle Label', 'gp-premium' ),
+				'section' => 'menu_plus_slideout_menu',
+				'settings' => 'generate_menu_plus_settings[off_canvas_desktop_toggle_label]',
+				'active_callback' => 'generate_slideout_navigation_activated',
+			)
+		);
+
+		$wp_customize->add_setting(
 			'generate_menu_plus_settings[slideout_menu_style]',
 			array(
 				'default' => $defaults['slideout_menu_style'],
@@ -704,7 +723,18 @@ if ( ! function_exists( 'generate_menu_plus_enqueue_css' ) ) {
 		if ( 'false' !== $settings['slideout_menu'] ) {
 			wp_enqueue_style( 'generate-offside', plugin_dir_url( __FILE__ ) . "css/offside{$suffix}.css", array(), GENERATE_MENU_PLUS_VERSION );
 			wp_add_inline_style( 'generate-offside', generate_do_off_canvas_css() );
-			wp_enqueue_style( 'gp-premium-icons' );
+
+			$font_icons = true;
+
+			if ( function_exists( 'generate_get_option' ) ) {
+				if ( 'font' !== generate_get_option( 'icons' ) ) {
+					$font_icons = false;
+				}
+			}
+
+			if ( $font_icons ) {
+				wp_enqueue_style( 'gp-premium-icons' );
+			}
 		}
 
 		// Add regular menu logo styling
@@ -827,6 +857,10 @@ if ( ! function_exists( 'generate_menu_plus_inline_css' ) ) {
 
 		if ( 'false' !== $generate_menu_plus_settings['sticky_menu'] ) {
 			$return .= '.main-navigation .main-nav ul li a,.menu-toggle,.main-navigation .mobile-bar-items a{transition: line-height 300ms ease}';
+
+			if ( class_exists( 'FLBuilderModel' ) ) {
+				$return .= '.fl-builder-edit .navigation-stick {z-index: 10 !important;}';
+			}
 		}
 
 		if ( function_exists( 'generate_get_color_defaults' ) ) {
@@ -889,18 +923,44 @@ if ( ! function_exists( 'generate_menu_plus_mobile_header' ) ) {
 		?>
 		<nav id="mobile-header"<?php echo $hide_sticky;?> class="<?php echo $classes; ?>" <?php echo $microdata; ?>>
 			<div class="inside-navigation grid-container grid-parent">
-				<?php do_action( 'generate_inside_mobile_header' ); ?>
-				<button class="menu-toggle" aria-controls="mobile-menu" aria-expanded="false">
-					<?php
-					do_action( 'generate_inside_mobile_header_menu' );
-
-					if ( function_exists( 'generate_do_svg_icon' ) ) {
-						generate_do_svg_icon( 'menu-bars', true );
-					}
-					?>
-					<span class="mobile-menu"><?php echo apply_filters('generate_mobile_menu_label', __( 'Menu', 'generatepress' ) ); ?></span>
-				</button>
 				<?php
+				do_action( 'generate_inside_mobile_header' );
+
+				// Remove the menu toggle if it's disabled using Disable Elements.
+				$disable_navigation = false;
+
+				if ( is_singular() ) {
+					$disable_navigation = get_post_meta( get_the_ID(), '_generate-disable-nav', true );
+				}
+
+				if ( ! $disable_navigation ) :
+					?>
+					<button class="menu-toggle" aria-controls="mobile-menu" aria-expanded="false">
+						<?php
+						do_action( 'generate_inside_mobile_header_menu' );
+
+						if ( function_exists( 'generate_do_svg_icon' ) ) {
+							generate_do_svg_icon( 'menu-bars', true );
+						}
+
+						$mobile_menu_label = apply_filters( 'generate_mobile_menu_label', __( 'Menu', 'gp-premium' ) );
+
+						if ( $mobile_menu_label ) {
+							printf(
+								'<span class="mobile-menu">%s</span>',
+								$mobile_menu_label
+							);
+						} else {
+							printf(
+								'<span class="screen-reader-text">%s</span>',
+								__( 'Menu', 'gp-premium' )
+							);
+						}
+						?>
+					</button>
+					<?php
+				endif;
+
 				wp_nav_menu(
 					array(
 						'theme_location' => apply_filters( 'generate_mobile_header_theme_location', 'primary' ),
@@ -969,10 +1029,17 @@ if ( ! function_exists( 'generate_slideout_navigation' ) ) {
 			</div><!-- .inside-navigation -->
 		</nav><!-- #site-navigation -->
 
-		<?php if ( 'slide' === $settings['slideout_menu_style'] ) : ?>
+		<?php if ( 'slide' === $settings['slideout_menu_style'] ) :
+			$svg_icon = '';
+
+			if ( function_exists( 'generate_get_svg_icon' ) ) {
+				$svg_icon = generate_get_svg_icon( 'pro-close' );
+			}
+			?>
 			<div class="slideout-overlay">
 				<?php if ( 'outside' === $settings['slideout_close_button'] && 'slide' === $settings['slideout_menu_style'] ) : ?>
-					<button class="slideout-exit">
+					<button class="slideout-exit <?php echo $svg_icon ? 'has-svg-icon' : ''; ?>">
+						<?php echo $svg_icon; ?>
 						<span class="screen-reader-text"><?php esc_attr_e( 'Close', 'gp-premium' ); ?></span>
 					</button>
 				<?php endif; ?>
@@ -1129,13 +1196,24 @@ if ( ! function_exists( 'generate_menu_plus_slidebar_icon' ) ) {
 		}
 
 		// If our primary menu is set, add the search icon
-	    if ( 'primary' === $args->theme_location ) {
-	        return $nav . '<li class="slideout-toggle menu-item-align-right"><a href="#"></a></li>';
+		if ( 'primary' === $args->theme_location ) {
+			$svg_icon = '';
+
+			if ( function_exists( 'generate_get_svg_icon' ) ) {
+				$svg_icon = generate_get_svg_icon( 'pro-menu-bars' );
+			}
+
+			$icon = apply_filters( 'generate_off_canvas_toggle_output', sprintf(
+				'<li class="slideout-toggle menu-item-align-right %2$s"><a href="#">%1$s%3$s</a></li>',
+				$svg_icon,
+				$svg_icon ? 'has-svg-icon' : '',
+				'' !== $settings['off_canvas_desktop_toggle_label'] ? '<span class="off-canvas-toggle-label">' . wp_kses_post( $settings['off_canvas_desktop_toggle_label'] ) . '</span>' : ''
+			) );
+
+			return $nav . $icon;
 		}
 
-		// Our primary menu isn't set, return the regular nav
-		// In this case, the search icon is added to the generate_menu_fallback() function in navigation.php
-	    return $nav;
+		return $nav;
 	}
 }
 
@@ -1322,7 +1400,7 @@ function generate_do_off_canvas_css() {
 	}
 
 	if ( '' !== $settings[ 'slideout_mobile_font_size' ] ) {
-		$css->start_media_query( apply_filters( 'generate_mobile_media_query', '(max-width:768px)' ) );
+		$css->start_media_query( generate_premium_get_media_query( 'mobile' ) );
 			$css->set_selector( '.slideout-navigation.main-navigation .main-nav ul li a' );
 			$css->add_property( 'font-size', absint( $settings[ 'slideout_mobile_font_size' ] ), false, 'px' );
 
@@ -1377,7 +1455,7 @@ function generate_do_off_canvas_css() {
 		$css->add_property( 'padding-right', absint( $spacing_settings['menu_item'] ), false, 'px' );
 
 		if ( ! empty( $settings[ 'mobile_menu_item' ] ) ) {
-			$css->start_media_query( apply_filters( 'generate_mobile_media_query', '(max-width:768px)' ) );
+			$css->start_media_query( generate_premium_get_media_query( 'mobile' ) );
 				$css->set_selector( '.slideout-navigation button.slideout-exit' );
 
 				$css->add_property( 'padding-left', absint( $spacing_settings['mobile_menu_item'] ), false, 'px' );
@@ -1423,14 +1501,12 @@ function generate_do_nav_branding_css() {
 		generate_menu_plus_get_defaults()
 	);
 
-	$mobile_menu_query = apply_filters( 'generate_mobile_menu_media_query', '(max-width: 768px)' );
-
 	// Initiate our CSS class
 	require_once GP_LIBRARY_DIRECTORY . 'class-make-css.php';
 	$css = new GeneratePress_Pro_CSS;
 
 	if ( 'enable' === $menu_plus_settings['mobile_header'] ) {
-		$css->start_media_query( $mobile_menu_query );
+		$css->start_media_query( generate_premium_get_media_query( 'mobile-menu' ) );
 			$css->set_selector( '.site-header, #site-navigation, #sticky-navigation' );
 			$css->add_property( 'display', 'none !important' );
 			$css->add_property( 'opacity', '0.0' );
@@ -1502,7 +1578,7 @@ function generate_do_nav_branding_css() {
 		$css->add_property( 'margin-left', '10px' );
 	$css->stop_media_query();
 
-	$css->start_media_query( $mobile_menu_query );
+	$css->start_media_query( generate_premium_get_media_query( 'mobile-menu' ) );
 		$css->set_selector( '.main-navigation:not(.slideout-navigation) .main-nav' );
 		$css->add_property( '-webkit-box-flex', '0' );
 		$css->add_property( '-ms-flex', '0 0 100%' );
@@ -1543,7 +1619,7 @@ function generate_do_mobile_navigation_logo_css() {
 	require_once GP_LIBRARY_DIRECTORY . 'class-make-css.php';
 	$css = new GeneratePress_Pro_CSS;
 
-	$css->start_media_query( apply_filters( 'generate_mobile_menu_media_query', '(max-width: 768px)' ) );
+	$css->start_media_query( generate_premium_get_media_query( 'mobile-menu' ) );
 		// Sticky & Sticky + Static logo.
 		$css->set_selector( '.sticky-menu-logo .navigation-stick:not(.mobile-header-navigation) .menu-toggle,.menu-logo .main-navigation:not(.mobile-header-navigation) .menu-toggle' );
 		$css->add_property( 'display', 'inline-block' );
@@ -1590,9 +1666,17 @@ function generate_do_slideout_menu_close_button() {
 	);
 
 	if ( 'inside' === $settings['slideout_close_button'] || 'overlay' === $settings['slideout_menu_style'] ) {
+		$svg_icon = '';
+
+		if ( function_exists( 'generate_get_svg_icon' ) ) {
+			$svg_icon = generate_get_svg_icon( 'pro-close' );
+		}
+
 		echo apply_filters( 'generate_close_slideout_navigation_button', sprintf(
-			'<button class="slideout-exit"><span class="screen-reader-text">%s</span></button>',
-			esc_html__( 'Close', 'gp-premium' )
+			'<button class="slideout-exit %3$s">%1$s <span class="screen-reader-text">%2$s</span></button>',
+			$svg_icon,
+			esc_html__( 'Close', 'gp-premium' ),
+			$svg_icon ? 'has-svg-icon' : ''
 		) );
 	}
 }
@@ -1696,7 +1780,7 @@ function generate_do_navigation_branding() {
 		$sticky_logo = apply_filters( 'generate_sticky_navigation_logo_output', sprintf(
 			'<div class="sticky-navigation-logo">
 				<a href="%1$s" title="%2$s" rel="home">
-					<img src="%3$s" />
+					<img src="%3$s" alt="%2$s" />
 				</a>
 			</div>',
 			esc_url( apply_filters( 'generate_logo_href' , home_url( '/' ) ) ),
@@ -1775,6 +1859,37 @@ function generate_set_mobile_menu_breakpoint( $breakpoint ) {
 
 	if ( '' !== $mobile_menu_breakpoint ) {
 	 	return '(max-width: ' . absint( $mobile_menu_breakpoint ) . 'px)';
+	}
+
+	return $breakpoint;
+}
+
+add_filter( 'generate_not_mobile_menu_media_query', 'generate_set_not_mobile_menu_breakpoint' );
+/**
+ * Set the breakpoint when the mobile menu doesn't apply.
+ *
+ * @since 1.8.3
+ *
+ * @param string
+ * @return string
+ */
+function generate_set_not_mobile_menu_breakpoint( $breakpoint ) {
+	$settings = wp_parse_args(
+		get_option( 'generate_menu_plus_settings', array() ),
+		generate_menu_plus_get_defaults()
+	);
+
+	// This setting shouldn't apply if the mobile header isn't on and we're using GP < 2.3.
+	if ( defined( 'GENERATE_VERSION' ) && version_compare( GENERATE_VERSION, '2.3-alpha.1', '<' ) ) {
+		if ( 'enable' !== $settings['mobile_header'] ) {
+			return $breakpoint;
+		}
+	}
+
+	$mobile_menu_breakpoint = $settings['mobile_menu_breakpoint'];
+
+	if ( '' !== $mobile_menu_breakpoint && is_int( $mobile_menu_breakpoint ) ) {
+		return '(min-width: ' . ( absint( $mobile_menu_breakpoint ) + 1 ) . 'px)';
 	}
 
 	return $breakpoint;

@@ -1,11 +1,19 @@
-.generatepress-font-weight,
-.generatepress-font-transform {
-    float: left;
-    width: 50%
+.generatepress-font-family {
+    margin-bottom: 12px;
 }
 
-.generatepress-font-weight select {
-    border-right: 0;
+.generatepress-weight-transform-wrapper {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.generatepress-font-weight,
+.generatepress-font-transform {
+    width: calc(50% - 5px);
 }
 
 span.select2-container.select2-container--default.select2-container--open li.select2-results__option {
@@ -36,10 +44,21 @@ span.select2-container.select2-container--default.select2-container--open{
 	display: none;
 }
 
+#customize-control-single_content_title_control,
 #customize-control-font_heading_2_control,
+#customize-control-archive_content_title_control,
 #customize-control-font_heading_3_control,
 #customize-control-font_heading_4_control,
 #customize-control-font_heading_5_control,
 #customize-control-font_heading_6_control {
 	margin-top: 20px;
+}
+
+.generatepress-weight-transform-wrapper select option[value=""] {
+	display: none;
+}
+
+#customize-control-single_content_title_control .generatepress-weight-transform-wrapper select option[value=""],
+#customize-control-archive_content_title_control .generatepress-weight-transform-wrapper select option[value=""] {
+	display: block;
 }

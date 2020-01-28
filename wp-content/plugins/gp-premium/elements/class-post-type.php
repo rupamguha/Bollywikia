@@ -254,7 +254,7 @@ class GeneratePress_Elements_Post_Type {
 			'themes.php',
 			esc_html__( 'Elements', 'gp-premium' ),
 			esc_html__( 'Elements', 'gp-premium' ),
-			'manage_options',
+			apply_filters( 'generate_elements_admin_menu_capability', 'manage_options' ),
 			'edit.php?post_type=gp_elements'
 		);
 	}

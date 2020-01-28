@@ -21,10 +21,8 @@ class GeneratePress_Pro_Typography_Customize_Control extends WP_Customize_Contro
 	public function to_json() {
 		parent::to_json();
 
-		$number_of_fonts = apply_filters( 'generate_number_of_fonts', 200 );
 		$this->json[ 'default_fonts_title'] = __( 'System Fonts', 'gp-premium' );
 		$this->json[ 'google_fonts_title'] = __( 'Google Fonts', 'gp-premium' );
-		$this->json[ 'google_fonts' ] = apply_filters( 'generate_typography_customize_list', generate_get_all_google_fonts( $number_of_fonts ) );
 		$this->json[ 'default_fonts' ] = generate_typography_default_fonts();
 		$this->json[ 'family_title' ] = esc_html__( 'Font family', 'gp-premium' );
 		$this->json[ 'weight_title' ] = esc_html__( 'Font weight', 'gp-premium' );
@@ -66,8 +64,8 @@ class GeneratePress_Pro_Typography_Customize_Control extends WP_Customize_Contro
 							<# } #>
 						</optgroup>
 						<optgroup label="{{ data.google_fonts_title }}">
-							<# for ( var key in data.google_fonts ) { #>
-								<option value="{{ data.google_fonts[ key ].name }}"  <# if ( data.google_fonts[ key ].name === data.family.value ) { #>selected="selected"<# } #>>{{ data.google_fonts[ key ].name }}</option>
+							<# for ( var key in generatePressTypography.googleFonts ) { #>
+								<option value="{{ generatePressTypography.googleFonts[ key ].name }}"  <# if ( generatePressTypography.googleFonts[ key ].name === data.family.value ) { #>selected="selected"<# } #>>{{ generatePressTypography.googleFonts[ key ].name }}</option>
 							<# } #>
 						</optgroup>
 					</select>
@@ -81,7 +79,7 @@ class GeneratePress_Pro_Typography_Customize_Control extends WP_Customize_Contro
 		<# if ( 'undefined' !== typeof ( data.variant ) ) { #>
 			<#
 			var id = data.family.value.split(' ').join('_').toLowerCase();
-			var font_data = data.google_fonts[id];
+			var font_data = generatePressTypography.googleFonts[id];
 			var variants = '';
 			if ( typeof font_data !== 'undefined' ) {
 				variants = font_data.variants;
@@ -117,48 +115,51 @@ class GeneratePress_Pro_Typography_Customize_Control extends WP_Customize_Contro
 			</div>
 		<# } #>
 
-		<# if ( 'undefined' !== typeof ( data.weight ) ) { #>
-			<div class="generatepress-font-weight">
-				<label>
-					<select {{{ data.weight.link }}}>
+		<div class="generatepress-weight-transform-wrapper">
+			<# if ( 'undefined' !== typeof ( data.weight ) ) { #>
+				<div class="generatepress-font-weight">
+					<label>
+						<select {{{ data.weight.link }}}>
 
-						<# _.each( data.weight.choices, function( label, choice ) { #>
+							<# _.each( data.weight.choices, function( label, choice ) { #>
 
-							<option value="{{ choice }}" <# if ( choice === data.weight.value ) { #> selected="selected" <# } #>>{{ label }}</option>
+								<option value="{{ choice }}" <# if ( choice === data.weight.value ) { #> selected="selected" <# } #>>{{ label }}</option>
 
-						<# } ) #>
+							<# } ) #>
 
-					</select>
-					<# if ( '' !== data.weight_title ) { #>
-						<p class="description">{{ data.weight_title }}</p>
-					<# } #>
-				</label>
-			</div>
-		<# } #>
+						</select>
+						<# if ( '' !== data.weight_title ) { #>
+							<p class="description">{{ data.weight_title }}</p>
+						<# } #>
+					</label>
+				</div>
+			<# } #>
 
-		<# if ( 'undefined' !== typeof ( data.transform ) ) { #>
-			<div class="generatepress-font-transform">
-				<label>
-					<select {{{ data.transform.link }}}>
+			<# if ( 'undefined' !== typeof ( data.transform ) ) { #>
+				<div class="generatepress-font-transform">
+					<label>
+						<select {{{ data.transform.link }}}>
 
-						<# _.each( data.transform.choices, function( label, choice ) { #>
+							<# _.each( data.transform.choices, function( label, choice ) { #>
 
-							<option value="{{ choice }}" <# if ( choice === data.transform.value ) { #> selected="selected" <# } #>>{{ label }}</option>
+								<option value="{{ choice }}" <# if ( choice === data.transform.value ) { #> selected="selected" <# } #>>{{ label }}</option>
 
-						<# } ) #>
+							<# } ) #>
 
-					</select>
-					<# if ( '' !== data.transform_title ) { #>
-						<p class="description">{{ data.transform_title }}</p>
-					<# } #>
-				</label>
-			</div>
-		<# } #>
+						</select>
+						<# if ( '' !== data.transform_title ) { #>
+							<p class="description">{{ data.transform_title }}</p>
+						<# } #>
+					</label>
+				</div>
+			<# } #>
+		</div>
 		<?php
 	}
 
 	public function get_font_weight_choices() {
 		return array(
+			'' => esc_html__( 'inherit', 'gp-premium' ),
 			'normal' => esc_html__( 'normal', 'gp-premium' ),
 			'bold' => esc_html__( 'bold', 'gp-premium' ),
 			'100' => esc_html( '100' ),
@@ -175,6 +176,7 @@ class GeneratePress_Pro_Typography_Customize_Control extends WP_Customize_Contro
 
 	public function get_font_transform_choices() {
 		return array(
+			'' => esc_html__( 'inherit', 'gp-premium' ),
 			'none' => esc_html__( 'none', 'gp-premium' ),
 			'capitalize' => esc_html__( 'capitalize', 'gp-premium' ),
 			'uppercase' => esc_html__( 'uppercase', 'gp-premium' ),

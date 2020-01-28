@@ -228,17 +228,19 @@ button.slideout-exit:hover {
 	width: 100%;
 }
 
-.slideout-toggle a:before {
+.slideout-toggle:not(.has-svg-icon) a:before {
 	content: "\f0c9";
 	font-family: 'GP Premium';
 	line-height: 1em;
 	width: 1.28571429em;
 	text-align: center;
 	display: inline-block;
+	position: relative;
+	top: 1px;
 }
 
-.slide-opened .slideout-exit:before,
-.slideout-navigation button.slideout-exit:before {
+.slide-opened .slideout-exit:not(.has-svg-icon):before,
+.slideout-navigation button.slideout-exit:not(.has-svg-icon):before {
 	content: "\f00d";
 	font-family: 'GP Premium';
 	line-height: 1em;
@@ -374,6 +376,14 @@ button.slideout-exit:hover {
 	float: none;
 }
 
+.off-canvas-toggle-label {
+	padding-left: 7px;
+}
+
+.gp-icon + .off-canvas-toggle-label {
+	padding-left: 9px;
+}
+
 @media (max-width: 768px) {
 	.slideout-overlay button.slideout-exit {
 		font-size: 20px;
@@ -387,7 +397,8 @@ button.slideout-exit:hover {
 		min-height: calc(100% + 100px); /* Safari */
 	}
 
-    .slideout-navigation.do-overlay .slideout-exit {
-        position: static;
-    }
+	.slideout-navigation.do-overlay .slideout-exit {
+		position: static;
+		text-align: center;
+	}
 }

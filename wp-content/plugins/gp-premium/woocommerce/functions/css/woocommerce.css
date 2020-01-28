@@ -81,7 +81,7 @@
 }
 
 .woocommerce div.product div.images .flex-control-thumbs li {
-	max-width: 150px;
+	max-width: 100px;
 	padding-top: 5px;
 	padding-right: 5px;
 	-webkit-box-sizing: border-box;
@@ -126,6 +126,7 @@
     font-weight: 500;
     padding: 10px 40px 10px 12px;
     -webkit-appearance: none;
+	-moz-appearance: none;
     width: 100%;
 	background: transparent;
 	border-color: rgba(0,0,0,0.1);
@@ -357,7 +358,8 @@ body:not(.using-mouse) .wc-menu-item.sfHover .wc-mini-cart {
     border-style: solid;
     border-radius: 50%;
     padding: 0;
-    line-height: 20px;
+	font-size: 16px;
+    line-height: 17px;
 	font-weight: normal;
 	position: relative;
 	float: right;
@@ -713,22 +715,17 @@ nav span.count {
 # Cart
 --------------------------------------------------------------*/
 
-.woocommerce a.remove:before {
-    font-family: "GP Premium";
-    content: "\f00d";
-    font-size: 11px;
-}
-
 .woocommerce a.remove {
     color: inherit !important;
     background: transparent !important;
     border: 1px solid !important;
     border-color: inherit;
     font-weight: normal;
-	font-size: 0 !important;
+	font-size: 16px;
     width: 20px;
     height: 20px;
-	line-height: 20px;
+	line-height: 17px;
+	font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
 }
 
 .woocommerce a.remove:hover {
@@ -1149,8 +1146,8 @@ h2.woocommerce-loop-category__title mark {
     line-height: 1.5;
 }
 
-.main-navigation a.cart-contents:before,
-.secondary-navigation a.cart-contents:before {
+.main-navigation a.cart-contents:not(.has-svg-icon):before,
+.secondary-navigation a.cart-contents:not(.has-svg-icon):before {
 	content: "\f07a";
 	display: inline-block;
     font-family: "GP Premium";
@@ -1164,13 +1161,13 @@ h2.woocommerce-loop-category__title mark {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.main-navigation a.cart-contents.shopping-bag:before,
-.secondary-navigation a.cart-contents.shopping-bag:before {
+.main-navigation a.cart-contents:not(.has-svg-icon).shopping-bag:before,
+.secondary-navigation a.cart-contents:not(.has-svg-icon).shopping-bag:before {
 	content: "\f290";
 }
 
-.main-navigation a.cart-contents.shopping-basket:before,
-.secondary-navigation a.cart-contents.shopping-basket:before {
+.main-navigation a.cart-contents:not(.has-svg-icon).shopping-basket:before,
+.secondary-navigation a.cart-contents:not(.has-svg-icon).shopping-basket:before {
 	content: "\f291";
 }
 

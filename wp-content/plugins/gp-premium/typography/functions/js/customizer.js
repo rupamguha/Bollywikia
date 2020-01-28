@@ -26,6 +26,22 @@ function gp_premium_typography_live_update( id, selector, property, unit, media,
 				newval = wp.customize('generate_settings[body_font_size]').get();
 			}
 
+			if ( 'single_post_title_weight' == id && '' == wp.customize('generate_settings[single_post_title_weight]').get() ) {
+				newval = wp.customize('generate_settings[heading_1_weight]').get();
+			}
+
+			if ( 'single_post_title_transform' == id && '' == wp.customize('generate_settings[single_post_title_transform]').get() ) {
+				newval = wp.customize('generate_settings[heading_1_transform]').get();
+			}
+
+			if ( 'archive_post_title_weight' == id && '' == wp.customize('generate_settings[archive_post_title_weight]').get() ) {
+				newval = wp.customize('generate_settings[heading_2_weight]').get();
+			}
+
+			if ( 'archive_post_title_transform' == id && '' == wp.customize('generate_settings[archive_post_title_transform]').get() ) {
+				newval = wp.customize('generate_settings[heading_2_transform]').get();
+			}
+
 			// We're using a desktop value
 			if ( ! isTablet && ! isMobile ) {
 
@@ -82,6 +98,7 @@ gp_premium_typography_live_update( 'top_bar_font_transform', '.top-bar', 'text-t
  * Site title font size, weight and transform
  */
 gp_premium_typography_live_update( 'site_title_font_size', '.main-title, .navigation-branding .main-title', 'font-size', 'px', gp_typography.desktop );
+gp_premium_typography_live_update( 'tablet_site_title_font_size', '.main-title, .navigation-branding .main-title', 'font-size', 'px', gp_typography.tablet );
 gp_premium_typography_live_update( 'mobile_site_title_font_size', '.main-title, .navigation-branding .main-title', 'font-size', 'px', gp_typography.mobile );
 gp_premium_typography_live_update( 'site_title_font_weight', '.main-title, .navigation-branding .main-title', 'font-weight' );
 gp_premium_typography_live_update( 'site_title_font_transform', '.main-title, .navigation-branding .main-title', 'text-transform' );
@@ -97,7 +114,7 @@ gp_premium_typography_live_update( 'site_tagline_font_transform', '.site-descrip
  * Main navigation font size, weight and transform
  */
 gp_premium_typography_live_update( 'navigation_font_size', '.main-navigation a, .menu-toggle', 'font-size', 'px', gp_typography.desktop );
-//gp_premium_typography_live_update( 'tablet_navigation_font_size', '.main-navigation a, .menu-toggle', 'font-size', 'px', gp_typography.tablet );
+gp_premium_typography_live_update( 'tablet_navigation_font_size', '.main-navigation a, .menu-toggle', 'font-size', 'px', gp_typography.tablet );
 gp_premium_typography_live_update( 'mobile_navigation_font_size', '.main-navigation:not(.slideout-navigation) a, .menu-toggle', 'font-size', 'px', gp_typography.mobile );
 gp_premium_typography_live_update( 'navigation_font_weight', '.main-navigation a, .menu-toggle', 'font-weight' );
 gp_premium_typography_live_update( 'navigation_font_transform', '.main-navigation a, .menu-toggle', 'text-transform' );
@@ -106,6 +123,7 @@ gp_premium_typography_live_update( 'navigation_font_transform', '.main-navigatio
  * Site title when in navigation.
  */
  gp_premium_typography_live_update( 'navigation_site_title_font_size', '.navigation-branding .main-title', 'font-size', 'px', gp_typography.desktop );
+ gp_premium_typography_live_update( 'tablet_navigation_site_title_font_size', '.navigation-branding .main-title', 'font-size', 'px', gp_typography.tablet );
  gp_premium_typography_live_update( 'mobile_navigation_site_title_font_size', '.navigation-branding .main-title', 'font-size', 'px', gp_typography.mobile );
 
 /**
@@ -133,6 +151,15 @@ gp_premium_typography_live_update( 'heading_1_line_height', 'h1', 'line-height',
 gp_premium_typography_live_update( 'heading_1_margin_bottom', 'h1', 'margin-bottom', 'px' );
 
 /**
+ * Single content title (h1)
+ */
+gp_premium_typography_live_update( 'single_post_title_font_size', 'h1.entry-title', 'font-size', 'px', gp_typography.desktop );
+gp_premium_typography_live_update( 'single_post_title_font_size_mobile', 'h1.entry-title', 'font-size', 'px', gp_typography.mobile );
+gp_premium_typography_live_update( 'single_post_title_weight', 'h1.entry-title', 'font-weight' );
+gp_premium_typography_live_update( 'single_post_title_transform', 'h1.entry-title', 'text-transform' );
+gp_premium_typography_live_update( 'single_post_title_line_height', 'h1.entry-title', 'line-height', 'em' );
+
+/**
  * H2 font size, weight and transform
  */
 gp_premium_typography_live_update( 'heading_2_font_size', 'h2', 'font-size', 'px', gp_typography.desktop );
@@ -141,6 +168,15 @@ gp_premium_typography_live_update( 'heading_2_weight', 'h2', 'font-weight' );
 gp_premium_typography_live_update( 'heading_2_transform', 'h2', 'text-transform' );
 gp_premium_typography_live_update( 'heading_2_line_height', 'h2', 'line-height', 'em' );
 gp_premium_typography_live_update( 'heading_2_margin_bottom', 'h2', 'margin-bottom', 'px' );
+
+/**
+ * Archive post title (h1)
+ */
+gp_premium_typography_live_update( 'archive_post_title_font_size', 'h2.entry-title', 'font-size', 'px', gp_typography.desktop );
+gp_premium_typography_live_update( 'archive_post_title_font_size_mobile', 'h2.entry-title', 'font-size', 'px', gp_typography.mobile );
+gp_premium_typography_live_update( 'archive_post_title_weight', 'h2.entry-title', 'font-weight' );
+gp_premium_typography_live_update( 'archive_post_title_transform', 'h2.entry-title', 'text-transform' );
+gp_premium_typography_live_update( 'archive_post_title_line_height', 'h2.entry-title', 'line-height', 'em' );
 
 /**
  * H3 font size, weight and transform
