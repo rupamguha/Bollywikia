@@ -56,8 +56,6 @@
 			} ) );
 
 			request.done( function( response ) {
-				self.set( response.data );
-
 				if ( self.isNew() ) {
 					happyForms.updateFormID( response.ID );
 				}
@@ -65,6 +63,8 @@
 				if ( happyForms.previewLoaded ) {
 					api.previewer.refresh();
 				}
+
+				self.trigger( 'save', response );
 
 				if ( options.success ) {
 					options.success( response );
@@ -77,14 +77,15 @@
 		},
 
 		changeDocumentTitle: function() {
-			var title = $( 'title' ).text();
-			var newTitle = '';
-
-			newTitle = title.replace( title.substring( 0, title.indexOf( ':' ) ), 'HappyForms' );
-			$( 'title' ).text( newTitle );
-
-			// change template
+			var formTitle = this.get( 'post_title' );
 			_wpCustomizeSettings.documentTitleTmpl = 'HappyForms: %s';
+			var titleTemplate = 'HappyForms';
+
+			if ( formTitle ) {
+				titleTemplate = titleTemplate + ': ' + formTitle;
+			}
+
+			_wpCustomizeSettings.documentTitleTmpl = titleTemplate;
 		}
 	} );
 
@@ -145,11 +146,28 @@
 		routes: {
 			'build': 'build',
 			'setup': 'setup',
+			'email': 'email',
 			'style': 'style',
 		},
 
-		steps: [ 'build', 'setup', 'style' ],
+		steps: [ 'build', 'setup', 'email', 'style' ],
 		currentRoute: 'build',
+		savedStates: {
+			'build': {
+				'scrollTop': 0,
+				'activePartIndex': -1
+			},
+			'setup': {
+				'scrollTop': 0,
+			},
+			'email': {
+				'scrollTop': 0,
+			},
+			'style': {
+				'scrollTop': 0,
+				'activeSection': ''
+			}
+		},
 		form: false,
 		previewLoaded: false,
 		buffer: [],
@@ -208,12 +226,20 @@
 				case 'build':
 					childView = new classes.views.FormBuild( { model: this.form } );
 					break;
+				case 'email':
+					childView = new classes.views.FormEmail( { model: this.form } );
+					break;
 				case 'style':
 					childView = new classes.views.FormStyle( { model: this.form } );
 					break;
 			}
 
+			this.previousRoute = this.currentRoute;
 			this.currentRoute = segment;
+
+			if ( 'style' !== this.previousRoute ) {
+				this.savedStates[this.previousRoute]['scrollTop'] = this.sidebar.$el.scrollTop();
+			}
 
 			this.sidebar.doStep( {
 				step: {
@@ -225,6 +251,8 @@
 				direction: direction,
 				child: childView,
 			} );
+
+			this.sidebar.steps.enable();
 		},
 
 		forward: function() {
@@ -376,11 +404,9 @@
 		},
 
 		render: function() {
-			this.$el.html( this.template( {} ) );
-
-			if ( this.model.isNew() ) {
-				this.enableSave();
-			}
+			this.$el.html( this.template( {
+				isNewForm: this.model.isNew()
+			} ) );
 
 			return this;
 		},
@@ -464,36 +490,35 @@
 				this.previous = this.current;
 				this.current = child;
 
-				this.current.$el.css( 'left', options.direction > 0 ? '300px': '-300px' );
-				this.current.$el.animate( {
-					left: '0px',
-				}, 200 );
-
-				this.previous.$el.animate( {
-					left: options.direction > 0 ? '-300px': '300px',
-				}, 200, $.proxy( this.onStepComplete, this, options ) );
+				this.current.$el.show();
+				this.previous.$el.hide();
+				this.onStepComplete();
 			} else {
 				this.current = child;
-				this.current.$el.css( 'left', '0px' );
+				this.current.$el.show();
 				this.steps.render( options );
 			}
 		},
 
 		onStepComplete: function( options ) {
 			this.previous.remove();
-			$( '.wp-full-overlay-sidebar-content' ).scrollTop( 0 );
 			this.steps.render( options );
+			this.$el.scrollTop( happyForms.savedStates[happyForms.currentRoute]['scrollTop'] );
 		}
 	} );
 
 	classes.views.Steps = classes.views.Base.extend( {
-		el: '#customize-footer-actions',
+		el: '#happyforms-steps-nav',
 		template: '#happyforms-form-steps-template',
 
 		events: {
-			'click .happyforms-step-previous': 'onPreviousStepClick',
-			'click .happyforms-step-next': 'onNextStepClick',
-			'click .happyforms-step-save': 'onSaveStepClick',
+			'click .nav-tab': 'onStepClick'
+		},
+
+		initialize: function() {
+			classes.views.Base.prototype.initialize.apply( this, arguments );
+
+			this.disabled = false;
 		},
 
 		render: function( options ) {
@@ -502,34 +527,29 @@
 			this.$el.show();
 		},
 
-		enable: function() {
-			$( 'button', this.$el ).removeAttr( 'disabled' );
+		onStepClick: function( e ) {
+			e.preventDefault();
+
+			if ( this.disabled ) {
+				return;
+			}
+
+			var $link = $( e.target );
+			var stepID = $link.attr( 'data-step' );
+
+			$( '.nav-tab', this.$el ).removeClass( 'nav-tab-active' );
+			$link.addClass( 'nav-tab-active' );
+
+			happyForms.navigate( stepID, { trigger: true } );
 		},
 
 		disable: function() {
-			$( 'button', this.$el ).attr( 'disabled', 'disabled' );
+			this.disabled = true;
 		},
 
-		onNextStepClick: function( e ) {
-			e.preventDefault();
-			happyForms.forward();
-		},
-
-		onPreviousStepClick: function( e ) {
-			e.preventDefault();
-			happyForms.back();
-		},
-
-		onSaveStepClick: function( e ) {
-			e.preventDefault();
-
-			this.model.save( {
-				success: function() {
-					happyForms.actions.disableSave();
-					window.location.href = $( '#happyforms-close-link' ).attr( 'href' );
-				}
-			} );
-		},
+		enable: function() {
+			this.disabled = false;
+		}
 
 	} );
 
@@ -539,6 +559,7 @@
 		events: {
 			'keyup #happyforms-form-name': 'onNameChange',
 			'click #happyforms-form-name': 'onNameInputClick',
+			'click .happyforms-add-new-part': 'onPartAddButtonClick',
 			'change #happyforms-form-name': 'onNameChange',
 			'click .expand-collapse-all': 'onExpandCollapseAllClick',
 			'global-attribute-set': 'onSetGlobalAttribute',
@@ -560,7 +581,6 @@
 			this.listenTo( this.model.get( 'parts' ), 'remove', this.onPartModelRemove );
 			this.listenTo( this.model.get( 'parts' ), 'change', this.onPartModelChange );
 			this.listenTo( this.model.get( 'parts' ), 'reset', this.onPartModelsSorted );
-			this.listenTo( this.model.get( 'parts' ), 'widget-toggle', this.onWidgetToggle );
 			this.listenTo( this.partViews, 'add', this.onPartViewAdd );
 			this.listenTo( this.partViews, 'remove', this.onPartViewRemove );
 			this.listenTo( this.partViews, 'reset', this.onPartViewsSorted );
@@ -573,41 +593,32 @@
 			return this;
 		},
 
-		onWidgetToggle: function() {
-			var $expandCollapseButton = $( '.expand-collapse-all', this.$el );
-
-			if ( 0 === $( '.happyforms-widget-expanded', this.$el ).length ) {
-				$expandCollapseButton.text($expandCollapseButton.data('expand-text')).removeClass('collapse').addClass('expand');
-			}
-
-			if ( 0 === $( '.happyforms-widget:not(.happyforms-widget-expanded)', this.$el ).length ) {
-				$expandCollapseButton.text($expandCollapseButton.data('collapse-text')).removeClass('expand').addClass('collapse');
-			}
-		},
-
 		ready: function() {
 			this.model.get( 'parts' ).each( function( partModel ) {
 				this.addViewPart( partModel );
 			}, this );
 
 			$( '.happyforms-form-widgets', this.$el ).sortable( {
-				items: '.happyforms-widget:not(.no-sortable)',
+				items: '> .happyforms-widget:not(.no-sortable)',
 				handle: '.happyforms-part-widget-top',
+				axis: 'y',
+				tolerance: 'pointer',
 
 				stop: function ( e, ui ) {
 					this.trigger( 'sort-stop', e, ui );
 				}.bind( this ),
 			} );
 
+			$( '.happyforms-widget-expanded input[data-bind=label]', this.$el ).focus();
+
 			this.drawer = new classes.views.PartsDrawer();
 			$( '.wp-full-overlay' ).append( this.drawer.render().$el );
-			$( 'body' ).addClass( 'adding-happyforms-parts' );
 
-			this.drawer.$el.animate( {
-				'left': '0px',
-			}, 200 );
-
-			$( '#happyforms-form-name', this.$el ).focus().select();
+			if ( -1 === happyForms.savedStates.build.activePartIndex ) {
+				$( '#happyforms-form-name', this.$el ).focus().select();
+			} else {
+				$( '.happyforms-widget:eq(' + happyForms.savedStates.build.activePartIndex + ')' ).addClass( 'happyforms-widget-expanded' );
+			}
 		},
 
 		onNameInputClick: function( e ) {
@@ -624,32 +635,10 @@
 			happyForms.previewSend( 'happyforms-form-title-update', value );
 		},
 
-		onExpandCollapseAllClick: function(e) {
+		onPartAddButtonClick: function( e ) {
 			e.preventDefault();
 
-			var $button = $(e.target);
-
-			this.partViews.each(function (model) {
-				if ($button.hasClass('expand')) {
-					model.get('view').trigger('widget-expand');
-				} else {
-					model.get('view').trigger('widget-collapse');
-				}
-			});
-
-			if ($button.hasClass('expand')) {
-				$button.text($button.data('collapse-text')).removeClass('expand').addClass('collapse');
-			} else {
-				$button.text($button.data('expand-text')).removeClass('collapse').addClass('expand');
-			}
-		},
-
-		showExpandCollapseButton: function() {
-			this.$el.find('.expand-collapse-all').show();
-		},
-
-		hideExpandCollapseButton: function () {
-			this.$el.find('.expand-collapse-all').hide();
+			this.drawer.toggle();
 		},
 
 		onPartAdd: function( type, options ) {
@@ -657,6 +646,8 @@
 				{ type: type },
 				{ collection: this.model.get( 'parts' ) },
 			);
+
+			this.drawer.close();
 
 			this.model.get( 'parts' ).add( partModel, options );
 			this.model.trigger( 'change', this.model );
@@ -773,17 +764,11 @@
 					scrollTop: partView.$el.position().top
 				}, 400 );
 			}
-
-			this.showExpandCollapseButton();
 		},
 
 		onPartViewRemove: function( viewModel ) {
 			var partView = viewModel.get( 'view' );
 			partView.remove();
-
-			if (!this.partViews.length) {
-				this.hideExpandCollapseButton();
-			}
 		},
 
 		onPartSortStop: function( e, ui ) {
@@ -854,14 +839,8 @@
 				this.partViews.remove( partView );
 			};
 
-			var drawer = this.drawer;
-			this.drawer.$el.animate( {
-				'left': '-300px',
-			}, 200, function() {
-				drawer.remove();
-			} );
-
-			$( 'body' ).removeClass( 'adding-happyforms-parts' );
+			this.drawer.close();
+			this.drawer.remove();
 
 			classes.views.Base.prototype.remove.apply( this, arguments );
 		},
@@ -877,14 +856,24 @@
 			'click .happyforms-clear-search': 'onClearSearchClick'
 		},
 
+		initialize: function() {
+			classes.views.Base.prototype.initialize.apply( this, arguments );
+
+			$( '.wp-full-overlay-sidebar' ).on( 'click', this.onSidebarClick.bind( this ) );
+		},
+
 		render: function() {
 			this.setElement( this.template( { parts: happyForms.parts.toJSON() } ) );
 			return this;
 		},
 
 		onListItemClick: function( e ) {
+			e.stopPropagation();
+
 			var type = $( e.currentTarget ).data( 'part-type' );
 			happyForms.trigger( 'part-add', type, { expand: true } );
+
+			this.close();
 		},
 
 		onPartSearch: function( e ) {
@@ -915,6 +904,32 @@
 
 		onClearSearchClick: function( e ) {
 			$( '#part-search', this.$el ).val( '' ).trigger( 'change' );
+		},
+
+		onSidebarClick: function( e ) {
+			e.stopPropagation();
+
+			var $element = $( e.target );
+
+			if ( $element.is( '.happyforms-add-new-part' ) ) {
+				return;
+			}
+
+			this.close();
+		},
+
+		toggle: function() {
+			this.$el.toggleClass( 'expanded' );
+			$( 'body' ).toggleClass( 'adding-happyforms-parts' );
+
+			if ( this.$el.hasClass( 'expanded') ) {
+				$( '#part-search' ).focus();
+			}
+		},
+
+		close: function() {
+			this.$el.removeClass( 'expanded' );
+			$( 'body' ).removeClass( 'adding-happyforms-parts' );
 		}
 	} );
 
@@ -950,9 +965,6 @@
 			this.listenTo( this.model, 'change:label_placement', this.onLabelPlacementChange );
 			this.listenTo( this.model, 'change:css_class', this.onCSSClassChange );
 			this.listenTo( this.model, 'change:focus_reveal_description', this.onFocusRevealDescriptionChange );
-
-			this.listenTo( this, 'widget-expand', this.expand );
-			this.listenTo( this, 'widget-collapse', this.collapse );
 
 			if ( options.expand ) {
 				this.listenTo( this, 'ready', this.expandToggle );
@@ -1059,43 +1071,22 @@
 		 */
 		expandToggle: function() {
 			var $el = this.$el;
-			var self = this;
 
-			$( '.happyforms-widget-content', this.$el ).slideToggle( function() {
-				$el.toggleClass('happyforms-widget-expanded');
+			this.closeOpenWidgets( $el );
 
-				self.model.collection.trigger('widget-toggle');
+			$( '.happyforms-widget-content', this.$el ).slideToggle( 200, function() {
+				$el.toggleClass( 'happyforms-widget-expanded' );
 			} );
+
+			happyForms.savedStates.build.activePartIndex = $el.index();
 		},
 
-		/**
-		 * Expand part view.
-		 *
-		 * @since 1.1.0.
-		 *
-		 * @return void
-		 */
-		expand: function() {
-			var $el = this.$el;
+		closeOpenWidgets: function( $currentElement ) {
+			var $openWidgets = $( '.happyforms-widget-expanded' ).not( $currentElement );
 
-			$el.find('.happyforms-widget-content').slideDown(function() {
-				$el.addClass('happyforms-widget-expanded');
-			});
-		},
-
-		/**
-		 * Collapse part view.
-		 *
-		 * @since 1.1.0.
-		 *
-		 * @return void
-		 */
-		collapse: function() {
-			var $el = this.$el;
-
-			$el.find('.happyforms-widget-content').slideUp(function () {
-				$el.removeClass('happyforms-widget-expanded');
-			});
+			$( '.happyforms-widget-content', $openWidgets ).slideUp( 200, function() {
+				$openWidgets.removeClass( 'happyforms-widget-expanded' );
+			} );
 		},
 
 		/**
@@ -1120,7 +1111,13 @@
 		onPartRemoveClick: function( e ) {
 			e.preventDefault();
 
-			this.model.collection.remove( this.model );
+			var self = this;
+
+			$( '.happyforms-widget-content', this.$el ).slideUp( 'fast', function() {
+				$( this ).removeClass( 'happyforms-widget-expanded' );
+
+				self.model.collection.remove( self.model );
+			} );
 		},
 
 		onPartDuplicateClick: function( e ) {
@@ -1233,14 +1230,6 @@
 
 			if ( $('option[value='+value+']', $select).length > 0 ) {
 				$select.val( value );
-
-				if ( ! options.skipGlobalReveal ) {
-					var $globalWrap = this.$( '.label_placement-options', this.$el );
-					// reset global checkbox
-					this.$( 'input', $globalWrap ).prop( 'checked', false );
-					// fade in the global checkbox wrapper
-					$globalWrap.fadeIn();
-				}
 
 				if ( 'as_placeholder' === value ) {
 					$( '.happyforms-placeholder-option', this.$el ).hide();
@@ -1377,7 +1366,6 @@
 		editorIds: [
 			'confirmation_message',
 			'error_message',
-			'confirmation_email_content'
 		],
 
 		initialize: function() {
@@ -1398,7 +1386,6 @@
 				tinymce: {
 					toolbar1: 'bold,italic,bullist,numlist,link,hr',
 					setup: this.onEditorInit.bind( this ),
-					content_style: 'body { font-family: sans-serif; }'
 				},
 			};
 
@@ -1488,6 +1475,25 @@
 		}
 	} );
 
+	classes.views.FormEmail = classes.views.FormSetup.extend( {
+		template: '#happyforms-form-email-template',
+
+		editorIds: [
+			'confirmation_email_content',
+			'abandoned_resume_email_content'
+		],
+
+		render: function() {
+			classes.views.FormSetup.prototype.render.apply( this, arguments );
+
+			if ( this.model.get( 'allow_abandoned_resume' ) ) {
+				this.$el.addClass( 'allow-abandoned-resume' );
+			}
+
+			return this;
+		},
+	} );
+
 	classes.views.FormStyle = classes.views.Base.extend( {
 		template: '#happyforms-form-style-template',
 
@@ -1497,7 +1503,7 @@
 			'change [data-target="form_class"] input': 'onFormClassChange',
 			'change [data-target="form_class"] select': 'onFormClassChange',
 			'change [data-target="form_class"] input[type="checkbox"]': 'onFormClassCheckboxChange',
-			'change [data-target="css_var"] input[type=radio]': 'onButtonSetCssVarChange',
+			'change [data-target="css_var"] input[type=radio]': 'onRadioChange',
 			'keyup [data-target="attribute"] input[type=text]': 'onAttributeChange',
 			'navigate-to-group': 'navigateToGroup',
 		} ),
@@ -1585,9 +1591,20 @@
 		ready: function() {
 			this.initColorPickers();
 			this.initUISliders();
-			this.initButtonSet();
-			this.initFormWidthSlider();
 			this.setupHelpPointers();
+			this.initCodeEditors();
+
+			if ( happyForms.savedStates.style.activeSection ) {
+				this.navigateToGroup( happyForms.savedStates.style.activeSection );
+			}
+
+			$( '.happyforms-style-controls-group' ).on( 'scroll', function() {
+				happyForms.savedStates.style.scrollTop = $( this ).scrollTop();
+			} );
+		},
+
+		setScrollPosition: function() {
+			$( '.happyforms-style-controls-group.open', this.$el ).scrollTop( happyForms.savedStates.style.scrollTop );
 		},
 
 		onFormClassChange: function( e ) {
@@ -1628,7 +1645,7 @@
 			happyForms.previewSend( 'happyforms-form-class-update', data );
 		},
 
-		onButtonSetCssVarChange: function( e ) {
+		onRadioChange: function( e ) {
 			e.preventDefault();
 
 			var $target = $( e.target );
@@ -1660,13 +1677,23 @@
 		onGroupClick: function( e ) {
 			e.preventDefault();
 
-			$( '.happyforms-style-controls-group', this.$el ).removeClass( 'open' );
+			var self = this;
 
-			$( '.happyforms-divider-control', this.$el )
-				.removeClass( 'active' )
-				.addClass( 'inactive' );
+			$( '.happyforms-style-controls-group', this.$el ).removeClass( 'open' ).addClass( 'animate' );
 
-			$( e.target ).parent().next().addClass( 'open' );
+			setTimeout( function() {
+				$( '.happyforms-divider-control', this.$el )
+					.removeClass( 'active' )
+					.addClass( 'inactive' );
+
+				var $linkTab = $( e.target ).parent();
+				var $group = $linkTab.next();
+
+				$group.addClass( 'open' );
+				self.setScrollPosition();
+
+				happyForms.savedStates.style.activeSection = $linkTab.attr( 'id' );
+			}, 200 );
 		},
 
 		onGroupBackClick: function( e ) {
@@ -1683,14 +1710,17 @@
 			setTimeout(function () {
 				$section.removeClass('closing open');
 			}, 200);
+
+			happyForms.savedStates.style.activeSection = '';
+			happyForms.savedStates.style.scrollTop = 0;
 		},
 
-		navigateToGroup: function( e, options ) {
-			if ( ! options.group ) {
+		navigateToGroup: function( groupID ) {
+			if ( ! groupID ) {
 				return;
 			}
 
-			var $group = $( '#customize-control-' +options.group, this.$el );
+			var $group = $( '#' + groupID, this.$el );
 
 			if ( ! $group.length ) {
 				return;
@@ -1702,11 +1732,9 @@
 				.removeClass( 'active' )
 				.addClass( 'inactive' );
 
-			$group.next().addClass( 'open' );
-		},
+			$group.next().removeClass( 'animate' ).addClass( 'open' );
 
-		initButtonSet: function() {
-			$('.happyforms-buttonset-container').buttonset();
+			this.setScrollPosition();
 		},
 
 		initColorPickers: function() {
@@ -1718,10 +1746,11 @@
 				var variable = $control.data( 'variable' );
 
 				$( el ).wpColorPicker( {
+					defaultColor: $( el ).attr( 'data-default' ),
 					change: function( e, ui ) {
 						var value = ui.color.toString();
 
-						self.model.set( $( this ).attr( 'data-attribute' ), value );
+						self.model.set( $( el ).attr( 'data-attribute' ), value );
 
 						var data = {
 							variable: variable,
@@ -1867,6 +1896,120 @@
 
 			happyForms.previewSend('happyforms-css-variable-update', data);
 		},
+
+		initCodeEditors: function() {
+			if ( ! $( '.happyforms-code-control', this.$el ).length ) {
+				return;
+			}
+
+			var self = this;
+
+			$( '.happyforms-code-control', this.$el ).each( function() {
+				var $this = $( this );
+				var $el = $( 'textarea', $this );
+
+				if ( 'rich' === $this.attr( 'data-mode' ) ) {
+					self.initSyntaxHighlightingEditor( $el );
+				} else {
+					self.initPlainTextEditor( $el );
+				}
+			} );
+		},
+
+		initSyntaxHighlightingEditor: function( $el ) {
+			var self = this;
+			var attribute = $el.attr( 'data-attribute' );
+
+			var editor = wp.codeEditor.initialize(
+				$el.attr( 'id' ),
+				{
+					csslint: {
+						"errors": true,
+						"box-model": true,
+						"display-property-grouping": true,
+						"duplicate-properties": true,
+						"known-properties": true,
+						"outline-none": true
+					},
+					codemirror: {
+						"mode": $el.attr( 'data-mode' ),
+						"lint": true,
+						"lineNumbers": true,
+						"styleActiveLine": true,
+						"indentUnit": 2,
+						"indentWithTabs": true,
+						"tabSize": 2,
+						"lineWrapping": true,
+						"autoCloseBrackets": true,
+						"matchBrackets": true,
+						"continueComments": true,
+						"extraKeys": {
+							"Ctrl-Space": "autocomplete",
+							"Ctrl-\/": "toggleComment",
+							"Cmd-\/": "toggleComment",
+							"Alt-F": "findPersistent",
+							"Ctrl-F": "findPersistent",
+							"Cmd-F": "findPersistent"
+						},
+						"direction": "ltr",
+						"gutters": [ "CodeMirror-lint-markers" ],
+					}
+				}
+			);
+
+			editor.codemirror.on( 'change', function() {
+				var value = editor.codemirror.getValue();
+
+				self.model.set( attribute, value );
+			} );
+		},
+
+		initPlainTextEditor: function( $el ) {
+			var self = this;
+			var attribute = $el.attr( 'data-attribute' );
+
+			$el.on( 'blur', function onBlur() {
+				$el.data( 'next-tab-blurs', false );
+			} );
+
+			$el.on( 'keydown', function onKeydown( event ) {
+				var selectionStart, selectionEnd, value, tabKeyCode = 9, escKeyCode = 27;
+
+				if ( escKeyCode === event.keyCode ) {
+					if ( ! $el.data( 'next-tab-blurs' ) ) {
+						$el.data( 'next-tab-blurs', true );
+						event.stopPropagation(); // Prevent collapsing the section.
+					}
+					return;
+				}
+
+				// Short-circuit if tab key is not being pressed or if a modifier key *is* being pressed.
+				if ( tabKeyCode !== event.keyCode || event.ctrlKey || event.altKey || event.shiftKey ) {
+					return;
+				}
+
+				// Prevent capturing Tab characters if Esc was pressed.
+				if ( $el.data( 'next-tab-blurs' ) ) {
+					return;
+				}
+
+				selectionStart = $el[0].selectionStart;
+				selectionEnd = $el[0].selectionEnd;
+				value = $el[0].value;
+
+				if ( selectionStart >= 0 ) {
+					$el[0].value = value.substring( 0, selectionStart ).concat( '\t', value.substring( selectionEnd ) );
+					$el.selectionStart = $el[0].selectionEnd = selectionStart + 1;
+				}
+
+				event.stopPropagation();
+				event.preventDefault();
+			});
+
+			$el.on( 'keyup', function( e ) {
+				self.model.set( attribute, $( e.target ).val() );
+			} );
+		}
 	} );
 
 	Previewer = {
@@ -1970,6 +2113,7 @@
 			$part.removeClass( 'happyforms-part--width-half' );
 			$part.removeClass( 'happyforms-part--width-full' );
 			$part.removeClass( 'happyforms-part--width-third' );
+			$part.removeClass( 'happyforms-part--width-quarter' );
 			$part.removeClass( 'happyforms-part--width-auto' );
 			$part.addClass( 'happyforms-part--width-' + width );
 		},

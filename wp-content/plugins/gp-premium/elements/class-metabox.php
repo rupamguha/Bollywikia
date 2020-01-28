@@ -1638,7 +1638,7 @@ class GeneratePress_Elements_Metabox {
 
 				if ( $value ) {
 					if ( 'zero' === $value ) {
-						$value = '0';
+						$value = '0'; // String on purpose.
 					}
 
 					update_post_meta( $post_id, $key, $value );
@@ -1934,6 +1934,7 @@ class GeneratePress_Elements_Metabox {
 				'group' => esc_attr__( 'Scripts & Styles', 'gp-premium' ),
 				'hooks' => array(
 					'wp_head',
+					'wp_body_open',
 					'wp_footer',
 				),
 			),
@@ -1964,11 +1965,13 @@ class GeneratePress_Elements_Metabox {
 			'content' => array(
 				'group' => esc_attr__( 'Content', 'gp-premium' ),
 				'hooks' => array(
+					'generate_inside_site_container',
 					'generate_inside_container',
 					'generate_before_main_content',
 					'generate_after_main_content',
 					'generate_before_content',
 					'generate_after_content',
+					'generate_after_entry_content',
 					'generate_after_primary_content_area',
 					'generate_before_entry_title',
 					'generate_after_entry_title',

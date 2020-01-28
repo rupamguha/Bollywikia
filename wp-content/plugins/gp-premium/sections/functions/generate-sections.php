@@ -211,7 +211,7 @@ if ( ! function_exists( 'generate_sections_add_css' ) ) {
 					$css .= '#' . $custom_id . ' a:hover{' . $link_color_hover . '}';
 				}
 
-				$mobile = apply_filters( 'generate_mobile_media_query', '(max-width:768px)' );
+				$mobile = generate_premium_get_media_query( 'mobile' );
 				$css .= '@media ' . esc_attr( $mobile ) . ' {.generate-sections-inside-container {padding-left: ' . $mobile_padding_left . 'px;padding-right: ' . $mobile_padding_right . 'px;}}';
 			endforeach;
 

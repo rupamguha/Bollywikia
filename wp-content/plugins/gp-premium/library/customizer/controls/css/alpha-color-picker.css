@@ -26,3 +26,8 @@
 .gp-alpha-color-picker-container .iris-picker .iris-strip .ui-slider-handle {
 	z-index: 100;
 }
+
+.customize-control-gp-alpha-color .wp-picker-input-wrap .button.wp-picker-clear {
+    margin-left: 6px;
+    padding: 2px 8px;
+}

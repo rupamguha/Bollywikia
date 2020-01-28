@@ -598,7 +598,7 @@ if ( ! function_exists( 'generate_blog_customize_register' ) ) {
 				'post_image_apply_sizes',
 				array(
 					'section' => 'generate_blog_section',
-					'label'	=> __( 'Apply sizes', 'gp-premium' ),
+					'label'	=> __( 'Apply', 'gp-premium' ),
 					'settings' => ( isset( $wp_customize->selective_refresh ) ) ? array() : 'blogname',
 					'active_callback' => 'generate_premium_featured_image_active',
 				)
@@ -762,7 +762,7 @@ if ( ! function_exists( 'generate_blog_customize_register' ) ) {
 				'single_post_image_apply_sizes',
 				array(
 					'section' => 'generate_blog_section',
-					'label'	=> __( 'Apply sizes', 'gp-premium' ),
+					'label'	=> __( 'Apply', 'gp-premium' ),
 					'settings' => ( isset( $wp_customize->selective_refresh ) ) ? array() : 'blogname',
 					'active_callback' => 'generate_premium_single_featured_image_active',
 				)
@@ -926,7 +926,7 @@ if ( ! function_exists( 'generate_blog_customize_register' ) ) {
 				'page_post_image_apply_sizes',
 				array(
 					'section' => 'generate_blog_section',
-					'label'	=> __( 'Apply sizes', 'gp-premium' ),
+					'label'	=> __( 'Apply', 'gp-premium' ),
 					'settings' => ( isset( $wp_customize->selective_refresh ) ) ? array() : 'blogname',
 					'active_callback' => 'generate_premium_single_page_featured_image_active',
 				)
@@ -1054,7 +1054,6 @@ function generate_blog_customizer_controls_css() {
 			display: inline-block !important;
 			width: 30%;
 			clear: none;
-			text-align: center;
 			vertical-align: bottom;
 			float: none;
 		}
@@ -1065,8 +1064,10 @@ function generate_blog_customizer_controls_css() {
 			margin-left: 1%;
 		}
 
-		#customize-control-generate_blog_settings-post_image_width input {
-			border-right: 0;
+		#customize-control-generate_blog_settings-post_image_width,
+		#customize-control-generate_blog_settings-single_post_image_width,
+		#customize-control-generate_blog_settings-page_post_image_width {
+		    margin-right: 2px;
 		}
 
 		#customize-control-generate_blog_settings-post_image_width .customize-control-title:after,

@@ -9,7 +9,9 @@ class HappyForms extends HappyForms_Core {
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'happyforms_do_setup_control', array( $this, 'do_control' ), 10, 3 );
+		add_action( 'happyforms_do_email_control', array( $this, 'do_control' ), 10, 3 );
 		add_filter( 'happyforms_setup_controls', array( $this, 'add_dummy_setup_controls' ) );
+		add_filter( 'happyforms_email_controls', array( $this, 'add_dummy_email_controls' ) );
 		add_action( 'admin_print_footer_scripts', array( $this, 'print_upgrade_modals' ) );
 		add_action( 'parse_request', array( $this, 'parse_archive_request' ) );
 		add_action( 'admin_notices', array( $this, 'display_notices' ) );
@@ -57,127 +59,153 @@ class HappyForms extends HappyForms_Core {
 		require_once( happyforms_get_include_folder() . '/classes/parts/class-part-legal-dummy.php' );
 		$part_library->register_part( 'HappyForms_Part_Legal_Dummy', 18 );
 
+		require_once( happyforms_get_include_folder() . '/classes/parts/class-part-signature-dummy.php' );
+		$part_library->register_part( 'HappyForms_Part_Signature_Dummy', 19 );
+
 		require_once( happyforms_get_include_folder() . '/classes/parts/class-part-rating-dummy.php' );
-		$part_library->register_part( 'HappyForms_Part_Rating_Dummy', 19 );
+		$part_library->register_part( 'HappyForms_Part_Rating_Dummy', 20 );
 
 		require_once( happyforms_get_include_folder() . '/classes/parts/class-part-narrative-dummy.php' );
-		$part_library->register_part( 'HappyForms_Part_Narrative_Dummy', 20 );
+		$part_library->register_part( 'HappyForms_Part_Narrative_Dummy', 21 );
 
 		require_once( happyforms_get_include_folder() . '/classes/parts/class-part-placeholder-dummy.php' );
-		$part_library->register_part( 'HappyForms_Part_Placeholder_Dummy', 21 );
+		$part_library->register_part( 'HappyForms_Part_Placeholder_Dummy', 22 );
 
 		require_once( happyforms_get_include_folder() . '/classes/parts/class-part-mailchimp-dummy.php' );
-		$part_library->register_part( 'HappyForms_Part_Mailchimp_Dummy', 22 );
+		$part_library->register_part( 'HappyForms_Part_Mailchimp_Dummy', 23 );
+
+		require_once( happyforms_get_include_folder() . '/classes/parts/class-part-payments-dummy.php' );
+		$part_library->register_part( 'HappyForms_Part_Payments_Dummy', 24 );
 	}
 
 	public function add_dummy_setup_controls( $controls ) {
-		$controls[450] = array(
-			'type' => 'checkbox_dummy',
-			'dummy_id' => 'email_mark_and_reply',
-			'label' => __( 'Include mark and reply link', 'happyforms' ),
-			'tooltip' => __( 'Reply to your users and mark their submission as read in one click.', 'happyforms' ),
-		);
-
 		$controls[1300] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'redirect_on_complete',
-			'label' => __( 'Redirect on complete', 'happyforms' ),
-			'tooltip' => __( 'By default, recipients will be redirected to the post or page displaying this form. To set a custom redirect webpage, add a link here.', 'happyforms' ),
-		);
-
-		$controls[1310] = array(
-			'type' => 'checkbox_dummy',
-			'dummy_id' => 'track_goal_link',
-			'label' => __( 'Track goal link', 'happyforms' ),
-			'tooltip' => __( 'Track recipients landing on this internal page after successfully submitting this form.', 'happyforms' ),
+			'label' => __( 'Redirect on complete', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'By default, recipients will be redirected to the post or page displaying this form. To set a custom redirect webpage, add a link here.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1320] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'use_theme_styles',
-			'label' => __( 'Use theme styles', 'happyforms' ),
-			'tooltip' => __( 'Inherit theme default styles instead of using HappyForms styles.', 'happyforms' ),
+			'label' => __( 'Use theme styles', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Inherit theme default styles instead of using HappyForms styles.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1450] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'shuffle_parts',
-			'label' => __( 'Shuffle parts', 'happyforms' ),
-			'tooltip' => __( 'Shuffle the order of all form parts to avoid biases in your responses.', 'happyforms' ),
+			'label' => __( 'Shuffle parts', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Shuffle the order of all form parts to avoid biases in your responses.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1500] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'captcha',
-			'label' => sprintf(
-					__( 'Use <a href="%s" target="_blank" class="external"> Google ReCaptcha</a>', 'happyforms' ),
-					'https://www.google.com/recaptcha'
-				),
-			'tooltip' => __( 'Protect your form against bots using your Google ReCaptcha credentials.', 'happyforms' ),
+			'label' => __( 'Use reCAPTCHA', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Protect your form against bots using your Google ReCaptcha credentials.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1550] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'require_password',
-			'label' => __( 'Require password', 'happyforms' ),
-			'tooltip' => __( 'Only users with password will be able to view and submit the form.', 'happyforms' ),
+			'label' => __( 'Require password', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Only users with password will be able to view and submit the form.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1590] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'open_in_overlay_window',
-			'label' => __( 'Open in overlay window', 'happyforms' ),
-			'tooltip' => __( 'Generate a link that can be clicked to open an overlay window for this form.', 'happyforms' ),
-		);
-
-		$controls[1600] = array(
-			'type' => 'checkbox_dummy',
-			'dummy_id' => 'save_responses',
-			'label' => __( 'Save responses', 'happyforms' ),
-			'tooltip' => __( 'Keep recipients responses stored in your WordPress database.', 'happyforms' ),
-			'field' => 'save_entries',
+			'label' => __( 'Open in overlay window', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Generate a link that can be clicked to open an overlay window for this form.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1660] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'save_abandoned_responses',
-			'label' => __( 'Save abandoned responses', 'happyforms' ),
-			'tooltip' => __( 'Keep incomplete recipients responses stored in your WordPress database.', 'happyforms' ),
+			'label' => __( 'Save abandoned submission', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Keep incomplete recipients responses stored in your WordPress database.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1690] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'unique_id',
-			'label' => __( 'Give each response an ID number', 'happyforms' ),
-			'tooltip' => __( 'Tag responses with a unique, incremental identifier.', 'happyforms' ),
+			'label' => __( 'Give each submission an ID number', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Tag responses with a unique, incremental identifier.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1800] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'preview_before_submit',
-			'label' => __( 'Preview values before submission', 'happyforms' ),
-			'tooltip' => __( 'Let your users review their submission before confirming it.', 'happyforms' ),
+			'label' => __( 'Preview values before submission', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Let your users review their submission before confirming it.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[1900] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'disable_submit_until_valid',
-			'label' => __( 'Fade submit button until valid', 'happyforms' ),
-			'tooltip' => __( 'Reduce the opacity of the submit button until all required form parts are valid.', 'happyforms' )
+			'label' => __( 'Fade submit button until valid', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Reduce the opacity of the submit button until all required form parts are valid.', HAPPYFORMS_TEXT_DOMAIN )
 		);
 
 		$controls[2300] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'limit_responses',
-			'label' => __( 'Limit responses', 'happyforms' ),
-			'tooltip' => __( 'Set limit on number of allowed form submission in general or per user.', 'happyforms' ),
+			'label' => __( 'Limit submissions', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Set limit on number of allowed form submission in general or per user.', HAPPYFORMS_TEXT_DOMAIN ),
 		);
 
 		$controls[3000] = array(
 			'type' => 'checkbox_dummy',
 			'dummy_id' => 'schedule_visibility',
-			'label' => __( 'Schedule visibility', 'happyforms' ),
-			'tooltip' => __( 'Show or hide this form during a chosen time and day. Go to Settings > Timezone to set your city offset.', 'happyforms' ),
+			'label' => __( 'Schedule visibility', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Show or hide this form during a chosen time and day. Go to Settings > Timezone to set your city offset.', HAPPYFORMS_TEXT_DOMAIN ),
+		);
+
+		return $controls;
+	}
+
+	public function add_dummy_email_controls( $controls ) {
+		$controls[450] = array(
+			'type' => 'checkbox_dummy',
+			'dummy_id' => 'email_mark_and_reply',
+			'label' => __( 'Include mark and reply link', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Reply to your users and mark their submission as read in one click.', HAPPYFORMS_TEXT_DOMAIN ),
+		);
+
+		$controls[451] = array(
+			'type' => 'checkbox_dummy',
+			'dummy_id' => 'alert_email_attachment_links',
+			'label' => __( 'Link to attachments in email', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Show attachments as links instead of a simple counter.', HAPPYFORMS_TEXT_DOMAIN ),
+		);
+
+		$controls[452] = array(
+			'type' => 'checkbox_dummy',
+			'dummy_id' => 'alert_email_hide_placeholder_parts',
+			'label' => __( 'Hide Placeholder parts in email', HAPPYFORMS_TEXT_DOMAIN )
+		);
+
+		$controls[453] = array(
+			'type' => 'checkbox_dummy',
+			'dummy_id' => 'alert_email_include_referral_url',
+			'label' => __( 'Include referral link', HAPPYFORMS_TEXT_DOMAIN ),
+			'tooltip' => __( 'Include the page link your form was submitted from.', HAPPYFORMS_TEXT_DOMAIN ),
+		);
+
+		$controls[819] = array(
+			'type' => 'checkbox_dummy',
+			'dummy_id' => 'attach_pdf',
+			'label' => __( 'Attach PDF to confirmation email', 'happyforms' ),
+			'tooltip' => __( 'Attach a PDF to the recipient\'s confirmation email.', 'happyforms' ),
+		);
+
+		$controls[1660] = array(
+			'type' => 'checkbox_dummy',
+			'dummy_id' => 'abandoned_resume_send_alert_email',
+			'label' => __( 'Send abandonment email', 'happyforms' ),
+			'tooltip' => __( 'Notify recipients when they abandon your form before submitting it.', 'happyforms' ),
 		);
 
 		return $controls;
@@ -291,10 +319,6 @@ class HappyForms extends HappyForms_Core {
 			return;
 		}
 
-		if ( ! $this->is_new_user( $forms ) ) {
-			$this->display_removal_notice( $forms );
-		}
-
 		$this->display_review_notice( $forms );
 	}
 
@@ -310,20 +334,6 @@ class HappyForms extends HappyForms_Core {
 		}
 
 		return false;
-	}
-
-	public function display_removal_notice( $forms ) {
-		$upgrade_link = 'https://happyforms.me/upgrade';
-
-		happyforms_get_admin_notices()->register(
-			'happyforms_feature_removal',
-			__( '<p><strong>Important changes to HappyForms</strong></p><p>We want to continue developing the free HappyForms plugin, but we can\'t do this without the support of more paying customers. So, starting with HappyForms 1.8.11, we\'ve transitioned the following features to the paid plugin: Scale, Rating, Story, Website Link, Table, Phone, Date & Time, Address, Title, Legal, Placeholder and Text Editor form parts along with redirects, submit button fade, reCAPTCHA and response reviews.</p><p>If you\'re using these parts and features in your forms, they will be removed from the free plugin with this release. Please review all your existing forms for changes.</p>', 'happyforms' ),
-			array(
-				'type' => 'error',
-				'screen' => array( 'dashboard', 'edit-post', 'edit-page', 'edit-happyform', 'plugins' ),
-				'dismissible' => true,
-			)
-		);
 	}
 
 	public function display_review_notice( $forms ) {
@@ -373,7 +383,7 @@ class HappyForms extends HappyForms_Core {
 		$html = '';
 
 		ob_start();
-			require( happyforms_get_include_folder() . '/core/templates/customize-form-setup-logic.php' );
+			require( happyforms_get_core_folder() . '/templates/customize-form-setup-logic.php' );
 		$html = ob_get_clean();
 
 		echo $html;

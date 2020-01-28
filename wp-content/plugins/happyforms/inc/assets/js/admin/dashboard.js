@@ -7,8 +7,7 @@
 		init: function() {
 			$( document ).on( 'click', '#adminmenu #toplevel_page_happyforms li:last-child a', this.onUpgradeClick.bind(this) );
 			$( document ).on( 'click', '#adminmenu #toplevel_page_happyforms a[href="#responses"]', this.onModalTriggerClick.bind(this) );
-			$( document ).on( 'click', '#adminmenu #toplevel_page_happyforms a[href="#import-export"]', this.onModalTriggerClick.bind(this) );
-			$( document ).on( 'click', '#adminmenu #toplevel_page_happyforms a[href="#integrations"]', this.onModalTriggerClick.bind(this) );
+			$( document ).on( 'click', '#adminmenu #toplevel_page_happyforms a[href="#settings"]', this.onModalTriggerClick.bind(this) );
 			$( document ).on( 'click', '.happyforms-upgrade-modal .happyforms-continue-link', this.onContinueClick.bind(this) );
 			$( document ).on( 'click', '.happyforms-upgrade-modal .happyforms-export-button', this.onExportButtonClick.bind(this) );
 			$( document ).on( 'click', '.happyforms-upgrade-modal .happyforms-upgrade-modal__close', this.onCloseClick.bind(this) );

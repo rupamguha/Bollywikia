@@ -3,7 +3,7 @@
 Plugin Name: GP Premium
 Plugin URI: https://generatepress.com
 Description: The entire collection of GeneratePress premium modules.
-Version: 1.8.2
+Version: 1.9.0
 Author: Tom Usborne
 Author URI: https://generatepress.com
 License: GNU General Public License v2 or later
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Set our version
-define( 'GP_PREMIUM_VERSION', '1.8.2' );
+define( 'GP_PREMIUM_VERSION', '1.9.0' );
 
 // Set our library directory
 define( 'GP_LIBRARY_DIRECTORY', plugin_dir_path( __FILE__ ) . 'library/' );
@@ -128,6 +128,7 @@ if ( generatepress_is_module_active( 'generate_package_woocommerce', 'GENERATE_W
 }
 
 // General
+require_once plugin_dir_path( __FILE__ ) . 'inc/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'general/smooth-scroll.php';
 require_once plugin_dir_path( __FILE__ ) . 'general/icons.php';
 

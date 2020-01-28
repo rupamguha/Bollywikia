@@ -26,7 +26,11 @@ function generatepress_wc_defaults() {
 		'columns' => 4,
 		'tablet_columns' => 2,
 		'mobile_columns' => 1,
+		'columns_gap' => 50,
+		'tablet_columns_gap' => '',
+		'mobile_columns_gap' => '',
 		'related_upsell_columns' => 4,
+		'tablet_related_upsell_columns' => 2,
 		'mobile_related_upsell_columns' => 1,
 		'product_archive_image_alignment' => 'center',
 		'product_archive_alignment' => 'center',
@@ -144,6 +148,7 @@ function generatepress_wc_post_class( $classes ) {
 
 		if ( is_single() ) {
 			$classes[] = 'wc-related-upsell-columns-' . generatepress_wc_get_setting( 'related_upsell_columns' );
+			$classes[] = 'wc-related-upsell-tablet-columns-' . generatepress_wc_get_setting( 'tablet_related_upsell_columns' );
 			$classes[] = 'wc-related-upsell-mobile-columns-' . generatepress_wc_get_setting( 'mobile_related_upsell_columns' );
 		} else {
 			$classes[] = 'woocommerce-image-align-' . generatepress_wc_get_setting( 'product_archive_image_alignment' );
@@ -169,7 +174,7 @@ function generatepress_wc_before_shop_loop() {
 	$classes = apply_filters( 'generate_woocommerce_container_classes', array(
 		'wc-columns-container',
 		'wc-columns-' . generatepress_wc_get_setting( 'columns' ),
-		//'wc-tablet-columns-' . generatepress_wc_get_setting( 'tablet_columns' ),
+		'wc-tablet-columns-' . generatepress_wc_get_setting( 'tablet_columns' ),
 		'wc-mobile-columns-' . generatepress_wc_get_setting( 'mobile_columns' ),
 	) );
 
@@ -196,7 +201,7 @@ add_action( 'wp_enqueue_scripts', 'generatepress_wc_scripts', 100 );
 function generatepress_wc_scripts() {
 	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 	wp_enqueue_style( 'generate-woocommerce', plugin_dir_url( __FILE__ ) . "css/woocommerce{$suffix}.css", array(), GENERATE_WOOCOMMERCE_VERSION );
-	wp_enqueue_style( 'generate-woocommerce-mobile', plugin_dir_url( __FILE__ ) . "css/woocommerce-mobile{$suffix}.css", array(), GENERATE_WOOCOMMERCE_VERSION, apply_filters( 'generate_mobile_media_query', '(max-width:768px)' ) );
+	wp_enqueue_style( 'generate-woocommerce-mobile', plugin_dir_url( __FILE__ ) . "css/woocommerce-mobile{$suffix}.css", array(), GENERATE_WOOCOMMERCE_VERSION, generate_premium_get_media_query( 'mobile' ) );
 	//wp_enqueue_style( 'generate-woocommerce-tablet', plugin_dir_url( __FILE__ ) . "css/woocommerce-tablet{$suffix}.css", array(), GENERATE_WOOCOMMERCE_VERSION, apply_filters( 'generate_tablet_media_query', '(min-width: 769px) and (max-width: 1024px)' ) );
 
 	wp_enqueue_script( 'generate-woocommerce', plugin_dir_url( __FILE__ ) . "js/woocommerce{$suffix}.js", array( 'jquery' ), GENERATE_WOOCOMMERCE_VERSION, true );
@@ -207,7 +212,7 @@ function generatepress_wc_scripts() {
 		array(
 			'quantityButtons' => generatepress_wc_get_setting( 'quantity_buttons' ),
 			'stickyAddToCart' => generatepress_wc_show_sticky_add_to_cart(),
-			'addToCartPanel' => generatepress_wc_get_setting( 'off_canvas_panel_on_add_to_cart' ),
+			'addToCartPanel' => ! is_singular() && generatepress_wc_get_setting( 'off_canvas_panel_on_add_to_cart' ),
 		)
 	);
 
@@ -216,7 +221,17 @@ function generatepress_wc_scripts() {
 		wp_dequeue_script( 'generate-sticky' );
 	}
 
-	wp_enqueue_style( 'gp-premium-icons' );
+	$font_icons = true;
+
+	if ( function_exists( 'generate_get_option' ) ) {
+		if ( 'font' !== generate_get_option( 'icons' ) ) {
+			$font_icons = false;
+		}
+	}
+
+	if ( $font_icons ) {
+		wp_enqueue_style( 'gp-premium-icons' );
+	}
 }
 
 /**
@@ -246,16 +261,18 @@ add_filter( 'generate_sidebar_layout', 'generatepress_wc_sidebar_layout' );
  * @return string New layout
  */
 function generatepress_wc_sidebar_layout( $layout ) {
-	if ( is_woocommerce() && is_single() && 'inherit' !== generatepress_wc_get_setting( 'single_sidebar_layout' ) ) {
-		if ( get_post_meta( get_the_ID(), '_generate-sidebar-layout-meta', true ) ) {
-			return get_post_meta( get_the_ID(), '_generate-sidebar-layout-meta', true );
-		}
-
-		return generatepress_wc_get_setting( 'single_sidebar_layout' );
-	}
-
 	if ( is_woocommerce() ) {
-		return generatepress_wc_get_setting( 'sidebar_layout' );
+		$layout = generatepress_wc_get_setting( 'sidebar_layout' );
+
+		if ( is_single() ) {
+			if ( 'inherit' !== generatepress_wc_get_setting( 'single_sidebar_layout' ) ) {
+				$layout = generatepress_wc_get_setting( 'single_sidebar_layout' );
+			}
+
+			if ( get_post_meta( get_the_ID(), '_generate-sidebar-layout-meta', true ) ) {
+			 	$layout = get_post_meta( get_the_ID(), '_generate-sidebar-layout-meta', true );
+			}
+		}
 	}
 
 	return $layout;
@@ -483,10 +500,17 @@ function generatepress_wc_menu_cart( $nav, $args ) {
  */
 function generatepress_wc_cart_link() {
 	// Kept for backward compatibility.
-	$icon = apply_filters( 'generate_woocommerce_menu_cart_icon', '' );
+	$legacy_icon = apply_filters( 'generate_woocommerce_menu_cart_icon', '' );
 
 	// Get the icon type.
 	$icon_type = generatepress_wc_get_setting( 'cart_menu_item_icon' );
+
+	$icon = '';
+
+	if ( function_exists( 'generate_get_svg_icon' ) ) {
+		$icon = generate_get_svg_icon( $icon_type );
+	}
+
 	ob_start();
 
 	$no_items = '';
@@ -494,9 +518,26 @@ function generatepress_wc_cart_link() {
 	if ( ! WC()->cart->get_cart_contents_count() > 0 ) {
 		$no_items = 'no-items';
 	}
-	?>
-	<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="cart-contents <?php echo esc_attr( $icon_type ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'gp-premium' ); ?>"><?php echo sprintf ( _n( '<span class="number-of-items ' . $no_items . '">%d</span>', '<span class="number-of-items ' . $no_items . '">%d</span>', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?><?php echo $icon; ?><span class="amount"><?php if ( WC()->cart->subtotal > 0 ) { echo wp_kses_data( WC()->cart->get_cart_subtotal() ); } ?></span></a>
-	<?php
+
+	printf(
+		'<a href="%1$s" class="cart-contents %2$s %3$s" title="%4$s">%5$s%6$s%7$s<span class="amount">%8$s</span></a>',
+		esc_url( wc_get_cart_url() ),
+		esc_attr( $icon_type ),
+		$icon ? 'has-svg-icon' : '',
+		esc_attr__( 'View your shopping cart', 'gp-premium' ),
+		$icon,
+		sprintf (
+			_n(
+				'<span class="number-of-items ' . $no_items . '">%d</span>',
+				'<span class="number-of-items ' . $no_items . '">%d</span>',
+				WC()->cart->get_cart_contents_count()
+			),
+			WC()->cart->get_cart_contents_count()
+		),
+		$legacy_icon,
+		WC()->cart->subtotal > 0 ? wp_kses_data( WC()->cart->get_cart_subtotal() ) : ''
+	);
+
 	if ( generatepress_wc_get_setting( 'menu_mini_cart' ) && ! is_cart() ) : ?>
 		<div id="wc-mini-cart" class="wc-mini-cart" aria-hidden="true">
 			<div class="inside-wc-mini-cart">
@@ -789,7 +830,83 @@ function generatepress_wc_css() {
 		$css->add_property( 'display', 'inline-block' );
 	}
 
-	$css->start_media_query( apply_filters( 'generate_mobile_media_query', '(max-width:768px)' ) );
+	$font_icons = true;
+
+	if ( function_exists( 'generate_get_option' ) ) {
+		if ( 'font' !== generate_get_option( 'icons' ) ) {
+			$font_icons = false;
+		}
+	}
+
+	if ( ! $font_icons ) {
+		$css->set_selector( '.woocommerce-MyAccount-navigation li.is-active a:after, a.button.wc-forward:after' );
+		$css->add_property( 'display', 'none' );
+
+		$css->set_selector( '#payment .payment_methods>.wc_payment_method>label:before' );
+		$css->add_property( 'font-family', 'WooCommerce' );
+		$css->add_property( 'content', '"\e039"' );
+
+		$css->set_selector( '#payment .payment_methods li.wc_payment_method>input[type=radio]:first-child:checked+label:before' );
+		$css->add_property( 'content', '"\e03c"' );
+
+		$css->set_selector( '.woocommerce-ordering:after' );
+		$css->add_property( 'font-family', 'WooCommerce' );
+		$css->add_property( 'content', '"\e00f"' );
+	}
+
+	$css->set_selector( '.wc-columns-container .products, .woocommerce .related ul.products, .woocommerce .up-sells ul.products' );
+
+	if ( '' !== generatepress_wc_get_setting( 'columns_gap' ) ) {
+		$css->add_property( 'grid-gap', generatepress_wc_get_setting( 'columns_gap' ), false, 'px' );
+	}
+
+	$css->start_media_query( generate_premium_get_media_query( 'tablet' ) );
+		$css->set_selector( '.wc-columns-container .products, .woocommerce .related ul.products, .woocommerce .up-sells ul.products' );
+
+		if ( '' !== generatepress_wc_get_setting( 'tablet_columns_gap' ) ) {
+			$css->add_property( 'grid-gap', generatepress_wc_get_setting( 'tablet_columns_gap' ), false, 'px' );
+		}
+
+		if ( 3 === generatepress_wc_get_setting( 'tablet_columns' ) ) {
+			$css->set_selector( '.woocommerce .wc-columns-container.wc-tablet-columns-3 .products' );
+			$css->add_property( '-ms-grid-columns', '(1fr)[3]' );
+			$css->add_property( 'grid-template-columns', 'repeat(3, 1fr)' );
+		}
+
+		if ( 2 === generatepress_wc_get_setting( 'tablet_columns' ) ) {
+			$css->set_selector( '.woocommerce .wc-columns-container.wc-tablet-columns-2 .products' );
+			$css->add_property( '-ms-grid-columns', '(1fr)[2]' );
+			$css->add_property( 'grid-template-columns', 'repeat(2, 1fr)' );
+		}
+
+		if ( 1 === generatepress_wc_get_setting( 'tablet_columns' ) ) {
+			$css->set_selector( '.woocommerce .wc-columns-container.wc-tablet-columns-1 .products' );
+			$css->add_property( 'width', '100%' );
+			$css->add_property( '-ms-grid-columns', '1fr' );
+			$css->add_property( 'grid-template-columns', '1fr' );
+		}
+
+		if ( 3 === generatepress_wc_get_setting( 'tablet_related_upsell_columns' ) ) {
+			$css->set_selector( '.wc-related-upsell-tablet-columns-3 .related ul.products, .wc-related-upsell-tablet-columns-3 .up-sells ul.products' );
+			$css->add_property( '-ms-grid-columns', '(1fr)[3]' );
+			$css->add_property( 'grid-template-columns', 'repeat(3, 1fr)' );
+		}
+
+		if ( 2 === generatepress_wc_get_setting( 'tablet_related_upsell_columns' ) ) {
+			$css->set_selector( '.wc-related-upsell-tablet-columns-2 .related ul.products, .wc-related-upsell-tablet-columns-2 .up-sells ul.products' );
+			$css->add_property( '-ms-grid-columns', '(1fr)[2]' );
+			$css->add_property( 'grid-template-columns', 'repeat(2, 1fr)' );
+		}
+
+		if ( 1 === generatepress_wc_get_setting( 'tablet_related_upsell_columns' ) ) {
+			$css->set_selector( '.wc-related-upsell-tablet-columns-1 .related ul.products, .wc-related-upsell-tablet-columns-1 .up-sells ul.products' );
+			$css->add_property( 'width', '100%' );
+			$css->add_property( '-ms-grid-columns', '1fr' );
+			$css->add_property( 'grid-template-columns', '1fr' );
+		}
+	$css->stop_media_query();
+
+	$css->start_media_query( generate_premium_get_media_query( 'mobile' ) );
 		$css->set_selector( '.woocommerce ul.products li.product .woocommerce-LoopProduct-link h2, .woocommerce ul.products li.product .woocommerce-loop-category__title' );
 		if ( '' !== $settings[ 'mobile_wc_product_title_font_size' ] ) {
 			$css->add_property( 'font-size', esc_attr( $settings[ 'mobile_wc_product_title_font_size' ] ), false, 'px' );
@@ -797,9 +914,15 @@ function generatepress_wc_css() {
 
 		$css->set_selector( '.add-to-cart-panel .continue-shopping' );
 		$css->add_property( 'background-color', esc_attr( $settings['wc_panel_cart_background_color'] ) );
+
+		$css->set_selector( '.wc-columns-container .products, .woocommerce .related ul.products, .woocommerce .up-sells ul.products' );
+
+		if ( '' !== generatepress_wc_get_setting( 'mobile_columns_gap' ) ) {
+			$css->add_property( 'grid-gap', generatepress_wc_get_setting( 'mobile_columns_gap' ), false, 'px' );
+		}
 	$css->stop_media_query();
 
-	$css->start_media_query( apply_filters( 'generate_mobile_menu_media_query', '(max-width: 768px)' ) );
+	$css->start_media_query( generate_premium_get_media_query( 'mobile-menu' ) );
 		$css->set_selector( '.mobile-bar-items + .menu-toggle' );
 		$css->add_property( 'text-align', 'left' );
 
@@ -1053,7 +1176,7 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'generatepress_add_to_cart_pane
  * @since 1.8
  */
 function generatepress_add_to_cart_panel_fragments( $fragments ) {
-    $fragments['.add-to-cart-panel .cart-data'] = '<div class="cart-data">' . sprintf ( _n( '%d item', '%d items', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ) . ' - ' .  WC()->cart->get_cart_total() . '</div>';
+    $fragments['.add-to-cart-panel .cart-data'] = '<div class="cart-data">' . sprintf ( _n( '%d item', '%d items', WC()->cart->get_cart_contents_count(), 'gp-premium' ), WC()->cart->get_cart_contents_count() ) . ' - ' .  WC()->cart->get_cart_total() . '</div>';
 
 	return $fragments;
 }

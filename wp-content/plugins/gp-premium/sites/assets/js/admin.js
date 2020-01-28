@@ -78,6 +78,14 @@ jQuery( document ).ready( function($) {
 		siteBox.siblings( page_builder ).fadeIn( 'fast' );
 
 		bLazy.revalidate();
+
+		if ( $( 'body' ).hasClass( 'site-import-data-exists' ) ) {
+			$( '.remove-site' ).show();
+			$( '.remove-site .do-remove-site' ).show();
+			$( '.remove-site .skip-remove-site' ).show();
+			$( '.generatepress-sites' ).addClass( 'remove-site-needed' );
+			window.scrollTo( { top: 0 } );
+		}
 	} );
 
 	$( '.site-box .next' ).on( 'click', function( e ) {
@@ -114,6 +122,13 @@ jQuery( document ).ready( function($) {
 
 			next_site.find( '.site-demo' ).show().addClass( 'open' );
 		}
+
+		if ( $( 'body' ).hasClass( 'site-import-data-exists' ) ) {
+			$( '.remove-site' ).show();
+			$( '.remove-site .do-remove-site' ).show();
+			$( '.remove-site .skip-remove-site' ).show();
+			$( '.generatepress-sites' ).addClass( 'remove-site-needed' );
+		}
 	} );
 
 	$( '.site-box .prev' ).on( 'click', function( e ) {
@@ -149,6 +164,13 @@ jQuery( document ).ready( function($) {
 			});
 
 			prev_site.find( '.site-demo' ).show().addClass( 'open' );
+		}
+
+		if ( $( 'body' ).hasClass( 'site-import-data-exists' ) ) {
+			$( '.remove-site' ).show();
+			$( '.remove-site .do-remove-site' ).show();
+			$( '.remove-site .skip-remove-site' ).show();
+			$( '.generatepress-sites' ).addClass( 'remove-site-needed' );
 		}
 	} );
 
@@ -400,6 +422,7 @@ jQuery( document ).ready( function($) {
 				siteBox.find( '.loading' ).hide();
 				siteBox.find( '.theme-options .big-loader' ).css( 'opacity', '0' );
 				siteBox.find( '.theme-options .number' ).css( 'opacity', '1' ).addClass( 'step-complete' );
+				$( 'body' ).addClass( 'site-import-data-exists' );
 
 				siteBox.find( '.site-message' ).text( generate_sites_params.checking_demo_content );
 				siteBox.find( '.loading' ).show();
@@ -447,6 +470,7 @@ jQuery( document ).ready( function($) {
 		siteBox.find( '.confirm-content-import-message' ).hide();
 		siteBox.find( '.demo-content .big-loader' ).css( 'opacity', '1' );
 		siteBox.find( '.demo-content .number' ).css( 'opacity', '0' );
+		$( 'body' ).addClass( 'site-import-content-exists' );
 
 		siteBox.attr( 'data-plugins', JSON.stringify( plugins ) );
 
@@ -698,9 +722,192 @@ jQuery( document ).ready( function($) {
 	 /**
 	  * View our completed site.
 	  */
-	 $( '.site-box .view-site' ).on( 'click', function( e ) {
+	 $( '.site-box .view-site, .remove-site .view-site' ).on( 'click', function( e ) {
 	 	e.preventDefault();
 
 	 	window.location.href = generate_sites_params.home_url;
+	 } );
+
+	 function restoreThemeOptions() {
+		 var restoreBox = $( '.remove-site' );
+
+		 restoreBox.find( '.do-remove-site' ).hide()
+		 restoreBox.find( '.skip-remove-site' ).hide();
+		 restoreBox.find( '.loading' ).show();
+		 restoreBox.find( '.remove-site-message' ).text( generate_sites_params.restoreThemeOptions );
+
+		 $.ajax( {
+			 type: 'POST',
+			 url: generate_sites_params.ajaxurl,
+			 data: {
+				 action: 'generate_restore_theme_options',
+				 nonce: generate_sites_params.nonce,
+			 },
+			 success: function( data ) {
+				 if ( generate_sites_params.hasContentBackup || $( 'body' ).hasClass( 'site-import-content-exists' ) ) {
+				 	restoreSiteOptions();
+				} else {
+					restoreCSS();
+				}
+				 console.log( data );
+			 },
+			 error: function( data ) {
+				 console.log( data );
+			 }
+		 } );
+	 }
+
+	 function restoreSiteOptions() {
+		 var restoreBox = $( '.remove-site' );
+
+		 restoreBox.find( '.remove-site-message' ).text( generate_sites_params.restoreSiteOptions );
+
+		 $.ajax( {
+			 type: 'POST',
+			 url: generate_sites_params.ajaxurl,
+			 data: {
+				 action: 'generate_restore_site_options',
+				 nonce: generate_sites_params.nonce,
+			 },
+			 success: function( data ) {
+				 restoreContent();
+				 console.log( data );
+			 },
+			 error: function( data ) {
+				 console.log( data );
+			 }
+		 } );
+	 }
+
+	 function restoreContent() {
+		 var restoreBox = $( '.remove-site' );
+
+		 restoreBox.find( '.remove-site-message' ).text( generate_sites_params.restoreContent );
+
+		 $.ajax( {
+			 type: 'POST',
+			 url: generate_sites_params.ajaxurl,
+			 data: {
+				 action: 'generate_restore_content',
+				 nonce: generate_sites_params.nonce,
+			 },
+			 success: function( data ) {
+				 restorePlugins();
+				 console.log( data );
+			 },
+			 error: function( data ) {
+				 console.log( data );
+			 }
+		 } );
+	 }
+
+	 function restorePlugins() {
+		 var restoreBox = $( '.remove-site' );
+
+		 restoreBox.find( '.remove-site-message' ).text( generate_sites_params.restorePlugins );
+
+		 $.ajax( {
+			 type: 'POST',
+			 url: generate_sites_params.ajaxurl,
+			 data: {
+				 action: 'generate_restore_plugins',
+				 nonce: generate_sites_params.nonce,
+			 },
+			 success: function( data ) {
+				 restoreWidgets();
+				 console.log( data );
+			 },
+			 error: function( data ) {
+				 console.log( data );
+			 }
+		 } );
+	 }
+
+	 function restoreWidgets() {
+		 var restoreBox = $( '.remove-site' );
+
+		 restoreBox.find( '.remove-site-message' ).text( generate_sites_params.restoreWidgets );
+
+		 $.ajax( {
+			 type: 'POST',
+			 url: generate_sites_params.ajaxurl,
+			 data: {
+				 action: 'generate_restore_widgets',
+				 nonce: generate_sites_params.nonce,
+			 },
+			 success: function( data ) {
+				 restoreCSS();
+				 console.log( data );
+			 },
+			 error: function( data ) {
+				 console.log( data );
+			 }
+		 } );
+	 }
+
+	 function restoreCSS() {
+		 var restoreBox = $( '.remove-site' );
+
+		 restoreBox.find( '.remove-site-message' ).text( generate_sites_params.restoreCSS );
+
+		 $.ajax( {
+			 type: 'POST',
+			 url: generate_sites_params.ajaxurl,
+			 data: {
+				 action: 'generate_restore_css',
+				 nonce: generate_sites_params.nonce,
+			 },
+			 success: function( data ) {
+				 cleanUp();
+				 console.log( data );
+			 },
+			 error: function( data ) {
+				 console.log( data );
+			 }
+		 } );
+	 }
+
+	 function cleanUp() {
+		 var restoreBox = $( '.remove-site' );
+
+		 restoreBox.find( '.remove-site-message' ).text( generate_sites_params.cleanUp );
+
+		 $.ajax( {
+			 type: 'POST',
+			 url: generate_sites_params.ajaxurl,
+			 data: {
+				 action: 'generate_restore_site_clean_up',
+				 nonce: generate_sites_params.nonce,
+			 },
+			 success: function( data ) {
+				 restoreBox.find( '.loading' ).hide();
+				 restoreBox.hide();
+
+				 $( '.generatepress-sites' ).removeClass( 'remove-site-needed' );
+				 $( 'body' ).removeClass( 'site-import-content-exists' );
+				 $( 'body' ).removeClass( 'site-import-data-exists' );
+				 console.log( data );
+			 },
+			 error: function( data ) {
+				 console.log( data );
+			 }
+		 } );
+	 }
+
+	 $( '.do-remove-site' ).on( 'click', function( e ) {
+		 e.preventDefault();
+
+		 if ( confirm( generate_sites_params.confirmRemoval ) ) {
+		 	restoreThemeOptions();
+		}
+	 } );
+
+	 $( '.skip-remove-site' ).on( 'click', function( e ) {
+		 e.preventDefault();
+
+		 $( '.remove-site' ).hide();
+		 $( '.generatepress-sites' ).removeClass( 'remove-site-needed' );
+		 $( 'body' ).removeClass( 'site-import-content-exists' );
+		 $( 'body' ).removeClass( 'site-import-data-exists' );
 	 } );
 } );

@@ -210,10 +210,21 @@ var Generate_Sections = {
 				init_settings = this.tmc_defaults;
 			}
 
+			var thisPanel = this.ui.panels;
+
 			var custom_settings = {
                 wp_autoresize_on: false,
                 cache_suffix: "",
                 min_height: 400,
+				wp_keep_scroll_position: false,
+				setup: function( editor ) {
+					editor.on( 'init', function( e ) {
+						if ( 'html-active' === generate_sections_metabox_i18n.default_editor && generate_sections_metabox_i18n.user_can_richedit ) {
+							thisPanel.find( '#wp-generate-sections-editor-wrap' ).removeClass( 'tmce-active' ).addClass( 'html-active' );
+							editor.hidden = true;
+						}
+					} );
+				}
             }
 
 			init_settings = $.extend({}, init_settings, custom_settings);
@@ -226,6 +237,10 @@ var Generate_Sections = {
 				qt_settings = this.qt_defaults;
 			}
 
+			if ( ! generate_sections_metabox_i18n.user_can_richedit ) {
+				init_settings = false;
+			}
+
 			wp.sectionsEditor.initialize( id, {
 				tinymce: init_settings,
 				quicktags: qt_settings,
@@ -235,6 +250,10 @@ var Generate_Sections = {
 			var buttonsElement = this.ui.panels.find( '#wp-generate-sections-editor-wrap' ).find( '.wp-media-buttons' );
 			buttonsElement.attr( 'id', 'custom-media-buttons' );
 			$( customButtons ).appendTo( buttonsElement );
+
+			if ( ! generate_sections_metabox_i18n.user_can_richedit ) {
+				this.ui.panels.find( '#generate-sections-editor' ).addClass( 'no-rich-edit' );
+			}
 		},
 
         /**

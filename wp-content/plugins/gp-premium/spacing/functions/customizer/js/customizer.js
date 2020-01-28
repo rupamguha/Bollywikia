@@ -95,7 +95,8 @@ var content_areas = '.separate-containers .inside-article, \
 					.separate-containers .page-header, \
 					.separate-containers .paging-navigation, \
 					.one-container .site-content, \
-					.inside-page-header';
+					.inside-page-header, \
+					.wp-block-group__inner-container';
 
 generate_spacing_live_update( 'content_top', 'content_top', content_areas, 'padding-top', false, false, gp_spacing.desktop );
 generate_spacing_live_update( 'content_right', 'content_right', content_areas, 'padding-right', false, false, gp_spacing.desktop );

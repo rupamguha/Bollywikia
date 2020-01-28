@@ -78,7 +78,7 @@ if ( ! function_exists( 'generate_typography_wc_customizer' ) ) {
 				$wp_customize,
 				'google_wc_product_title_control',
 				array(
-					'label' => __( 'Product Titles', 'gp-premium' ),
+					'label' => __( 'Shop Product Titles', 'gp-premium' ),
 					'section' => 'generate_woocommerce_typography',
 					'settings' => array(
 						'weight' => 'generate_settings[wc_product_title_font_weight]',

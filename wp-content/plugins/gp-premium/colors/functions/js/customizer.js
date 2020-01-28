@@ -250,6 +250,40 @@ generate_colors_live_update( 'navigation_text_color',
 );
 
 /**
+ * Navigation search
+ */
+wp.customize( 'generate_settings[navigation_search_background_color]', function( value ) {
+	value.bind( function( newval ) {
+		if ( jQuery( 'style#navigation_search_background_color' ).length ) {
+			jQuery( 'style#navigation_search_background_color' ).html( '.navigation-search input[type="search"],.navigation-search input[type="search"]:active, .navigation-search input[type="search"]:focus, .main-navigation .main-nav ul li.search-item.active > a{background-color:' + newval + ';}' );
+		} else {
+			jQuery( 'head' ).append( '<style id="navigation_search_background_color">.navigation-search input[type="search"],.navigation-search input[type="search"]:active, .navigation-search input[type="search"]:focus, .main-navigation .main-nav ul li.search-item.active > a{background-color:' + newval + ';}</style>' );
+			setTimeout(function() {
+				jQuery( 'style#navigation_search_background_color' ).not( ':last' ).remove();
+			}, 1000);
+		}
+
+	if ( jQuery( 'style#navigation_search_background_opacity' ).length ) {
+		if ( newval ) {
+			jQuery( 'style#navigation_search_background_opacity' ).html( '.navigation-search input{opacity: 1;}' );
+		} else {
+			jQuery( 'style#navigation_search_background_opacity' ).html( '.navigation-search input{opacity: 0.9;}' );
+		}
+	} else {
+			if ( newval ) {
+				jQuery( 'head' ).append( '<style id="navigation_search_background_opacity">.navigation-search input{opacity: 1;}</style>' );
+			}
+
+			setTimeout(function() {
+				jQuery( 'style#navigation_search_background_opacity' ).not( ':last' ).remove();
+			}, 1000);
+		}
+	} );
+} );
+
+generate_colors_live_update( 'navigation_search_text_color', '.navigation-search input[type="search"],.navigation-search input[type="search"]:active, .navigation-search input[type="search"]:focus, .main-navigation .main-nav ul li.search-item.active > a', 'color', '' );
+
+/**
  * Secondary navigation text color hover
  * Empty:  link_color_hover
  */

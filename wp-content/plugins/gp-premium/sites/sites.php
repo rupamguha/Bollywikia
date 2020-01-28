@@ -7,6 +7,7 @@ define( 'GENERATE_SITES_URL', plugin_dir_url( __FILE__ ) );
 require_once GENERATE_SITES_PATH . 'classes/class-site.php';
 require_once GENERATE_SITES_PATH . 'classes/class-site-helper.php';
 require_once GENERATE_SITES_PATH . 'classes/class-site-widget-importer.php';
+require_once GENERATE_SITES_PATH . 'classes/class-site-restore.php';
 
 /**
  * Checks to see if we're in the Site dashboard.
@@ -89,6 +90,12 @@ add_action( 'admin_enqueue_scripts', 'generate_sites_do_enqueue_scripts' );
  * @since 1.8
  */
 function generate_sites_do_enqueue_scripts() {
+	if ( ! generate_is_sites_dashboard() ) {
+		return;
+	}
+
+	$backup_data = get_option( '_generatepress_site_library_backup', array() );
+
 	wp_enqueue_script(
 		'generate-sites-admin',
 		GENERATE_SITES_URL . 'assets/js/admin.js',
@@ -131,6 +138,15 @@ function generate_sites_do_enqueue_scripts() {
 			'automatic_plugins'			=> __( 'Automatic', 'gp-premium' ),
 			'manual_plugins'			=> __( 'Manual', 'gp-premium' ),
 			'home_url'					=> home_url(),
+			'restoreThemeOptions'		=> __( 'Restoring theme options', 'gp-premium' ),
+			'restoreSiteOptions'		=> __( 'Restoring site options', 'gp-premium' ),
+			'restoreContent'			=> __( 'Removing imported content', 'gp-premium' ),
+			'restorePlugins'			=> __( 'Deactivating imported plugins', 'gp-premium' ),
+			'restoreWidgets'			=> __( 'Restoring widgets', 'gp-premium' ),
+			'restoreCSS'				=> __( 'Restoring CSS', 'gp-premium' ),
+			'cleanUp'					=> __( 'Cleaning up', 'gp-premium' ),
+			'hasContentBackup'			=> ! empty( $backup_data['content'] ),
+			'confirmRemoval'			=> __( 'This process makes changes to your database. If you have existing data, be sure to create a backup as a precaution.', 'gp-premium' ),
 		)
 	);
 
@@ -252,7 +268,35 @@ function generate_sites_container() {
 			</div> <!-- .site-library-tabs-wrapper -->
 			<?php // The opening wrapper for this is in generate_sites_add_tabs_wrapper_open() ?>
 
-			<div class="generatepress-sites generatepress-admin-block" id="sites" data-page-builder=".no-page-builder">
+			<?php
+				$backup_data = get_option( '_generatepress_site_library_backup', array() );
+				$show_remove_site = false;
+
+				if ( ! empty( $backup_data ) ) {
+					$show_remove_site = true;
+				}
+			?>
+
+			<div class="remove-site" style="<?php echo ! $show_remove_site ? 'display: none' : ''; ?>">
+				<h2><?php _e( 'Existing Site Import Detected', 'gp-premium' ); ?></h2>
+
+				<div class="remove-site-content">
+					<p><?php _e( 'It is highly recommended that you remove the last site you imported before importing a new one.', 'gp-premium' ); ?></p>
+					<p><?php _e( 'This process restores your previous options, widgets and active plugins. It will also remove your imported content and CSS.', 'gp-premium' ); ?></p>
+				</div>
+
+				<div class="remove-site-actions">
+					<button class="do-remove-site button-primary"><?php _e( 'Remove Imported Site', 'gp-premium' ); ?></button>
+					<a class="skip-remove-site" href="#"><?php _e( 'Skip', 'gp-premium' ); ?></a>
+
+					<div class="loading" style="display: none;">
+						<span class="remove-site-message"></span>
+						<?php GeneratePress_Sites_Helper::loading_icon(); ?>
+					</div>
+				</div>
+			</div>
+
+			<div class="generatepress-sites generatepress-admin-block <?php echo $show_remove_site ? 'remove-site-needed' : ''; ?>" id="sites" data-page-builder=".no-page-builder">
 				<?php do_action( 'generate_inside_sites_container' ); ?>
 			</div>
 
@@ -463,7 +507,7 @@ function generatepress_sites_do_site_options_export( $data ) {
 	$data['modules'] = array();
 	foreach ( $modules as $name => $key ) {
 		if ( 'activated' == get_option( $key ) ) {
-			$data['modules'][$name] = $key;
+			$data['modules'][ $name ] = $key;
 		}
 	}
 
@@ -557,6 +601,11 @@ function generatepress_sites_do_site_options_export( $data ) {
 		$data['site_options']['ank_google_map'] = get_option( 'ank_google_map' );
 	}
 
+	// GP Social Share
+	if ( is_plugin_active( 'gp-social-share-svg/gp-social-share.php' ) ) {
+		$data['site_options']['gp_social_settings'] = get_option( 'gp_social_settings' );
+	}
+
 	// Active plugins
 	$active_plugins = get_option( 'active_plugins' );
 	$all_plugins = get_plugins();
@@ -601,7 +650,7 @@ function generatepress_sites_init() {
 		if ( empty( $remote_sites ) ) {
 			$sites = array();
 
-			$data = wp_safe_remote_get( 'https://gpsites.co/wp-json/wp/v2/sites?per_page=50' );
+			$data = wp_safe_remote_get( 'https://gpsites.co/wp-json/wp/v2/sites?per_page=100' );
 
 			if ( is_wp_error( $data ) ) {
 				set_transient( 'generatepress_sites', 'no results', 5 * MINUTE_IN_SECONDS );

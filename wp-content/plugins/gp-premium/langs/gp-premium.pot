@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GP Premium\n"
-"POT-Creation-Date: 2019-04-03 10:14-0700\n"
+"POT-Creation-Date: 2019-11-06 11:02-0800\n"
 "PO-Revision-Date: 2016-10-01 21:24-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
@@ -40,8 +40,8 @@ msgstr ""
 #: backgrounds/functions/functions.php:248 colors/functions/functions.php:72
 #: disable-elements/functions/functions.php:128
 #: disable-elements/functions/functions.php:130
-#: disable-elements/functions/functions.php:291
-#: disable-elements/functions/functions.php:293 elements/class-metabox.php:1029
+#: disable-elements/functions/functions.php:290
+#: disable-elements/functions/functions.php:292 elements/class-metabox.php:1029
 #: typography/functions/functions.php:256
 msgid "Top Bar"
 msgstr ""
@@ -52,10 +52,10 @@ msgstr ""
 #: colors/functions/functions.php:168
 #: disable-elements/functions/functions.php:134
 #: disable-elements/functions/functions.php:136
-#: disable-elements/functions/functions.php:297
-#: disable-elements/functions/functions.php:299 elements/class-metabox.php:156
-#: elements/class-metabox.php:1941 elements/class-post-type.php:195
-#: library/customizer-helpers.php:120
+#: disable-elements/functions/functions.php:296
+#: disable-elements/functions/functions.php:298 elements/class-metabox.php:156
+#: elements/class-metabox.php:1942 elements/class-post-type.php:195
+#: library/customizer-helpers.php:129
 #: spacing/functions/customizer/header-spacing.php:11
 #: typography/functions/functions.php:379
 #: typography/functions/functions.php:393
@@ -67,18 +67,18 @@ msgstr ""
 #: colors/functions/functions.php:279
 #: disable-elements/functions/functions.php:139
 #: disable-elements/functions/functions.php:141
-#: disable-elements/functions/functions.php:302
-#: disable-elements/functions/functions.php:304 elements/class-metabox.php:1038
-#: library/customizer-helpers.php:138
+#: disable-elements/functions/functions.php:301
+#: disable-elements/functions/functions.php:303 elements/class-metabox.php:1038
+#: library/customizer-helpers.php:147
 #: spacing/functions/customizer/navigation-spacing.php:11
-#: typography/functions/functions.php:636
-#: typography/functions/functions.php:650
+#: typography/functions/functions.php:652
+#: typography/functions/functions.php:666
 msgid "Primary Navigation"
 msgstr ""
 
 #: backgrounds/functions/functions.php:457
 #: backgrounds/functions/secondary-nav-backgrounds.php:87
-#: elements/class-metabox.php:1953
+#: elements/class-metabox.php:1954
 msgid "Navigation"
 msgstr ""
 
@@ -191,40 +191,40 @@ msgstr ""
 #: backgrounds/functions/functions.php:800
 #: backgrounds/functions/functions.php:813
 #: backgrounds/functions/functions.php:843 blog/functions/customizer.php:49
-#: colors/functions/functions.php:669 colors/functions/functions.php:681
+#: colors/functions/functions.php:731 colors/functions/functions.php:743
 #: elements/class-metabox.php:213 elements/class-metabox.php:913
 #: elements/class-metabox.php:920 elements/class-metabox.php:934
 #: elements/class-metabox.php:941 elements/class-metabox.php:948
-#: elements/class-metabox.php:1965 library/customizer-helpers.php:160
+#: elements/class-metabox.php:1966 library/customizer-helpers.php:169
 #: sections/functions/metaboxes/metabox-functions.php:248
 #: sections/functions/metaboxes/metabox-functions.php:251
 #: spacing/functions/customizer/content-spacing.php:11
-#: typography/functions/functions.php:925
+#: typography/functions/functions.php:959
 msgid "Content"
 msgstr ""
 
 #: backgrounds/functions/functions.php:904
-#: backgrounds/functions/functions.php:917 colors/functions/functions.php:850
-#: elements/class-metabox.php:193 library/customizer-helpers.php:178
+#: backgrounds/functions/functions.php:917 colors/functions/functions.php:912
+#: elements/class-metabox.php:193 library/customizer-helpers.php:187
 msgid "Sidebar"
 msgstr ""
 
-#: backgrounds/functions/functions.php:945 colors/functions/functions.php:838
+#: backgrounds/functions/functions.php:945 colors/functions/functions.php:900
 msgid "Sidebar Widgets"
 msgstr ""
 
 #: backgrounds/functions/functions.php:1006
-#: backgrounds/functions/functions.php:1019 colors/functions/functions.php:1086
-#: colors/functions/functions.php:1098
+#: backgrounds/functions/functions.php:1019 colors/functions/functions.php:1148
+#: colors/functions/functions.php:1160
 #: disable-elements/functions/functions.php:161
 #: disable-elements/functions/functions.php:163
-#: disable-elements/functions/functions.php:324
-#: disable-elements/functions/functions.php:326 elements/class-metabox.php:199
-#: elements/class-metabox.php:1074 elements/class-metabox.php:2000
-#: library/customizer-helpers.php:196
+#: disable-elements/functions/functions.php:323
+#: disable-elements/functions/functions.php:325 elements/class-metabox.php:199
+#: elements/class-metabox.php:1074 elements/class-metabox.php:2001
+#: library/customizer-helpers.php:205
 #: spacing/functions/customizer/footer-spacing.php:12
-#: typography/functions/functions.php:2084
-#: typography/functions/functions.php:2098
+#: typography/functions/functions.php:2355
+#: typography/functions/functions.php:2369
 msgid "Footer"
 msgstr ""
 
@@ -242,11 +242,11 @@ msgstr ""
 #: colors/functions/secondary-nav-colors.php:64
 #: disable-elements/functions/functions.php:145
 #: disable-elements/functions/functions.php:147
-#: disable-elements/functions/functions.php:308
-#: disable-elements/functions/functions.php:310 elements/class-metabox.php:1047
-#: secondary-nav/functions/functions.php:158
-#: secondary-nav/functions/functions.php:167
-#: secondary-nav/functions/functions.php:180
+#: disable-elements/functions/functions.php:307
+#: disable-elements/functions/functions.php:309 elements/class-metabox.php:1047
+#: secondary-nav/functions/functions.php:160
+#: secondary-nav/functions/functions.php:169
+#: secondary-nav/functions/functions.php:182
 #: typography/functions/secondary-nav-fonts.php:49
 #: typography/functions/secondary-nav-fonts.php:63
 msgid "Secondary Navigation"
@@ -257,7 +257,7 @@ msgid "Secondary Sub-Navigation"
 msgstr ""
 
 #: blog/functions/customizer.php:35 elements/class-conditions.php:40
-#: elements/class-hero.php:812
+#: elements/class-hero.php:823
 msgid "Blog"
 msgstr ""
 
@@ -378,9 +378,9 @@ msgstr ""
 
 #: blog/functions/customizer.php:531 blog/functions/customizer.php:695
 #: blog/functions/customizer.php:859 elements/class-metabox.php:372
-#: elements/class-metabox.php:394 secondary-nav/functions/functions.php:282
-#: woocommerce/functions/customizer/customizer.php:324
-#: woocommerce/functions/customizer/customizer.php:367
+#: elements/class-metabox.php:394 secondary-nav/functions/functions.php:284
+#: woocommerce/functions/customizer/customizer.php:390
+#: woocommerce/functions/customizer/customizer.php:433
 msgid "Center"
 msgstr ""
 
@@ -388,11 +388,11 @@ msgstr ""
 #: blog/functions/customizer.php:860 elements/class-metabox.php:371
 #: elements/class-metabox.php:444 elements/class-metabox.php:482
 #: library/customizer/controls/class-spacing-control.php:43
-#: menu-plus/functions/generate-menu-plus.php:609
-#: secondary-nav/functions/functions.php:281
-#: secondary-nav/functions/functions.php:338
-#: woocommerce/functions/customizer/customizer.php:323
-#: woocommerce/functions/customizer/customizer.php:366
+#: menu-plus/functions/generate-menu-plus.php:655
+#: secondary-nav/functions/functions.php:283
+#: secondary-nav/functions/functions.php:340
+#: woocommerce/functions/customizer/customizer.php:389
+#: woocommerce/functions/customizer/customizer.php:432
 msgid "Left"
 msgstr ""
 
@@ -400,11 +400,11 @@ msgstr ""
 #: blog/functions/customizer.php:861 elements/class-metabox.php:373
 #: elements/class-metabox.php:426 elements/class-metabox.php:464
 #: library/customizer/controls/class-spacing-control.php:41
-#: menu-plus/functions/generate-menu-plus.php:610
-#: secondary-nav/functions/functions.php:283
-#: secondary-nav/functions/functions.php:337
-#: woocommerce/functions/customizer/customizer.php:325
-#: woocommerce/functions/customizer/customizer.php:368
+#: menu-plus/functions/generate-menu-plus.php:656
+#: secondary-nav/functions/functions.php:285
+#: secondary-nav/functions/functions.php:339
+#: woocommerce/functions/customizer/customizer.php:391
+#: woocommerce/functions/customizer/customizer.php:434
 msgid "Right"
 msgstr ""
 
@@ -425,8 +425,9 @@ msgid "Height"
 msgstr ""
 
 #: blog/functions/customizer.php:601 blog/functions/customizer.php:765
-#: blog/functions/customizer.php:929
-msgid "Apply sizes"
+#: blog/functions/customizer.php:929 inc/activation.php:139
+#: sections/functions/metaboxes/views/sections-template.php:80
+msgid "Apply"
 msgstr ""
 
 #: blog/functions/customizer.php:671 blog/functions/customizer.php:835
@@ -469,9 +470,10 @@ msgstr ""
 
 #: colors/functions/functions.php:93 colors/functions/functions.php:195
 #: colors/functions/functions.php:320 colors/functions/functions.php:451
-#: colors/functions/functions.php:592 colors/functions/functions.php:708
-#: colors/functions/functions.php:877 colors/functions/functions.php:1138
-#: colors/functions/functions.php:1220 colors/functions/functions.php:1297
+#: colors/functions/functions.php:582 colors/functions/functions.php:654
+#: colors/functions/functions.php:770 colors/functions/functions.php:939
+#: colors/functions/functions.php:1200 colors/functions/functions.php:1282
+#: colors/functions/functions.php:1359
 #: colors/functions/secondary-nav-colors.php:105
 #: colors/functions/secondary-nav-colors.php:259
 #: colors/functions/slideout-nav-colors.php:100
@@ -482,9 +484,10 @@ msgstr ""
 
 #: colors/functions/functions.php:109 colors/functions/functions.php:210
 #: colors/functions/functions.php:382 colors/functions/functions.php:513
-#: colors/functions/functions.php:614 colors/functions/functions.php:722
-#: colors/functions/functions.php:891 colors/functions/functions.php:1151
-#: colors/functions/functions.php:1233 colors/functions/functions.php:1319
+#: colors/functions/functions.php:605 colors/functions/functions.php:676
+#: colors/functions/functions.php:784 colors/functions/functions.php:953
+#: colors/functions/functions.php:1213 colors/functions/functions.php:1295
+#: colors/functions/functions.php:1381
 #: colors/functions/secondary-nav-colors.php:129
 #: colors/functions/secondary-nav-colors.php:283
 #: colors/functions/slideout-nav-colors.php:124
@@ -493,19 +496,19 @@ msgid "Text"
 msgstr ""
 
 #: colors/functions/functions.php:115 colors/functions/functions.php:216
-#: colors/functions/functions.php:728 colors/functions/functions.php:897
-#: colors/functions/functions.php:1156 colors/functions/functions.php:1238
+#: colors/functions/functions.php:790 colors/functions/functions.php:959
+#: colors/functions/functions.php:1218 colors/functions/functions.php:1300
 msgid "Link"
 msgstr ""
 
 #: colors/functions/functions.php:121 colors/functions/functions.php:222
-#: colors/functions/functions.php:734 colors/functions/functions.php:903
-#: colors/functions/functions.php:1161 colors/functions/functions.php:1243
+#: colors/functions/functions.php:796 colors/functions/functions.php:965
+#: colors/functions/functions.php:1223 colors/functions/functions.php:1305
 msgid "Link Hover"
 msgstr ""
 
 #: colors/functions/functions.php:228 elements/class-metabox.php:690
-#: menu-plus/functions/generate-menu-plus.php:439
+#: menu-plus/functions/generate-menu-plus.php:467
 #: typography/functions/functions.php:460
 msgid "Site Title"
 msgstr ""
@@ -520,7 +523,7 @@ msgid "Parent Items"
 msgstr ""
 
 #: colors/functions/functions.php:344 colors/functions/functions.php:475
-#: colors/functions/functions.php:636 colors/functions/functions.php:1340
+#: colors/functions/functions.php:698 colors/functions/functions.php:1402
 #: colors/functions/secondary-nav-colors.php:152
 #: colors/functions/secondary-nav-colors.php:306
 #: colors/functions/slideout-nav-colors.php:147
@@ -537,7 +540,7 @@ msgid "Background Current"
 msgstr ""
 
 #: colors/functions/functions.php:388 colors/functions/functions.php:519
-#: colors/functions/functions.php:658 colors/functions/functions.php:1362
+#: colors/functions/functions.php:720 colors/functions/functions.php:1424
 #: colors/functions/secondary-nav-colors.php:176
 #: colors/functions/secondary-nav-colors.php:330
 #: colors/functions/slideout-nav-colors.php:171
@@ -559,114 +562,118 @@ msgstr ""
 msgid "Sub-Menu Items"
 msgstr ""
 
-#: colors/functions/functions.php:555
+#: colors/functions/functions.php:560
+msgid "Navigation Search"
+msgstr ""
+
+#: colors/functions/functions.php:617
 #: colors/functions/woocommerce-colors.php:63
-#: typography/functions/functions.php:786
+#: typography/functions/functions.php:820
 msgid "Buttons"
 msgstr ""
 
-#: colors/functions/functions.php:567 typography/functions/functions.php:800
+#: colors/functions/functions.php:629 typography/functions/functions.php:834
 msgid "Button"
 msgstr ""
 
-#: colors/functions/functions.php:740
+#: colors/functions/functions.php:802
 #: disable-elements/functions/functions.php:156
 #: disable-elements/functions/functions.php:158
-#: disable-elements/functions/functions.php:319
-#: disable-elements/functions/functions.php:321 elements/class-metabox.php:1065
+#: disable-elements/functions/functions.php:318
+#: disable-elements/functions/functions.php:320 elements/class-metabox.php:1065
 msgid "Content Title"
 msgstr ""
 
-#: colors/functions/functions.php:746
-msgid "Blog Post Title"
+#: colors/functions/functions.php:808
+msgid "Archive Content Title"
 msgstr ""
 
-#: colors/functions/functions.php:752
-msgid "Blog Post Title Hover"
+#: colors/functions/functions.php:814
+msgid "Archive Content Title Hover"
 msgstr ""
 
-#: colors/functions/functions.php:758
+#: colors/functions/functions.php:820
 msgid "Entry Meta Text"
 msgstr ""
 
-#: colors/functions/functions.php:764
+#: colors/functions/functions.php:826
 msgid "Entry Meta Links"
 msgstr ""
 
-#: colors/functions/functions.php:770
+#: colors/functions/functions.php:832
 msgid "Entry Meta Links Hover"
 msgstr ""
 
-#: colors/functions/functions.php:776
+#: colors/functions/functions.php:838
 msgid "Heading 1 (H1) Color"
 msgstr ""
 
-#: colors/functions/functions.php:782
+#: colors/functions/functions.php:844
 msgid "Heading 2 (H2) Color"
 msgstr ""
 
-#: colors/functions/functions.php:788
+#: colors/functions/functions.php:850
 msgid "Heading 3 (H3) Color"
 msgstr ""
 
-#: colors/functions/functions.php:796
+#: colors/functions/functions.php:858
 msgid "Heading 4 (H4) Color"
 msgstr ""
 
-#: colors/functions/functions.php:805
+#: colors/functions/functions.php:867
 msgid "Heading 5 (H5) Color"
 msgstr ""
 
-#: colors/functions/functions.php:909 colors/functions/functions.php:1166
+#: colors/functions/functions.php:971 colors/functions/functions.php:1228
 msgid "Widget Title"
 msgstr ""
 
-#: colors/functions/functions.php:941
+#: colors/functions/functions.php:1003
 msgid "Forms"
 msgstr ""
 
-#: colors/functions/functions.php:962
+#: colors/functions/functions.php:1024
 msgid "Form Background"
 msgstr ""
 
-#: colors/functions/functions.php:986
+#: colors/functions/functions.php:1048
 msgid "Form Background Focus"
 msgstr ""
 
-#: colors/functions/functions.php:1010
+#: colors/functions/functions.php:1072
 msgid "Form Border"
 msgstr ""
 
-#: colors/functions/functions.php:1034
+#: colors/functions/functions.php:1096
 msgid "Form Border Focus"
 msgstr ""
 
-#: colors/functions/functions.php:1048
+#: colors/functions/functions.php:1110
 msgid "Form Text"
 msgstr ""
 
-#: colors/functions/functions.php:1054
+#: colors/functions/functions.php:1116
 msgid "Form Text Focus"
 msgstr ""
 
-#: colors/functions/functions.php:1117 elements/class-metabox.php:960
+#: colors/functions/functions.php:1179 elements/class-metabox.php:960
 msgid "Footer Widgets"
 msgstr ""
 
-#: colors/functions/functions.php:1199
+#: colors/functions/functions.php:1261
 msgid "Footer Bar"
 msgstr ""
 
-#: colors/functions/functions.php:1277
+#: colors/functions/functions.php:1339
 msgid "Back to Top Button"
 msgstr ""
 
 #: colors/functions/slideout-nav-colors.php:47
 #: colors/functions/slideout-nav-colors.php:60
-#: menu-plus/functions/generate-menu-plus.php:519
-#: menu-plus/functions/generate-menu-plus.php:532
-#: menu-plus/functions/generate-menu-plus.php:557
-#: menu-plus/functions/generate-menu-plus.php:982
+#: menu-plus/functions/generate-menu-plus.php:547
+#: menu-plus/functions/generate-menu-plus.php:560
+#: menu-plus/functions/generate-menu-plus.php:585
+#: menu-plus/functions/generate-menu-plus.php:1077
 #: typography/functions/slideout-nav-fonts.php:39
 #: typography/functions/slideout-nav-fonts.php:52
 msgid "Off Canvas Panel"
@@ -680,8 +687,8 @@ msgstr ""
 #: typography/functions/woocommerce-fonts.php:43
 #: woocommerce/functions/customizer/customizer.php:57
 #: woocommerce/functions/customizer/customizer.php:70
-#: woocommerce/functions/customizer/customizer.php:898
-#: woocommerce/functions/customizer/customizer.php:908
+#: woocommerce/functions/customizer/customizer.php:981
+#: woocommerce/functions/customizer/customizer.php:991
 msgid "WooCommerce"
 msgstr ""
 
@@ -845,8 +852,8 @@ msgstr ""
 
 #: disable-elements/functions/functions.php:151
 #: disable-elements/functions/functions.php:153
-#: disable-elements/functions/functions.php:314
-#: disable-elements/functions/functions.php:316
+#: disable-elements/functions/functions.php:313
+#: disable-elements/functions/functions.php:315
 msgid "Featured Image / Page Header"
 msgstr ""
 
@@ -921,7 +928,7 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: elements/class-hero.php:839
+#: elements/class-hero.php:850
 #, php-format
 msgid "View all posts by %s"
 msgstr ""
@@ -1044,8 +1051,8 @@ msgid "Full Width"
 msgstr ""
 
 #: elements/class-metabox.php:348 elements/class-metabox.php:359
-#: secondary-nav/functions/functions.php:230
-#: secondary-nav/functions/functions.php:256
+#: secondary-nav/functions/functions.php:232
+#: secondary-nav/functions/functions.php:258
 #: sections/functions/metaboxes/views/sections-template.php:177
 #: sections/functions/metaboxes/views/sections-template.php:185
 msgctxt "Width"
@@ -1184,7 +1191,7 @@ msgstr ""
 msgid "Header Background"
 msgstr ""
 
-#: elements/class-metabox.php:701 typography/functions/functions.php:583
+#: elements/class-metabox.php:701 typography/functions/functions.php:599
 msgid "Site Tagline"
 msgstr ""
 
@@ -1204,7 +1211,7 @@ msgid "Retina Logo"
 msgstr ""
 
 #: elements/class-metabox.php:764
-#: menu-plus/functions/generate-menu-plus.php:296
+#: menu-plus/functions/generate-menu-plus.php:331
 msgid "Navigation Logo"
 msgstr ""
 
@@ -1212,7 +1219,7 @@ msgstr ""
 msgid "Mobile Header Logo"
 msgstr ""
 
-#: elements/class-metabox.php:815 secondary-nav/functions/functions.php:305
+#: elements/class-metabox.php:815 secondary-nav/functions/functions.php:307
 msgid "Navigation Location"
 msgstr ""
 
@@ -1221,33 +1228,33 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: elements/class-metabox.php:820 secondary-nav/functions/functions.php:308
+#: elements/class-metabox.php:820 secondary-nav/functions/functions.php:310
 msgid "Below Header"
 msgstr ""
 
-#: elements/class-metabox.php:821 secondary-nav/functions/functions.php:309
+#: elements/class-metabox.php:821 secondary-nav/functions/functions.php:311
 msgid "Above Header"
 msgstr ""
 
-#: elements/class-metabox.php:822 secondary-nav/functions/functions.php:310
+#: elements/class-metabox.php:822 secondary-nav/functions/functions.php:312
 msgid "Float Right"
 msgstr ""
 
-#: elements/class-metabox.php:823 secondary-nav/functions/functions.php:311
+#: elements/class-metabox.php:823 secondary-nav/functions/functions.php:313
 msgid "Float Left"
 msgstr ""
 
 #: elements/class-metabox.php:824 elements/class-metabox.php:918
-#: secondary-nav/functions/functions.php:312
+#: secondary-nav/functions/functions.php:314
 msgid "Left Sidebar"
 msgstr ""
 
 #: elements/class-metabox.php:825 elements/class-metabox.php:911
-#: secondary-nav/functions/functions.php:313
+#: secondary-nav/functions/functions.php:315
 msgid "Right Sidebar"
 msgstr ""
 
-#: elements/class-metabox.php:826 secondary-nav/functions/functions.php:314
+#: elements/class-metabox.php:826 secondary-nav/functions/functions.php:316
 msgid "No Navigation"
 msgstr ""
 
@@ -1281,7 +1288,7 @@ msgstr ""
 
 #: elements/class-metabox.php:900
 #: woocommerce/functions/customizer/customizer.php:227
-#: woocommerce/functions/customizer/customizer.php:647
+#: woocommerce/functions/customizer/customizer.php:713
 msgid "Sidebar Layout"
 msgstr ""
 
@@ -1298,7 +1305,7 @@ msgstr ""
 
 #: elements/class-metabox.php:927
 #: woocommerce/functions/customizer/customizer.php:232
-#: woocommerce/functions/customizer/customizer.php:653
+#: woocommerce/functions/customizer/customizer.php:719
 msgid "Content (no sidebars)"
 msgstr ""
 
@@ -1404,56 +1411,56 @@ msgstr ""
 msgid "Scripts & Styles"
 msgstr ""
 
-#: elements/class-metabox.php:1982
+#: elements/class-metabox.php:1983
 msgid "Comments"
 msgstr ""
 
-#: elements/class-metabox.php:1991
+#: elements/class-metabox.php:1992
 #: spacing/functions/customizer/sidebar-spacing.php:12
 msgid "Sidebars"
 msgstr ""
 
-#: elements/class-metabox.php:2016
+#: elements/class-metabox.php:2017
 msgid "WooCommerce - Global"
 msgstr ""
 
-#: elements/class-metabox.php:2026
+#: elements/class-metabox.php:2027
 msgid "WooCommerce - Shop"
 msgstr ""
 
-#: elements/class-metabox.php:2037
+#: elements/class-metabox.php:2038
 msgid "WooCommerce - Product"
 msgstr ""
 
-#: elements/class-metabox.php:2058
+#: elements/class-metabox.php:2059
 msgid "WooCommerce - Cart"
 msgstr ""
 
-#: elements/class-metabox.php:2080
+#: elements/class-metabox.php:2081
 msgid "WooCommerce - Checkout"
 msgstr ""
 
-#: elements/class-metabox.php:2107
+#: elements/class-metabox.php:2108
 msgid "WooCommerce - Account"
 msgstr ""
 
-#: elements/class-metabox.php:2123
+#: elements/class-metabox.php:2124
 msgid "The content title of the current post/taxonomy."
 msgstr ""
 
-#: elements/class-metabox.php:2128
+#: elements/class-metabox.php:2129
 msgid "The published date of the current post."
 msgstr ""
 
-#: elements/class-metabox.php:2133
+#: elements/class-metabox.php:2134
 msgid "The author of the current post."
 msgstr ""
 
-#: elements/class-metabox.php:2138
+#: elements/class-metabox.php:2139
 msgid "The terms attached to the chosen taxonomy (category, post_tag, product_cat)."
 msgstr ""
 
-#: elements/class-metabox.php:2143
+#: elements/class-metabox.php:2144
 msgid "Custom post meta. Replace \"name\" with the name of your custom field."
 msgstr ""
 
@@ -1536,23 +1543,23 @@ msgstr ""
 msgid "Initiate smooth scroll on anchor links using the <code>smooth-scroll</code> class."
 msgstr ""
 
-#: gp-premium.php:226
+#: gp-premium.php:227
 msgid "GeneratePress has an update available."
 msgstr ""
 
-#: gp-premium.php:228
+#: gp-premium.php:229
 msgid "Update now."
 msgstr ""
 
-#: gp-premium.php:240
+#: gp-premium.php:241
 msgid "GP Premium requires GeneratePress to be your active theme."
 msgstr ""
 
-#: gp-premium.php:241
+#: gp-premium.php:242
 msgid "Install now."
 msgstr ""
 
-#: gp-premium.php:256
+#: gp-premium.php:257
 msgid "Configure"
 msgstr ""
 
@@ -1671,11 +1678,6 @@ msgstr ""
 msgid "Deactivate"
 msgstr ""
 
-#: inc/activation.php:139
-#: sections/functions/metaboxes/views/sections-template.php:80
-msgid "Apply"
-msgstr ""
-
 #: inc/activation.php:173
 msgid "WooCommerce not activated."
 msgstr ""
@@ -1754,7 +1756,7 @@ msgid "Warning: This will delete your settings and can not be undone."
 msgstr ""
 
 #: inc/reset.php:58
-#: library/customizer/controls/class-range-slider-control.php:45
+#: library/customizer/controls/class-range-slider-control.php:46
 msgid "Reset"
 msgstr ""
 
@@ -1781,31 +1783,33 @@ msgstr ""
 msgid "Every %d Minutes"
 msgstr ""
 
-#: library/customizer-helpers.php:58
+#: library/customizer-helpers.php:67
 msgid "This will design your overlay by changing options in the Customizer for you. Once saved, this can not be undone."
 msgstr ""
 
-#: library/customizer-helpers.php:64 typography/functions/functions.php:163
+#: library/customizer-helpers.php:73 typography/functions/functions.php:163
 #: typography/functions/functions.php:354
-#: typography/functions/functions.php:501
-#: typography/functions/functions.php:613
-#: typography/functions/functions.php:755
-#: typography/functions/functions.php:888
-#: typography/functions/functions.php:1025
-#: typography/functions/functions.php:1212
-#: typography/functions/functions.php:1389
-#: typography/functions/functions.php:1559
-#: typography/functions/functions.php:1692
-#: typography/functions/functions.php:1825
-#: typography/functions/functions.php:1992
-#: typography/functions/functions.php:2191
+#: typography/functions/functions.php:509
+#: typography/functions/functions.php:629
+#: typography/functions/functions.php:781
+#: typography/functions/functions.php:922
+#: typography/functions/functions.php:1058
+#: typography/functions/functions.php:1216
+#: typography/functions/functions.php:1364
+#: typography/functions/functions.php:1522
+#: typography/functions/functions.php:1660
+#: typography/functions/functions.php:1830
+#: typography/functions/functions.php:1963
+#: typography/functions/functions.php:2096
+#: typography/functions/functions.php:2263
+#: typography/functions/functions.php:2462
 #: typography/functions/secondary-nav-fonts.php:158
 #: typography/functions/slideout-nav-fonts.php:125
 #: typography/functions/woocommerce-fonts.php:117
 msgid "Font size"
 msgstr ""
 
-#: library/customizer-helpers.php:65
+#: library/customizer-helpers.php:74
 msgid "Mobile header font size"
 msgstr ""
 
@@ -1846,7 +1850,7 @@ msgid "Local"
 msgstr ""
 
 #: library/customizer/controls/class-backgrounds-control.php:142
-#: woocommerce/functions/customizer/customizer.php:650
+#: woocommerce/functions/customizer/customizer.php:716
 msgid "Inherit"
 msgstr ""
 
@@ -1866,21 +1870,21 @@ msgstr ""
 msgid "Shortcodes are allowed."
 msgstr ""
 
-#: library/customizer/controls/class-range-slider-control.php:42
+#: library/customizer/controls/class-range-slider-control.php:43
 #: library/customizer/controls/class-spacing-control.php:44
-#: sites/classes/class-site.php:517
+#: sites/classes/class-site.php:480
 msgid "Desktop"
 msgstr ""
 
-#: library/customizer/controls/class-range-slider-control.php:43
+#: library/customizer/controls/class-range-slider-control.php:44
 #: library/customizer/controls/class-spacing-control.php:45
-#: sites/classes/class-site.php:518
+#: sites/classes/class-site.php:481
 msgid "Tablet"
 msgstr ""
 
-#: library/customizer/controls/class-range-slider-control.php:44
+#: library/customizer/controls/class-range-slider-control.php:45
 #: library/customizer/controls/class-spacing-control.php:46
-#: sites/classes/class-site.php:519
+#: sites/classes/class-site.php:482
 msgid "Mobile"
 msgstr ""
 
@@ -1910,51 +1914,56 @@ msgstr ""
 msgid "Un-link values"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:25
+#: library/customizer/controls/class-typography-control.php:24
 msgid "System Fonts"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:26
+#: library/customizer/controls/class-typography-control.php:25
 msgid "Google Fonts"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:29
+#: library/customizer/controls/class-typography-control.php:27
 msgid "Font family"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:30
+#: library/customizer/controls/class-typography-control.php:28
 msgid "Font weight"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:31
+#: library/customizer/controls/class-typography-control.php:29
 msgid "Text transform"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:33
+#: library/customizer/controls/class-typography-control.php:31
 msgid "Variants"
 msgstr ""
 
 #: library/customizer/controls/class-typography-control.php:162
-msgid "normal"
+#: library/customizer/controls/class-typography-control.php:179
+msgid "inherit"
 msgstr ""
 
 #: library/customizer/controls/class-typography-control.php:163
+msgid "normal"
+msgstr ""
+
+#: library/customizer/controls/class-typography-control.php:164
 msgid "bold"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:178
+#: library/customizer/controls/class-typography-control.php:180
 msgid "none"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:179
+#: library/customizer/controls/class-typography-control.php:181
 msgid "capitalize"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:180
+#: library/customizer/controls/class-typography-control.php:182
 msgid "uppercase"
 msgstr ""
 
-#: library/customizer/controls/class-typography-control.php:181
+#: library/customizer/controls/class-typography-control.php:183
 msgid "lowercase"
 msgstr ""
 
@@ -1963,154 +1972,163 @@ msgid "Off Canvas Menu"
 msgstr ""
 
 #: menu-plus/functions/generate-menu-plus.php:25
-#: menu-plus/functions/generate-menu-plus.php:873
+#: menu-plus/functions/generate-menu-plus.php:946
+#: menu-plus/functions/generate-menu-plus.php:956
 msgid "Menu"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:117
+#: menu-plus/functions/generate-menu-plus.php:118
 msgid "Menu Plus"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:142
+#: menu-plus/functions/generate-menu-plus.php:143
 msgid "General Settings"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:160
-#: secondary-nav/functions/functions.php:204
+#: menu-plus/functions/generate-menu-plus.php:161
+#: secondary-nav/functions/functions.php:206
 msgid "Mobile Menu Label"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:170
-#: menu-plus/functions/generate-menu-plus.php:191
+#: menu-plus/functions/generate-menu-plus.php:182
+msgid "Mobile Menu Breakpoint"
+msgstr ""
+
+#: menu-plus/functions/generate-menu-plus.php:205
+#: menu-plus/functions/generate-menu-plus.php:226
 msgid "Sticky Navigation"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:194
-#: menu-plus/functions/generate-menu-plus.php:560
+#: menu-plus/functions/generate-menu-plus.php:229
+#: menu-plus/functions/generate-menu-plus.php:588
 msgid "Mobile only"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:195
-#: menu-plus/functions/generate-menu-plus.php:561
+#: menu-plus/functions/generate-menu-plus.php:230
+#: menu-plus/functions/generate-menu-plus.php:589
 msgid "Desktop only"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:196
-#: menu-plus/functions/generate-menu-plus.php:383
-#: menu-plus/functions/generate-menu-plus.php:486
-#: menu-plus/functions/generate-menu-plus.php:562
+#: menu-plus/functions/generate-menu-plus.php:231
+#: menu-plus/functions/generate-menu-plus.php:418
+#: menu-plus/functions/generate-menu-plus.php:514
+#: menu-plus/functions/generate-menu-plus.php:590
 msgid "On"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:197
-#: menu-plus/functions/generate-menu-plus.php:382
-#: menu-plus/functions/generate-menu-plus.php:487
-#: menu-plus/functions/generate-menu-plus.php:563
+#: menu-plus/functions/generate-menu-plus.php:232
+#: menu-plus/functions/generate-menu-plus.php:417
+#: menu-plus/functions/generate-menu-plus.php:515
+#: menu-plus/functions/generate-menu-plus.php:591
 msgid "Off"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:218
+#: menu-plus/functions/generate-menu-plus.php:253
 msgid "Transition"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:221
+#: menu-plus/functions/generate-menu-plus.php:256
 msgid "Fade"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:222
-#: menu-plus/functions/generate-menu-plus.php:585
+#: menu-plus/functions/generate-menu-plus.php:257
+#: menu-plus/functions/generate-menu-plus.php:631
 msgid "Slide"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:223 sites/sites.php:230
-#: sites/sites.php:248
+#: menu-plus/functions/generate-menu-plus.php:258 sites/sites.php:240
+#: sites/sites.php:258
 msgid "None"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:245
-#: menu-plus/functions/generate-menu-plus.php:508
+#: menu-plus/functions/generate-menu-plus.php:280
+#: menu-plus/functions/generate-menu-plus.php:536
 msgid "Hide when scrolling down"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:269
+#: menu-plus/functions/generate-menu-plus.php:304
 msgid "Sticky Navigation Logo"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:318
+#: menu-plus/functions/generate-menu-plus.php:353
 msgid "Navigation Logo Placement"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:321
-#: menu-plus/functions/generate-menu-plus.php:483
+#: menu-plus/functions/generate-menu-plus.php:356
+#: menu-plus/functions/generate-menu-plus.php:511
 msgid "Sticky"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:322
+#: menu-plus/functions/generate-menu-plus.php:357
 msgid "Sticky + Static"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:323
+#: menu-plus/functions/generate-menu-plus.php:358
 msgid "Static"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:337
-#: menu-plus/functions/generate-menu-plus.php:379
+#: menu-plus/functions/generate-menu-plus.php:372
+#: menu-plus/functions/generate-menu-plus.php:414
 msgid "Mobile Header"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:358
+#: menu-plus/functions/generate-menu-plus.php:393
 msgid "Use Navigation as Header"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:403
+#: menu-plus/functions/generate-menu-plus.php:430
 msgid "Breakpoint"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:435
+#: menu-plus/functions/generate-menu-plus.php:463
 msgid "Branding Type"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:438
-#: menu-plus/functions/generate-menu-plus.php:461
+#: menu-plus/functions/generate-menu-plus.php:466
+#: menu-plus/functions/generate-menu-plus.php:489
 msgid "Logo"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:582
+#: menu-plus/functions/generate-menu-plus.php:608
+msgid "Desktop Toggle Label"
+msgstr ""
+
+#: menu-plus/functions/generate-menu-plus.php:628
 msgid "Style"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:586
+#: menu-plus/functions/generate-menu-plus.php:632
 msgid "Overlay"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:606
+#: menu-plus/functions/generate-menu-plus.php:652
 msgid "Side"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:624
+#: menu-plus/functions/generate-menu-plus.php:670
 msgid "Set Overlay Defaults"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:625
+#: menu-plus/functions/generate-menu-plus.php:671
 msgid "Clicking the above button will design your overlay by changing some of your off canvas color and typography options."
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:645
+#: menu-plus/functions/generate-menu-plus.php:691
 msgid "Close Button"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:648
+#: menu-plus/functions/generate-menu-plus.php:694
 msgid "Outside"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:649
+#: menu-plus/functions/generate-menu-plus.php:695
 msgid "Inside"
 msgstr ""
 
-#: menu-plus/functions/generate-menu-plus.php:948
-#: menu-plus/functions/generate-menu-plus.php:1525
+#: menu-plus/functions/generate-menu-plus.php:1043
+#: menu-plus/functions/generate-menu-plus.php:1678
 #: sections/functions/metaboxes/views/sections-template.php:69
-#: sites/classes/class-site.php:244 sites/classes/class-site.php:514
+#: sites/classes/class-site.php:244 sites/classes/class-site.php:477
 msgid "Close"
 msgstr ""
 
@@ -2118,29 +2136,29 @@ msgstr ""
 msgid "Secondary Menu"
 msgstr ""
 
-#: secondary-nav/functions/functions.php:226
+#: secondary-nav/functions/functions.php:228
 msgid "Navigation Width"
 msgstr ""
 
-#: secondary-nav/functions/functions.php:229
-#: secondary-nav/functions/functions.php:255
+#: secondary-nav/functions/functions.php:231
+#: secondary-nav/functions/functions.php:257
 msgctxt "Width"
 msgid "Full"
 msgstr ""
 
-#: secondary-nav/functions/functions.php:252
+#: secondary-nav/functions/functions.php:254
 msgid "Inner Navigation Width"
 msgstr ""
 
-#: secondary-nav/functions/functions.php:278
+#: secondary-nav/functions/functions.php:280
 msgid "Navigation Alignment"
 msgstr ""
 
-#: secondary-nav/functions/functions.php:334
+#: secondary-nav/functions/functions.php:336
 msgid "Dropdown Direction"
 msgstr ""
 
-#: secondary-nav/functions/functions.php:359
+#: secondary-nav/functions/functions.php:361
 msgid "Merge with Secondary Navigation"
 msgstr ""
 
@@ -2277,7 +2295,35 @@ msgstr ""
 msgid "No sections added!"
 msgstr ""
 
-#: sites/classes/class-site.php:197 sites/sites.php:201
+#: sites/classes/class-site-restore.php:105
+msgid "Theme options restored."
+msgstr ""
+
+#: sites/classes/class-site-restore.php:134
+msgid "Site options restored."
+msgstr ""
+
+#: sites/classes/class-site-restore.php:158
+msgid "Content restored."
+msgstr ""
+
+#: sites/classes/class-site-restore.php:176
+msgid "Plugins restored."
+msgstr ""
+
+#: sites/classes/class-site-restore.php:194
+msgid "Widgets restored."
+msgstr ""
+
+#: sites/classes/class-site-restore.php:224
+msgid "CSS restored."
+msgstr ""
+
+#: sites/classes/class-site-restore.php:240
+msgid "Completed clean-up."
+msgstr ""
+
+#: sites/classes/class-site.php:197 sites/sites.php:211
 msgid "Documentation"
 msgstr ""
 
@@ -2314,7 +2360,7 @@ msgstr ""
 msgid "Previous Site"
 msgstr ""
 
-#: sites/classes/class-site.php:242 sites/classes/class-site.php:515
+#: sites/classes/class-site.php:242 sites/classes/class-site.php:478
 msgid "Previous"
 msgstr ""
 
@@ -2322,213 +2368,273 @@ msgstr ""
 msgid "Next Site"
 msgstr ""
 
-#: sites/classes/class-site.php:243 sites/classes/class-site.php:516
+#: sites/classes/class-site.php:243 sites/classes/class-site.php:479
 msgid "Next"
 msgstr ""
 
-#: sites/classes/class-site.php:245 sites/classes/class-site.php:334
+#: sites/classes/class-site.php:245 sites/classes/class-site.php:297
 msgid "Preview"
 msgstr ""
 
-#: sites/classes/class-site.php:335 sites/classes/class-site.php:520
+#: sites/classes/class-site.php:298 sites/classes/class-site.php:483
 msgid "Details"
 msgstr ""
 
-#: sites/classes/class-site.php:339
+#: sites/classes/class-site.php:302
 #, php-format
 msgctxt "required version number"
 msgid "Requires GP Premium %s"
 msgstr ""
 
-#: sites/classes/class-site.php:359
+#: sites/classes/class-site.php:322
 #, php-format
 msgid "Welcome to %s."
 msgstr ""
 
-#: sites/classes/class-site.php:381
+#: sites/classes/class-site.php:344
 msgid "I understand that this step will add content, site options, menus, widgets and plugins to my site. It can not be automatically undone."
 msgstr ""
 
-#: sites/classes/class-site.php:389
+#: sites/classes/class-site.php:352
 msgid "I understand that this step will overwrite my Customizer settings. It is recommended that you only use the Site Library on a fresh site."
 msgstr ""
 
-#: sites/classes/class-site.php:400
+#: sites/classes/class-site.php:363
 msgid "Theme Options"
 msgstr ""
 
-#: sites/classes/class-site.php:401
+#: sites/classes/class-site.php:364
 msgid "Options set in the Customizer of the theme."
 msgstr ""
 
-#: sites/classes/class-site.php:408
+#: sites/classes/class-site.php:371
 msgid "Demo Content"
 msgstr ""
 
-#: sites/classes/class-site.php:408
+#: sites/classes/class-site.php:371
 msgid "Skip this step"
 msgstr ""
 
-#: sites/classes/class-site.php:410
+#: sites/classes/class-site.php:373
 msgid "Things like pages, menus, widgets and plugins."
 msgstr ""
 
-#: sites/classes/class-site.php:419
+#: sites/classes/class-site.php:382
 msgid "This site uses the following plugins."
 msgstr ""
 
-#: sites/classes/class-site.php:435
+#: sites/classes/class-site.php:398
 msgid "No plugins required."
 msgstr ""
 
-#: sites/classes/class-site.php:439
+#: sites/classes/class-site.php:402
 msgid "The following plugins can be installed and activated automatically."
 msgstr ""
 
-#: sites/classes/class-site.php:444
+#: sites/classes/class-site.php:407
 msgid "The following plugins are already installed."
 msgstr ""
 
-#: sites/classes/class-site.php:449
+#: sites/classes/class-site.php:412
 msgid "The following plugins need to be installed and activated manually."
 msgstr ""
 
-#: sites/classes/class-site.php:459
+#: sites/classes/class-site.php:422
 msgid "All Done"
 msgstr ""
 
-#: sites/classes/class-site.php:460
+#: sites/classes/class-site.php:423
 msgid "Your site is ready to go!"
 msgstr ""
 
-#: sites/classes/class-site.php:475
+#: sites/classes/class-site.php:438
 msgid "Additional Cleanup"
 msgstr ""
 
-#: sites/classes/class-site.php:476
+#: sites/classes/class-site.php:439
 msgid "This site is using Elementor which means you will want to replace the imported image URLs."
 msgstr ""
 
-#: sites/classes/class-site.php:476
+#: sites/classes/class-site.php:439
 msgid "Learn more"
 msgstr ""
 
-#: sites/classes/class-site.php:480
+#: sites/classes/class-site.php:443
 #, php-format
 msgid "Go to %s, enter the below URLs and click the \"Replace URL\" button."
 msgstr ""
 
-#: sites/classes/class-site.php:486
+#: sites/classes/class-site.php:449
 msgid "Old URL"
 msgstr ""
 
-#: sites/classes/class-site.php:489
+#: sites/classes/class-site.php:452
 msgid "New URL"
 msgstr ""
 
-#: sites/classes/class-site.php:533
+#: sites/classes/class-site.php:496
 msgid "Backup Options"
 msgstr ""
 
-#: sites/classes/class-site.php:545
+#: sites/classes/class-site.php:508
 msgid "Import Options"
 msgstr ""
 
-#: sites/classes/class-site.php:556
+#: sites/classes/class-site.php:519
 msgid "Import Content"
 msgstr ""
 
-#: sites/classes/class-site.php:568
+#: sites/classes/class-site.php:531
 msgid "View Your Site"
 msgstr ""
 
-#: sites/classes/class-site.php:663
+#: sites/classes/class-site.php:631
 msgid "No theme options exist."
 msgstr ""
 
-#: sites/classes/class-site.php:934
+#: sites/classes/class-site.php:967
 msgid "Site options imported"
 msgstr ""
 
-#: sites/classes/class-site.php:978
+#: sites/classes/class-site.php:1011
 msgid "Plugins activated"
 msgstr ""
 
-#: sites/sites.php:49 sites/sites.php:66 sites/sites.php:67
+#: sites/sites.php:44 sites/sites.php:61 sites/sites.php:62
 msgid "Site Library"
 msgstr ""
 
-#: sites/sites.php:128
+#: sites/sites.php:129
 msgid "Importing options"
 msgstr ""
 
-#: sites/sites.php:129
+#: sites/sites.php:130
 msgid "Backing up options"
 msgstr ""
 
-#: sites/sites.php:130
+#: sites/sites.php:131
 msgid "Checking demo content"
 msgstr ""
 
-#: sites/sites.php:131
+#: sites/sites.php:132
 msgid "Downloading content"
 msgstr ""
 
-#: sites/sites.php:132
+#: sites/sites.php:133
 msgid "Importing content"
 msgstr ""
 
-#: sites/sites.php:133
+#: sites/sites.php:134
 msgid "Importing site options"
 msgstr ""
 
-#: sites/sites.php:134
+#: sites/sites.php:135
 msgid "Importing widgets"
 msgstr ""
 
-#: sites/sites.php:135
+#: sites/sites.php:136
 msgid "Activating plugins"
 msgstr ""
 
-#: sites/sites.php:136
+#: sites/sites.php:137
 msgid "Installing plugins"
 msgstr ""
 
-#: sites/sites.php:137
+#: sites/sites.php:138
 msgid "Automatic"
 msgstr ""
 
-#: sites/sites.php:138
+#: sites/sites.php:139
 msgid "Manual"
 msgstr ""
 
-#: sites/sites.php:196
+#: sites/sites.php:141
+msgid "Restoring theme options"
+msgstr ""
+
+#: sites/sites.php:142
+msgid "Restoring site options"
+msgstr ""
+
+#: sites/sites.php:143
+msgid "Removing imported content"
+msgstr ""
+
+#: sites/sites.php:144
+msgid "Deactivating imported plugins"
+msgstr ""
+
+#: sites/sites.php:145
+msgid "Restoring widgets"
+msgstr ""
+
+#: sites/sites.php:146
+msgid "Restoring CSS"
+msgstr ""
+
+#: sites/sites.php:147
+msgid "Cleaning up"
+msgstr ""
+
+#: sites/sites.php:149
+msgid "This process makes changes to your database. If you have existing data, be sure to create a backup as a precaution."
+msgstr ""
+
+#: sites/sites.php:206
 msgid "GeneratePress Site Library"
 msgstr ""
 
-#: sites/sites.php:200
+#: sites/sites.php:210
 msgid "Support"
 msgstr ""
 
-#: sites/sites.php:227 sites/sites.php:245
+#: sites/sites.php:237 sites/sites.php:255
 msgid "Page Builder:"
 msgstr ""
 
-#: sites/sites.php:249
+#: sites/sites.php:259
 msgid "Beaver Builder"
 msgstr ""
 
-#: sites/sites.php:250
+#: sites/sites.php:260
 msgid "Elementor"
 msgstr ""
 
-#: sites/sites.php:271
+#: sites/sites.php:281
+msgid "Existing Site Import Detected"
+msgstr ""
+
+#: sites/sites.php:284
+msgid "It is highly recommended that you remove the last site you imported before importing a new one."
+msgstr ""
+
+#: sites/sites.php:285
+msgid "This process restores your previous options, widgets and active plugins. It will also remove your imported content and CSS."
+msgstr ""
+
+#: sites/sites.php:289
+msgid "Remove Imported Site"
+msgstr ""
+
+#: sites/sites.php:290
+msgid "Skip"
+msgstr ""
+
+#: sites/sites.php:309
 msgid "Refresh Sites"
 msgstr ""
 
-#: sites/sites.php:446
+#: sites/sites.php:484
 msgctxt "Module name"
 msgid "GeneratePress Site"
+msgstr ""
+
+#: sites/sites.php:746
+msgid "No sites found."
+msgstr ""
+
+#: sites/sites.php:747
+msgid "Why?"
 msgstr ""
 
 #: spacing/functions/customizer/content-spacing.php:32
@@ -2548,7 +2654,7 @@ msgid "Content Separator"
 msgstr ""
 
 #: spacing/functions/customizer/content-spacing.php:213
-msgid "The space between the featured image, title, content and entry meta."
+msgid "The content separator controls the space between the featured image, title, content and entry meta."
 msgstr ""
 
 #: spacing/functions/customizer/footer-spacing.php:113
@@ -2609,12 +2715,14 @@ msgid "Change the spacing for various elements using pixels."
 msgstr ""
 
 #: typography/functions/functions.php:198
-#: typography/functions/functions.php:1068
-#: typography/functions/functions.php:1255
-#: typography/functions/functions.php:1424
-#: typography/functions/functions.php:1593
-#: typography/functions/functions.php:1726
-#: typography/functions/functions.php:1859
+#: typography/functions/functions.php:1101
+#: typography/functions/functions.php:1257
+#: typography/functions/functions.php:1407
+#: typography/functions/functions.php:1563
+#: typography/functions/functions.php:1695
+#: typography/functions/functions.php:1864
+#: typography/functions/functions.php:1997
+#: typography/functions/functions.php:2130
 msgid "Line height"
 msgstr ""
 
@@ -2622,51 +2730,59 @@ msgstr ""
 msgid "Paragraph margin"
 msgstr ""
 
-#: typography/functions/functions.php:911
+#: typography/functions/functions.php:945
 msgid "Headings"
 msgstr ""
 
-#: typography/functions/functions.php:987
+#: typography/functions/functions.php:1020
 msgid "Heading 1 (H1)"
 msgstr ""
 
-#: typography/functions/functions.php:1104
-#: typography/functions/functions.php:1291
-#: typography/functions/functions.php:1460
-#: typography/functions/functions.php:2026
+#: typography/functions/functions.php:1137
+#: typography/functions/functions.php:1443
+#: typography/functions/functions.php:1731
+#: typography/functions/functions.php:2297
 msgid "Bottom margin"
 msgstr ""
 
-#: typography/functions/functions.php:1174
+#: typography/functions/functions.php:1181
+msgid "Single Content Title (H1)"
+msgstr ""
+
+#: typography/functions/functions.php:1326
 msgid "Heading 2 (H2)"
 msgstr ""
 
-#: typography/functions/functions.php:1361
+#: typography/functions/functions.php:1487
+msgid "Archive Content Title (H2)"
+msgstr ""
+
+#: typography/functions/functions.php:1632
 msgid "Heading 3 (H3)"
 msgstr ""
 
-#: typography/functions/functions.php:1531
+#: typography/functions/functions.php:1802
 msgid "Heading 4 (H4)"
 msgstr ""
 
-#: typography/functions/functions.php:1664
+#: typography/functions/functions.php:1935
 msgid "Heading 5 (H5)"
 msgstr ""
 
-#: typography/functions/functions.php:1797
+#: typography/functions/functions.php:2068
 msgid "Heading 6 (H6)"
 msgstr ""
 
-#: typography/functions/functions.php:1882
-#: typography/functions/functions.php:1896
+#: typography/functions/functions.php:2153
+#: typography/functions/functions.php:2167
 msgid "Widgets"
 msgstr ""
 
-#: typography/functions/functions.php:1963
+#: typography/functions/functions.php:2234
 msgid "Widget Titles"
 msgstr ""
 
-#: typography/functions/functions.php:2061
+#: typography/functions/functions.php:2332
 msgid "Content font size"
 msgstr ""
 
@@ -2675,7 +2791,7 @@ msgid "Menu Items"
 msgstr ""
 
 #: typography/functions/woocommerce-fonts.php:81
-msgid "Product Titles"
+msgid "Shop Product Titles"
 msgstr ""
 
 #: typography/functions/woocommerce-fonts.php:160
@@ -2727,27 +2843,27 @@ msgid "Shop"
 msgstr ""
 
 #: woocommerce/functions/customizer/customizer.php:230
-#: woocommerce/functions/customizer/customizer.php:651
+#: woocommerce/functions/customizer/customizer.php:717
 msgid "Sidebar / Content"
 msgstr ""
 
 #: woocommerce/functions/customizer/customizer.php:231
-#: woocommerce/functions/customizer/customizer.php:652
+#: woocommerce/functions/customizer/customizer.php:718
 msgid "Content / Sidebar"
 msgstr ""
 
 #: woocommerce/functions/customizer/customizer.php:233
-#: woocommerce/functions/customizer/customizer.php:654
+#: woocommerce/functions/customizer/customizer.php:720
 msgid "Sidebar / Content / Sidebar"
 msgstr ""
 
 #: woocommerce/functions/customizer/customizer.php:234
-#: woocommerce/functions/customizer/customizer.php:655
+#: woocommerce/functions/customizer/customizer.php:721
 msgid "Sidebar / Sidebar / Content"
 msgstr ""
 
 #: woocommerce/functions/customizer/customizer.php:235
-#: woocommerce/functions/customizer/customizer.php:656
+#: woocommerce/functions/customizer/customizer.php:722
 msgid "Content / Sidebar / Sidebar"
 msgstr ""
 
@@ -2755,154 +2871,158 @@ msgstr ""
 msgid "Product Columns"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:320
+#: woocommerce/functions/customizer/customizer.php:339
+msgid "Column Gap"
+msgstr ""
+
+#: woocommerce/functions/customizer/customizer.php:386
 msgid "Image Alignment"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:344
+#: woocommerce/functions/customizer/customizer.php:410
 msgid "Products Per Page"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:363
+#: woocommerce/functions/customizer/customizer.php:429
 msgid "Text Alignment"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:387
+#: woocommerce/functions/customizer/customizer.php:453
 msgid "Display cart panel on add to cart"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:406
+#: woocommerce/functions/customizer/customizer.php:472
 msgid "Display page title"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:425
+#: woocommerce/functions/customizer/customizer.php:491
 msgid "Display product results count"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:444
+#: woocommerce/functions/customizer/customizer.php:510
 msgid "Display product sorting"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:463
+#: woocommerce/functions/customizer/customizer.php:529
 msgid "Display product image"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:482
+#: woocommerce/functions/customizer/customizer.php:548
 msgid "Display secondary image on hover"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:501
+#: woocommerce/functions/customizer/customizer.php:567
 msgid "Display product title"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:520
-#: woocommerce/functions/customizer/customizer.php:745
+#: woocommerce/functions/customizer/customizer.php:586
+#: woocommerce/functions/customizer/customizer.php:811
 msgid "Display sale flash"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:539
+#: woocommerce/functions/customizer/customizer.php:605
 msgid "Sale flash over image"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:558
+#: woocommerce/functions/customizer/customizer.php:624
 msgid "Display rating"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:577
+#: woocommerce/functions/customizer/customizer.php:643
 msgid "Display price"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:596
+#: woocommerce/functions/customizer/customizer.php:662
 msgid "Display add to cart button"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:615
-#: woocommerce/functions/customizer/customizer.php:889
+#: woocommerce/functions/customizer/customizer.php:681
+#: woocommerce/functions/customizer/customizer.php:972
 msgid "Display short description"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:628
+#: woocommerce/functions/customizer/customizer.php:694
 msgid "Single Product"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:676
+#: woocommerce/functions/customizer/customizer.php:742
 msgid "Product Image Area Width"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:707
+#: woocommerce/functions/customizer/customizer.php:773
 msgid "Display add to cart panel on scroll"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:726
+#: woocommerce/functions/customizer/customizer.php:792
 msgid "Display quantity buttons"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:764
+#: woocommerce/functions/customizer/customizer.php:830
 msgid "Display product tabs"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:783
+#: woocommerce/functions/customizer/customizer.php:849
 msgid "Display related products"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:802
+#: woocommerce/functions/customizer/customizer.php:868
 msgid "Display upsell products"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:831
+#: woocommerce/functions/customizer/customizer.php:906
 msgid "Related/Upsell Columns"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:870
+#: woocommerce/functions/customizer/customizer.php:953
 msgid "Display product meta data"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:922
-#: woocommerce/functions/functions.php:972
+#: woocommerce/functions/customizer/customizer.php:1005
+#: woocommerce/functions/functions.php:1114
 msgid "Checkout"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:941
+#: woocommerce/functions/customizer/customizer.php:1024
 msgid "Distraction-free mode"
 msgstr ""
 
-#: woocommerce/functions/customizer/customizer.php:942
+#: woocommerce/functions/customizer/customizer.php:1025
 msgid "Remove unnecessary distractions like sidebars, footer widgets and sticky menus."
 msgstr ""
 
-#: woocommerce/functions/functions.php:498
+#: woocommerce/functions/functions.php:527
 msgid "View your shopping cart"
 msgstr ""
 
-#: woocommerce/functions/functions.php:498
+#: woocommerce/functions/functions.php:531
 msgid "<span class=\"number-of-items "
 msgid_plural "<span class=\"number-of-items "
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/functions/functions.php:896
+#: woocommerce/functions/functions.php:1038
 #, php-format
 msgid "Rated %s out of 5"
 msgstr ""
 
-#: woocommerce/functions/functions.php:898
+#: woocommerce/functions/functions.php:1040
 msgid "Not yet rated"
 msgstr ""
 
-#: woocommerce/functions/functions.php:903
+#: woocommerce/functions/functions.php:1045
 msgid "out of 5"
 msgstr ""
 
-#: woocommerce/functions/functions.php:958
+#: woocommerce/functions/functions.php:1100
 msgid "Continue Shopping"
 msgstr ""
 
-#: woocommerce/functions/functions.php:963
+#: woocommerce/functions/functions.php:1105
 msgid "Item added to cart."
 msgstr ""
 
-#: woocommerce/functions/functions.php:967
-#: woocommerce/functions/functions.php:1037
+#: woocommerce/functions/functions.php:1109
+#: woocommerce/functions/functions.php:1179
 #, php-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -2910,6 +3030,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
 msgid "https://generatepress.com"
 msgstr ""
 
@@ -2919,8 +3040,4 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "Tom Usborne"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "https://tomusborne.com"
 msgstr ""

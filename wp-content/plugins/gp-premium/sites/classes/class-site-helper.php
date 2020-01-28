@@ -90,6 +90,13 @@ class GeneratePress_Sites_Helper {
 	 */
 	public static function clear_widgets() {
 		$data = get_option( 'sidebars_widgets' );
+
+		$backup_data = get_option( '_generatepress_site_library_backup', array() );
+		$backup_data['widgets'] = $data;
+
+		// Set our backed up options.
+		update_option( '_generatepress_site_library_backup', $backup_data );
+
 		$all_widgets = array();
 
 		foreach ( $data as $sidebar_id => $widgets ) {
@@ -143,7 +150,7 @@ class GeneratePress_Sites_Helper {
 					$diff = array();
 
 					foreach ( $options as $option => $value ) {
-						if ( $value !== $defaults[ $option ] ) {
+						if ( isset( $defaults[ $option ] ) && $value !== $defaults[ $option ] ) {
 							$diff[ $option ] = $value;
 						}
 					}
@@ -931,6 +938,52 @@ class GeneratePress_Sites_Helper {
 			'font_footer_category',
 			'generate_copyright',
 		);
+	}
+
+	/**
+	 * Build the loading icon.
+	 *
+	 * @since 1.6
+	 */
+	public static function loading_icon() {
+		?>
+		<svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#000">
+		    <g fill="none" fill-rule="evenodd" stroke-width="2">
+		        <circle cx="22" cy="22" r="1">
+		            <animate attributeName="r"
+		                begin="0s" dur="1.8s"
+		                values="1; 20"
+		                calcMode="spline"
+		                keyTimes="0; 1"
+		                keySplines="0.165, 0.84, 0.44, 1"
+		                repeatCount="indefinite" />
+		            <animate attributeName="stroke-opacity"
+		                begin="0s" dur="1.8s"
+		                values="1; 0"
+		                calcMode="spline"
+		                keyTimes="0; 1"
+		                keySplines="0.3, 0.61, 0.355, 1"
+		                repeatCount="indefinite" />
+		        </circle>
+		        <circle cx="22" cy="22" r="1">
+		            <animate attributeName="r"
+		                begin="-0.9s" dur="1.8s"
+		                values="1; 20"
+		                calcMode="spline"
+		                keyTimes="0; 1"
+		                keySplines="0.165, 0.84, 0.44, 1"
+		                repeatCount="indefinite" />
+		            <animate attributeName="stroke-opacity"
+		                begin="-0.9s" dur="1.8s"
+		                values="1; 0"
+		                calcMode="spline"
+		                keyTimes="0; 1"
+		                keySplines="0.3, 0.61, 0.355, 1"
+		                repeatCount="indefinite" />
+		        </circle>
+		    </g>
+		</svg>
+		<?php
 	}
 }
 
