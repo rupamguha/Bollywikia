@@ -13,3 +13,11 @@ Bollywood films are very popular among the Indian masses and they enjoy watching
 Deepika Padukone made her debut in 2006 with a Kannada film 'Aishwarya' opposite Upendra. Directed by Indrajit Lankesh, the film was a major commercial success. Meanwhile, she had also inked a deal with Farah Khan for the Hindi film 'Happy New Year. 
 
 Deepika Padukone has won three Filmfare Awards viz. Best Female Debut for 'Om Shanti Om' (2008), Best Actress for 'Goliyon Ki Raasleela: Ram-Leela' (2014) and Best Actress for 'Piku.
+
+### Sara Ali Khan
+
+[Sara Ali Khan](https://www.bollywikia.com/sara-ali-khan/) was born in 12 August 1995. She is an Indian actress who works in Hindi films and also a member of the Pataudi family. She is the daughter of actors Amrita Singh and Saif Ali Khan and the paternal granddaughter of Mansoor Ali Khan Pataudi and Sharmila Tagore.
+
+Sara debuted in 2018 with Abhishek Kapoor's romantic disaster film Kedarnath opposite of Sushant Singh Rajput. She awarded with the Filmfare Award for Best Female Debut and the IIFA Award for Star Debut of the Year – Female for this movie. After that she starred in Rohit Shetty's action film Simmba. The movie earned total of ₹4 billion world wide.
+
+As per Forbes India's Celebrity 100 list, her estimated annual income of ₹57.5 million. She ranked 66th on that list.
