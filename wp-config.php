@@ -1,4 +1,5 @@
-<?php
+<?php
+define('WP_CACHE', true); // Added by WP Rocket
 /**
  * The base configuration for WordPress
  *
@@ -17,26 +18,19 @@
  *
  * @package WordPress
  */
-
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'bollywikia' );
-
+define( 'DB_NAME', 'rupamguh_bollywikia' );
 /** MySQL database username */
-define( 'DB_USER', 'root' );
-
+define( 'DB_USER', 'rupamguh_bollywi' );
 /** MySQL database password */
-define( 'DB_PASSWORD', '' );
-
+define( 'DB_PASSWORD', '3QK4~GhGxMAa' );
 /** MySQL hostname */
 define( 'DB_HOST', 'localhost' );
-
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8mb4' );
-
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
-
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -54,9 +48,7 @@ define( 'AUTH_SALT',        'KzzNWQ[_`_yz>V2)C*1.8i+9wlLOymx8#k2*6P!]@%U 7 FXwZ%
 define( 'SECURE_AUTH_SALT', 'nX7~U8D#GKmwkVL~M^Ro^xxG*tB?|>j@m~[;ee%wCIQ/zD^Q:t!NTnJ!t*EMp>6h' );
 define( 'LOGGED_IN_SALT',   ' NA$h=mx:|,3hh1BtPE,H&pjNt1t;YOM$U]*AKkfm4{3C0}o}||;p;TEc+sz_wO3' );
 define( 'NONCE_SALT',       '2!xi>]DEtZR&84n.3a+9dg;,e9Qn-9DnT@4g>TGv8xM!g5^cJNlh6?_(({JSl +R' );
-
 /**#@-*/
-
 /**
  * WordPress Database Table prefix.
  *
@@ -64,7 +56,6 @@ define( 'NONCE_SALT',       '2!xi>]DEtZR&84n.3a+9dg;,e9Qn-9DnT@4g>TGv8xM!g5^cJNl
  * a unique prefix. Only numbers, letters, and underscores please!
  */
 $table_prefix = 'wpbolly_';
-
 /**
  * For developers: WordPress debugging mode.
  *
@@ -78,13 +69,16 @@ $table_prefix = 'wpbolly_';
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
 define( 'WP_DEBUG', false );
-
 /* That's all, stop editing! Happy publishing. */
-
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', dirname( __FILE__ ) . '/' );
 }
-
 /** Sets up WordPress vars and included files. */
 require_once( ABSPATH . 'wp-settings.php' );
+
+# Disables all core updates. Added by SiteGround Autoupdate:
+define( 'WP_AUTO_UPDATE_CORE', false );
+
+@include_once('/var/lib/sec/wp-settings.php'); // Added by SiteGround WordPress management system
+

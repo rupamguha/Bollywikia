@@ -3,6 +3,10 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'WP_ROCKET_ADVANCED_CACHE', true );
 
+if ( ! defined( 'WP_ROCKET_CONFIG_PATH' ) ) {
+	define( 'WP_ROCKET_CONFIG_PATH',       WP_CONTENT_DIR . '/wp-rocket-config/' );
+}
+
 if ( file_exists( '/home/rupamguha/public_html/bollywikia.com/wp-content/plugins/wp-rocket/inc/vendors/classes/class-rocket-mobile-detect.php' ) && ! class_exists( 'Rocket_Mobile_Detect' ) ) {
 	include_once '/home/rupamguha/public_html/bollywikia.com/wp-content/plugins/wp-rocket/inc/vendors/classes/class-rocket-mobile-detect.php';
 }
